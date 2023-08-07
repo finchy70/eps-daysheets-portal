@@ -33,13 +33,13 @@
                                 </tr>
                             </tbody>
                         @endforeach
-                        <div class="mt-6">
+                    </table>
+                        <div class="p-4">
                             {{ $clients->links() }}
                         </div>
-                    </table>
                 </div>
 
             </div>
         </div>
     </div>
-</x-app-layout>>
+</x-app-layout>

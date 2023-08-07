@@ -2,7 +2,7 @@
     <div class="mx-auto max-w-4xl bg-gray-100 shadow-lg overflow-hidden sm:rounded-lg mb-4">
         <ul class="divide-y divide-gray-200">
             <li>
-                <form wire:submit="authorise">
+
                     <div class="flex items-center px-4 py-4 sm:px-6">
                         <div class="min-w-0 flex-1 flex items-center">
                             <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
@@ -41,12 +41,12 @@
 
                         <div>
                             <!-- Heroicon name: chevron-right -->
-                            <button type="submit" class="ml-8 inline-flex px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+                            <button type="button" wire:click="authorise" class="ml-8 inline-flex px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
                                 Authorise
                             </button>
                         </div>
                     </div>
-                </form>
+
             </li>
         </ul>
     </div>

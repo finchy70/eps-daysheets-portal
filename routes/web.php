@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DaysheetController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\UserController;
 //use App\Livewire\Daysheet;
 //use App\Livewire\Daysheets\DaysheetIndex;
 use App\Http\Livewire\Daysheet\Index;
+use App\Models\Daysheet;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,8 +48,8 @@ Route::middleware(['auth', 'approved', 'admin'])->group(function () {
     Route::get('/clients/{client}/edit', [ClientController::class, 'edit'])->name('clients.edit');
     Route::patch('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
 
-    Route::get('/daysheets/index', Index::class)->name('daysheets.index');
-
+    Route::get('/daysheets/index', Index::class)->name('daysheet.index');
+    Route::get('/daysheets/{daysheet}/edit', [DaysheetController::class, 'edit'])->name('daysheet.edit');
 });
 
 Route::get('/users/auth', [UserController::class, 'auth'])->name('users.auth')->middleware(['admin', 'auth', 'verified']);

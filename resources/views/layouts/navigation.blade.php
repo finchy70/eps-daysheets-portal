@@ -3,8 +3,8 @@
 ])
 
 <div>
-    <nav x-data="{ open: false }" class="bg-gray-100 border border-b-indigo-300">
-        <div class="max-w-6xl mx-auto">
+    <nav x-data="{ open: false }" class="bg-gray-100 shadow">
+        <div class="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8">
             <div class="relative flex justify-start md:justify-between h-16">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     <!-- Mobile menu button -->
@@ -26,25 +26,25 @@
                 </div>
                 <div class="relative flex-1 flex items-center justify-end mr-4 sm:mr-0 sm:items-stretch sm:justify-start">
                     <div class="flex-shrink-0 flex items-center">
-                        <div class="text-indigo-500 text-2xl font-extrabold"><a href="/menu">EPS Daysheets</a></div>
+                        <div class="text-orange-500 text-2xl font-extrabold"><a href="/menu">EPS Day Sheets</a></div>
                     </div>
                     @auth
                         <div class="relative hidden sm:ml-6 sm:flex">
                             <a href="/menu" class="inline-flex items-center px-3 pt-1 border-b-2
                                         {{request()->route()->named('menu')
-                                        ? 'border-indigo-600 text-gray-900 '
+                                        ? 'border-orange-600 text-gray-900 '
                                         : 'border-transparent text-gray-500 '}}
-                                text-sm font-medium leading-5 focus:outline-none focus:border-indigo-700 transition
+                                text-sm font-medium leading-5 focus:outline-none focus:border-orange-700 transition
                                 duration-150 ease-in-out">
                                 Menu
                             </a>
 
-                            <a href="{{route('daysheet.index')}}" class="inline-flex items-center px-3 pt-1
+                            <a href="{{route('daysheets.index')}}" class="inline-flex items-center px-3 pt-1
                             border-b-2
-                                {{request()->route()->named('daysheet*')
-                                ? 'border-indigo-500 text-gray-900 '
+                                {{request()->route()->named('daysheets*')
+                                ? 'border-orange-500 text-gray-900 '
                                 : 'border-transparent text-gray-500 '}}
-                                text-sm font-medium leading-5 focus:outline-none focus:border-indigo-700 transition
+                                text-sm font-medium leading-5 focus:outline-none focus:border-orange-700 transition
                                 duration-150 ease-in-out">
                                 Day Sheets
                             </a>
@@ -52,26 +52,26 @@
                                 <a href="{{route('clients')}}" class="inline-flex items-center px-3 pt-1
                                 border-b-2
                                     {{request()->route()->named('clients*')
-                                    ? 'border-indigo-600 text-gray-900 '
+                                    ? 'border-orange-600 text-gray-900 '
                                     : 'border-transparent text-gray-500 '}}
-                                    text-sm font-medium leading-5 focus:outline-none focus:border-indigo-700 transition
+                                    text-sm font-medium leading-5 focus:outline-none focus:border-orange-700 transition
                                     duration-150 ease-in-out">
                                     Clients
                                 </a>
                                 <a href="{{route('users')}}" class="inline-flex items-center px-3 pt-1
                                 border-b-2
                                     {{request()->route()->named('users*')
-                                    ? 'border-indigo-600 text-gray-900 '
+                                    ? 'border-orange-600 text-gray-900 '
                                     : 'border-transparent text-gray-500 '}}
-                                    text-sm font-medium leading-5 focus:outline-none focus:border-indigo-700 transition
+                                    text-sm font-medium leading-5 focus:outline-none focus:border-orange-700 transition
                                     duration-150 ease-in-out">
                                     Users
                                 </a>
                                 <a href="{{route('api_admin')}}" class="inline-flex items-center px-3 pt-1 border-b-2
                                     {{request()->route()->named('api_admin*')
-                                    ? 'border-indigo-600 text-gray-900 '
+                                    ? 'border-orange-600 text-gray-900 '
                                     : 'border-transparent text-gray-500 '}}
-                                    text-sm font-medium leading-5 focus:outline-none focus:border-indigo-700 transition
+                                    text-sm font-medium leading-5 focus:outline-none focus:border-orange-700 transition
                                     duration-150 ease-in-out">
                                     API Admin
                                 </a>
@@ -114,42 +114,42 @@
                 @auth
                     <a href="{{route('menu')}}" class="block pl-3 pr-4 py-2 border-l-4
                         {{request()->route()->named('menu')
-                        ? 'border-indigo-500 text-indigo-700 bg-indigo-50 '
+                        ? 'border-orange-500 text-orange-700 bg-orange-50 '
                         : 'border-transparent text-gray-600 '}} text-base font-medium  focus:outline-none
-                        focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150
+                        focus:text-orange-800 focus:bg-orange-100 focus:border-orange-700 transition duration-150
                         ease-in-out">
                         Menu
                     </a>
                     <a href="" class="block pl-3 pr-4 py-2 border-l-4
-                        {{request()->route()->named('daysheet*')
-                        ? 'border-indigo-500 text-indigo-700 bg-indigo-50 '
+                        {{request()->route()->named('daysheets*')
+                        ? 'border-orange-500 text-orange-700 bg-orange-50 '
                         : 'border-transparent text-gray-600 '}} text-base font-medium  focus:outline-none
-                        focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150
+                        focus:text-orange-800 focus:bg-orange-100 focus:border-orange-700 transition duration-150
                         ease-in-out">
-                        Daysheets
+                        Day Sheets
                     </a>
                     @if(auth()->user()->admin)
                         <a href="{{route('clients')}}" class="block pl-3 pr-4 py-2 border-l-4
                             {{request()->route()->named('clients')
-                            ? 'border-indigo-500 text-indigo-700 bg-indigo-50 '
+                            ? 'border-orange-500 text-orange-700 bg-orange-50 '
                             : 'border-transparent text-gray-600 '}} text-base font-medium  focus:outline-none
-                            focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150
+                            focus:text-orange-800 focus:bg-orange-100 focus:border-orange-700 transition duration-150
                             ease-in-out">
                             Clients
                         </a>
                         <a href="{{route('users')}}" class="block pl-3 pr-4 py-2 border-l-4
                             {{request()->route()->named('users')
-                            ? 'border-indigo-500 text-gray-900 text-indigo-700 bg-indigo-50 '
+                            ? 'border-orange-500 text-gray-900 text-orange-700 bg-orange-50 '
                             : 'border-transparent text-gray-600 '}} text-base font-medium  focus:outline-none
-                            focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150
+                            focus:text-orange-800 focus:bg-orange-100 focus:border-orange-700 transition duration-150
                             ease-in-out">
                             Users
                         </a>
                         <a href="{{route('api_admin')}}" class="block pl-3 pr-4 py-2 border-l-4
                             {{request()->route()->named('api_admin')
-                            ? 'border-indigo-500 text-gray-900 text-indigo-700 bg-indigo-50 '
+                            ? 'border-orange-500 text-gray-900 text-orange-700 bg-orange-50 '
                             : 'border-transparent text-gray-600 '}} text-base font-medium  focus:outline-none
-                            focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150
+                            focus:text-orange-800 focus:bg-orange-100 focus:border-orange-700 transition duration-150
                             ease-in-out">
                             API Admin
                         </a>
