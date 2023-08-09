@@ -21,12 +21,12 @@
                         @foreach($clients as $client)
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr class="{{($loop->iteration % 2)?'bg-white':'bg-gray-200'}}">
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                    <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                                         {{$client->name}}
                                     </td>
                                     <td class="px-4 py-2 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                         <div class="row flex justify-end">
-                                            <a href="{{route('clients.edit', $client->id)}}" class="justify-end inline-flex items-center px-2 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">Edit</a>
+                                            <a href="{{route('clients.edit', $client->id)}}" class="justify-end inline-flex items-center px-2 py-1 border border-transparent text-xs leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">Edit</a>
                                         </div>
 
                                     </td>

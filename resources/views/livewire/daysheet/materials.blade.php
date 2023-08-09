@@ -2,8 +2,8 @@
     <div class="px-8 py-4 bg-gray-200 border border-indigo-500 rounded-xl">
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
-                <h1 class="text-base font-semibold leading-6 text-gray-900">Materials</h1>
-                <p class="mt-2 text-sm text-gray-700">A list of all the materials allocated to this work.</p>
+                <h1 class="text-base font-semibold leading-6 text-gray-900">Edit Materials</h1>
+                <p class="mt-2 text-sm text-gray-700">A list of all the materials allocated to this daysheet.</p>
             </div>
             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                 <button type="button" wire:click="newMaterials" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Materials</button>

@@ -24,4 +24,8 @@ class Daysheet extends Model
     public function materials(): HasMany {
         return $this->hasMany(Material::class);
     }
+
+    public function user(): BelongsTo {
+        return $this->belongsTo(User::class);
+    }
 }

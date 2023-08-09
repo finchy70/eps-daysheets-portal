@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('livewire.layouts.app')
 
 @section('title', 'Requires Authorisation')
 
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-2">
                                     <a href="{{route('users.authorise_user', $user->id)}}"
-                                        class="btn btn-sm btn-warning">As Client</a>
+                                       class="btn btn-sm btn-warning">As Client</a>
                                 </div>
                             </div>
                         @endforeach

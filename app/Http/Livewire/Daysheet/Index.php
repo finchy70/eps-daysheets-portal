@@ -32,6 +32,9 @@ class Index extends Component
     public function getData(): LengthAwarePaginator|\Illuminate\Pagination\LengthAwarePaginator|_IH_Daysheet_C|array
     {
         return Daysheet::query()->orderBy('work_date', 'desc')->with(['client', 'materials'])
+            ->when(auth()->user()->client_id != null, function ($q) {
+                return $q->where('client_id', auth()->user()->client_id)->where('published', true);
+            })
             ->when($this->searchedJobNumber != '', function ($q) {
                 return $q->where('job_number', $this->searchedJobNumber);
             })
@@ -51,12 +54,17 @@ class Index extends Component
 
     }
 
-    public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    public function render()
     {
-        $clientList = Client::query()->orderBy('name', 'asc')->get();
+        if(auth()->user()->client_id == null){
+            $clientList = Client::query()->orderBy('name', 'asc')->get();
+        } else {
+            $clientList = Client::query()->where('id', auth()->user()->client_id)->get();
+        }
+
         return view('livewire.daysheet.index', [
             'daysheets' => $this->getData(),
             'clientList' => $clientList
-        ]);
+        ])->layout('layouts.app');
     }
 }
