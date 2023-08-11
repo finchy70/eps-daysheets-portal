@@ -25,6 +25,10 @@ class Daysheet extends Model
         return $this->hasMany(Material::class);
     }
 
+    public function engineers(): HasMany {
+        return $this->hasMany(Engineer::class);
+    }
+
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
     }

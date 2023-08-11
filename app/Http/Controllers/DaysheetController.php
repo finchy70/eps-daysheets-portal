@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateDaysheetRequest;
+use App\Http\Requests\DaysheetFormRequest;
 use App\Models\Client;
 use App\Models\Daysheet;
 use Carbon\Carbon;
@@ -23,7 +23,7 @@ class DaysheetController extends Controller
         ]);
     }
 
-    public function update(UpdateDaysheetRequest $request, Daysheet $daysheet) {
+    public function update(DaysheetFormRequest $request, Daysheet $daysheet) {
         $validated = $request->validated();
 
         $daysheet->update([

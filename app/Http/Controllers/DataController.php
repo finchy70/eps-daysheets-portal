@@ -8,10 +8,12 @@ use App\Models\Device;
 use App\Models\Engineer;
 use App\Models\Material;
 use App\Models\Update;
+use App\Traits\HoursCalculator;
 use Illuminate\Http\Request;
 
 class DataController extends Controller
 {
+    use HoursCalculator;
     public function clients(Request $request)
     {
         $user = $request->user();
@@ -73,6 +75,15 @@ class DataController extends Controller
                     'cost_per_unit' => $material['cost_per_unit']
                 ]);
             }
+            $hours = $this->getHours($daysheet['start_time'], $daysheet['finish_time']);
+            Engineer::query()->create([
+                'name' => $user->name,
+                'daysheet_id' => $newDaysheet->id,
+                'role' => 'SAP',
+                'rate' => 25.00,
+                'hours' => $hours['time'],
+                'hours_as_fraction' => $hours['hoursFraction']
+            ]);
         }
         return response()->json(['message' => "All completed daysheets have synced with EPS Daysheet server!!", 'synced_daysheet_ids' => $syncedDaysheetIds]);
     }

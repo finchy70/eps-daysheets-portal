@@ -58,6 +58,17 @@
                                     duration-150 ease-in-out">
                                     Clients
                                 </a>
+
+                                <a href="{{route('roles')}}" class="inline-flex items-center px-3 pt-1
+                                border-b-2
+                                    {{request()->route()->named('roles*')
+                                    ? 'border-indigo-600 text-gray-900 '
+                                    : 'border-transparent text-gray-500 '}}
+                                    text-sm font-medium leading-5 focus:outline-none focus:border-indigo-700 transition
+                                    duration-150 ease-in-out">
+                                    Roles
+                                </a>
+
                                 <a href="{{route('users')}}" class="inline-flex items-center px-3 pt-1
                                 border-b-2
                                     {{request()->route()->named('users*')
@@ -120,7 +131,7 @@
                         ease-in-out">
                         Menu
                     </a>
-                    <a href="" class="block pl-3 pr-4 py-2 border-l-4
+                    <a href="{{route('daysheet.index')}}" class="block pl-3 pr-4 py-2 border-l-4
                         {{request()->route()->named('daysheet*')
                         ? 'border-indigo-500 text-indigo-700 bg-indigo-50 '
                         : 'border-transparent text-gray-600 '}} text-base font-medium  focus:outline-none
@@ -137,6 +148,16 @@
                             ease-in-out">
                             Clients
                         </a>
+
+                        <a href="{{route('roles')}}" class="block pl-3 pr-4 py-2 border-l-4
+                            {{request()->route()->named('roles')
+                            ? 'border-indigo-500 text-indigo-700 bg-indigo-50 '
+                            : 'border-transparent text-gray-600 '}} text-base font-medium  focus:outline-none
+                            focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150
+                            ease-in-out">
+                            Roles
+                        </a>
+
                         <a href="{{route('users')}}" class="block pl-3 pr-4 py-2 border-l-4
                             {{request()->route()->named('users')
                             ? 'border-indigo-500 text-gray-900 text-indigo-700 bg-indigo-50 '

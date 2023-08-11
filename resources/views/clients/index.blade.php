@@ -2,10 +2,10 @@
 
 <x-app-layout>
     <div class="text-center text-2xl text-indigo-600 font-extrabold">Clients</div>
-    <div class="mx-auto max-w-7xl row justify-end flex">
+    <div class="mx-auto max-w-3xl row justify-end flex">
         <a href="{{route("clients.create")}}" class="mb-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">Add Client</a>
     </div>
-    <div class="max-w-7xl mx-auto flex-col">
+    <div class="max-w-3xl mx-auto flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div class="mx-auto max-w-3xl shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
