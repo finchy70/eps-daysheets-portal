@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Daysheet;
 
 use App\Models\Daysheet;
 use App\Models\Engineer;
+use App\Models\Material;
 use App\Models\Role;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -15,6 +16,10 @@ class Engineers extends Component
     public ?String $hours = null;
     public ?String $role = null;
     public ?float $total = null;
+    public ?String $newTotal = null;
+    public ?float $newRate = null;
+    public ?String $newFormattedRate = null;
+    public ?int $newSelectedRole = null;
     public ?String $editName = null;
     public mixed $editRole = null;
     public ?String $editRate = null;
@@ -26,16 +31,19 @@ class Engineers extends Component
     public mixed $Engineers = null;
     public ?Engineer $editEngineer = null;
     public ?Daysheet $daysheet = null;
-    public bool $showNewEngineers = false;
+    public bool $showNewEngineer = false;
+    public bool $showEditEngineer = false;
     public mixed $roles = null;
 
-    public function mount($daysheetId) {
+    public function mount($daysheetId): void
+    {
         $this->daysheet = Daysheet::find($daysheetId);
         $this->getEngineers();
         $this->roles = Role::query()->orderBy('role')->get();
     }
 
-    public function getEngineers() {
+    public function getEngineers(): void
+    {
         $this->total = 0;
         $this->daysheet->load('engineers');
         foreach($this->daysheet->engineers as $engineer) {
@@ -43,35 +51,37 @@ class Engineers extends Component
         }
     }
 
-    public function updatedSelectedRole($id) {
+    public function updatedSelectedRole($id): void
+    {
         $this->editRole = Role::query()->where('id', $id)->first();
         $this->editRate = $this->editRole->rate;
         $this->editFormattedRate = '£ '.number_format($this->editRole->rate, 2, thousands_separator: ',');
         $this->editTotal = '£ '.number_format($this->editHoursAsFraction * floatval($this->editRole->rate), 2, thousands_separator: ',');
     }
 
-    public function updatedEditHours($time) {
-
-        $this->getHoursAsFraction($time);
-        $this->editTotal = '£ '.number_format($this->editHoursAsFraction * floatval($this->editRole->rate), 2, thousands_separator: ',');
+    public function updatedEditHours($time): void
+    {
+        $hoursAsFraction = $this->getHoursAsFraction($time);
+        $this->editTotal = '£ '.number_format($hoursAsFraction * floatval($this->editRole->rate), 2, thousands_separator: ',');
     }
 
-    public function getHoursAsFraction($time)
+    public function getHoursAsFraction($time): float|int
     {
         $hours = intval(Carbon::parse($time)->format('H'));
         $minutes = intval(Carbon::parse($time)->format('i'));
         $fraction = $minutes / 60;
 
         $nearestQuarter = floor($fraction * 4) / 4;
-        $this->editHoursAsFraction = $hours + $nearestQuarter;
+        return $hours + $nearestQuarter;
     }
 
-    public function editEngineer($id) {
+    public function editEngineer($id): void
+    {
         $this->resetErrorBag();
         $this->editEngineer = Engineer::query()->where('id', $id)->first();
         $this->editRole = Role::query()->where('role', $this->editEngineer->role)->orderBy('id', 'desc')->first();
         $this->selectedRole = $this->editRole->id;
-        $this->showNewEngineers = true;
+        $this->showEditEngineer = true;
         $this->editName = $this->editEngineer->name;
         $this->editHoursAsFraction = $this->editEngineer->hours_as_fraction;
         $this->editHours = Carbon::parse($this->editEngineer->hours)->format('H:i');
@@ -80,7 +90,8 @@ class Engineers extends Component
         $this->editTotal = '£ '.number_format($this->editEngineer->hours_as_fraction * floatval($this->editEngineer->rate), 2, thousands_separator: ',');
     }
 
-    public function update() {
+    public function update(): void
+    {
         $this->validate([
             'editName' => 'required',
             'editHours' => 'required',
@@ -95,11 +106,64 @@ class Engineers extends Component
         $this->editEngineer->hours_as_fraction = $this->editHoursAsFraction;
         $this->editEngineer->rate = $this->editRate;
         $this->editEngineer->update();
-        $this->showNewEngineers = false;
+        $this->showEditEngineer = false;
         $this->getEngineers();
         $this->dispatchBrowserEvent('notify-success', 'You have successfully updated an Engineer.');
     }
 
+    public function newEngineer(): void
+    {
+        $role = Role::query()->orderBy('role', 'asc')->first();
+        $this->newSelectedRole = $role->id;
+        $this->name = '';
+        $this->hours = '';
+        $this->showNewEngineer = true;
+        $this->newRate = $role->rate;
+        $this->newFormattedRate = '£ '.number_format($this->newRate, 2, thousands_separator: ',');
+    }
+
+    public function updatedHours($time) {
+        $this->hoursAsFraction = $this->getHoursAsFraction($time);
+
+        $this->newTotal = '£ '.number_format($this->hoursAsFraction * floatval($this->newRate), 2, thousands_separator: ',');
+
+    }
+
+    public function updatedNewSelectedRole($id): void
+    {
+        $role = Role::query()->where('id', $id)->first();
+        $this->newRate = $role->rate;
+        $this->newFormattedRate = '£ '.number_format($this->newRate, 2, thousands_separator: ',');
+        $this->newTotal = '£ '.number_format($this->hoursAsFraction * floatval($this->newRate), 2, thousands_separator: ',');
+    }
+
+    public function create() {
+        $this->validate([
+            'name' => 'required',
+            'hours' => 'required',
+            ],
+            [
+                'hours' => 'The hours field is required.'
+            ]
+        );
+        Engineer::query()->create([
+            'name' => $this->name,
+            'daysheet_id' => $this->daysheet->id,
+            'role' => Role::query()->where('id', $this->newSelectedRole)->first()->role,
+            'rate' => $this->newRate,
+            'hours' => $this->hours,
+            'hours_as_fraction' => $this->hoursAsFraction
+        ]);
+        $this->showNewEngineer = false;
+        $this->getEngineers();
+        $this->dispatchBrowserEvent('notify-success', 'You have successfully added a new Engineer.');
+    }
+
+    public function delete($id) {
+        Engineer::query()->where('id', $id)->delete();
+        $this->dispatchBrowserEvent('notify-success', 'Engineer successfully deleted.');
+        $this->getEngineers();
+    }
 
     public function render()
     {

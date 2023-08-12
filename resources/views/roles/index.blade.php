@@ -1,5 +1,5 @@
 <x-app-layout>
-    @section('title', 'Clients')
+    @section('title', 'Roles')
 
     <div>
         <div class="mt-4 text-center text-2xl text-indigo-600 font-extrabold">Roles</div>

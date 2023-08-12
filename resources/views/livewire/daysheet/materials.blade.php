@@ -30,7 +30,7 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$material->cost_per_unit}}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">£ {{number_format(($material->quantity * $material->cost_per_unit), 2, thousands_separator: '')}}</td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 space-x-2">
-                                    <button onclick="return confirm('Are you sure you want to remove these materials?')" wire:click="delete({{$material->id}})" type="button" class="py-1 px-2 text-xs text-white bg-indigo-500 rounded-lg hover:text-indigo-900">Delete</button>
+                                    <button onclick="return confirm('Are you sure you want to remove this material?')" wire:click="delete({{$material->id}})" type="button" class="py-1 px-2 text-xs text-white bg-indigo-500 rounded-lg hover:text-indigo-900">Delete</button>
                                     <button type="button" class="py-1 px-2 text-xs text-white bg-indigo-500 rounded-lg hover:text-indigo-900">Edit</button>
                                 </td>
                             </tr>

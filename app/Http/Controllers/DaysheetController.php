@@ -11,6 +11,11 @@ use Session;
 
 class DaysheetController extends Controller
 {
+    public function create() {
+        return view('daysheet.create', [
+            'clients' => Client::query()->orderBy('name')->get()
+        ]);
+    }
 
     public function edit(Daysheet $daysheet) {
         if(auth()->user()->client != null && auth()->user()->client_id != $daysheet->id) {

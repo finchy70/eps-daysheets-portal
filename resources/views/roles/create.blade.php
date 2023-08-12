@@ -1,3 +1,4 @@
+@section('title', "Create New Role")
 <x-app-layout>
     <div>
         <div class="mt-8 row flex justify-center text-2xl">Create New Role</div>

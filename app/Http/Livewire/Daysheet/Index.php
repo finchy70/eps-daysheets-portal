@@ -50,8 +50,8 @@ class Index extends Component
             ->paginate(15);
     }
 
-    public function editDaysheet($id): void {
-
+    public function newDaysheet() {
+        return redirect()->route('daysheet.create');
     }
 
     public function render()

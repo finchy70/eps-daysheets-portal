@@ -59,6 +59,7 @@ Route::middleware(['auth', 'approved', 'admin'])->group(function () {
 
 Route::middleware(['auth', 'approved'])->group(function () {
     Route::get('/daysheets/index', Index::class)->name('daysheet.index');
+    Route::get('/daysheets/create', [DaysheetController::class, 'create'])->name('daysheet.create');
     Route::get('/daysheets/{daysheet}/edit', [DaysheetController::class, 'edit'])->name('daysheet.edit');
     Route::get('/daysheets/{daysheet}/show', [DaysheetController::class, 'show'])->name('daysheet.show');
     Route::patch('/daysheets/{daysheet}/update', [DaysheetController::class, 'update'])->name('daysheet.update');
