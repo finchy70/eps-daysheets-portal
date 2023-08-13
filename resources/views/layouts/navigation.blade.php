@@ -82,7 +82,7 @@
                 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     @auth
                         <div class="inline-flex items-center px-1 pt-1 text-xs md:text-sm font-medium leading-5
-                        text-gray-900 hidden md:block">{{auth()->user()->name}}</div>
+                        text-gray-900 hidden md:block">{{auth()->user()->name}} - {{auth()->user()->client_id != null ? ' - '.auth()->user()->client->name : ''}}</div>
                         <div class="ml-8 inline-flex items-center px-1 pt-1 text-xs md:text-sm font-medium leading-5
                         text-gray-900 hidden md:block">
                             <a href="{{ route('logout') }}"

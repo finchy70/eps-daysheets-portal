@@ -13,11 +13,14 @@ class ToggleSwitch extends Component
     public function mount(int $daysheetId):void {
 
         $this->daysheet = Daysheet::where('id', $daysheetId)->first();
-        $this->published = $this->daysheet->published == 1;
+        $this->published = $this->daysheet->published;
     }
 
     public function togglePublished():void {
-        $this->daysheet->published = !$this->daysheet->published;
+        $this->published = !$this->published;
+        $this->daysheet->update([
+            'published' => $this->published
+        ]);
         $this->emitUp('toggled', $this->daysheet->id);
     }
 

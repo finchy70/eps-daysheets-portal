@@ -6,7 +6,6 @@
         <h2 class="mb-6 text-sm italic font-semibold leading-7 text-red-500">To add materials and engineers save this daysheet then add them via the edit option.</h2>
         <form class="space-y-4" method="POST" action="/daysheets">
             @csrf
-
             <div class="space-y-4">
                 <div class="sm:grid sm:grid-cols-3 sm:items-start">
                     <label for="selectedClient" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Client Name</label>
@@ -27,6 +26,7 @@
                         <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                             <input type="text" name="site" id="site" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
                         </div>
+                        @error('site')<span class="text-red-500 italic text-xs">{{$message}}</span>@enderror
                     </div>
                 </div>
 
@@ -36,6 +36,7 @@
                         <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                             <input type="text" name="jobNumber" id="jobNumber" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
                         </div>
+                        @error('jobNumber')<span class="text-red-500 italic text-xs">{{$message}}</span>@enderror
                     </div>
                 </div>
 
@@ -45,6 +46,8 @@
                         <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                             <input type="date" name="workDate" id="workDate" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
                         </div>
+                        @error('workDate')<span class="text-red-500 italic text-xs">{{$message}}</span>@enderror
+
                     </div>
                 </div>
 
@@ -54,6 +57,7 @@
                         <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                             <input type="time" name="startTime" id="startTime" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
                         </div>
+                        @error('startTime')<span class="text-red-500 italic text-xs">{{$message}}</span>@enderror
                     </div>
                 </div>
 
@@ -63,6 +67,7 @@
                         <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                             <input type="time" name="finishTime" id="finishTime" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
                         </div>
+                        @error('finishTime')<span class="text-red-500 italic text-xs">{{$message}}</span>@enderror
                     </div>
                 </div>
 
@@ -71,6 +76,7 @@
                     <label for="issueFault" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Issue / Fault</label>
                     <div class="mt-2 sm:col-span-2 sm:mt-0">
                         <textarea id="issueFault" name="issueFault" rows="3" class="block w-full max-w-2xl rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                        @error('issueFault')<span class="text-red-500 italic text-xs">{{$message}}</span>@enderror
                     </div>
                 </div>
 
@@ -78,6 +84,7 @@
                     <label for="resolution" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Resolution</label>
                     <div class="mt-2 sm:col-span-2 sm:mt-0">
                         <textarea id="resolution" name="resolution" rows="3" class="block w-full max-w-2xl rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                        @error('resolution')<span class="text-red-500 italic text-xs">{{$message}}</span>@enderror
                     </div>
                 </div>
 
@@ -87,6 +94,7 @@
                         <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                             <input type="number" step="1" name="mileage" id="mileage" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" >
                         </div>
+                        @error('mileage')<span class="text-red-500 italic text-xs">{{$message}}</span>@enderror
                     </div>
                 </div>
             </div>
@@ -99,16 +107,5 @@
 
 
         </form>
-{{--        <div class="mt-8 space-y-4">--}}
-{{--            <div>--}}
-{{--                <livewire:daysheet.engineers :daysheetId="$daysheet->id"/>--}}
-{{--            </div>--}}
-
-{{--            <div>--}}
-{{--                <livewire:daysheet.materials :daysheetId="$daysheet->id"/>--}}
-{{--            </div>--}}
-{{--        </div>--}}
     </div>
-
-
 </x-app-layout>

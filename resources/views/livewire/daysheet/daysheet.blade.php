@@ -1,7 +1,12 @@
 @php use function Symfony\Component\Translation\t; @endphp
 <div>
     @section('title', 'DaySheet')
-    <div class="mt-4 mx-auto max-w-4xl bg-white border-2 border-blue-900">
+    <div class="mt-4 mb-2 row flex justify-end max-w-4xl mx-auto">
+        <button class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+            Download PDF
+        </button>
+    </div>
+    <div class="mx-auto max-w-4xl bg-white border-2 border-blue-900">
         <div class="p-2 row flex justify-between items-center border-t border-black">
             <image src="{{asset('images/EPS new logo 100x50.png')}}"></image>
             <div class="text-xl">EPS Construction Limited - Job Report Sheet</div>
@@ -87,5 +92,19 @@
             <div class="p-4 text-center col-span-2 text-sm border-t border-r border-black"></div>
             <div class="p-4 text-center col-span-1 text-sm border-t border-black"></div>
         </div>
+    </div>
+    <div class="mt-4 mb-2 row flex justify-end max-w-4xl mx-auto">
+        @if(!$daysheet->client_confirmed)
+            <button type="button" onclick="return confirm('Are you sure you want to confirm this daysheet?')" wire:click="confirmDaysheet({{$daysheet->id}})" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+                Authorise Daysheet
+            </button>
+        @else
+            <button type="button" disabled class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-200 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+                Daysheet Authorised
+            </button>
+        @endif
+        <a href="{{route('daysheet.index')}}" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+            Return to Daysheet Index
+        </a>
     </div>
 </div>

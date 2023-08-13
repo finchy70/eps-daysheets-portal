@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use JetBrains\PhpStorm\NoReturn;
 use LaravelIdea\Helper\App\Models\_IH_Daysheet_C;
 use Livewire\Component;
@@ -24,11 +25,10 @@ class Index extends Component
     use WithPagination;
     protected $listeners = ['toggled'];
 
-    public function toggled($daysheet):void {
-        $daysheet = Daysheet::find($daysheet);
-        $daysheet->published = !$daysheet->published;
-        $daysheet->save();
+    public function toggled($daysheetId):void {
+        $this->getData();
     }
+
     public function getData(): LengthAwarePaginator|\Illuminate\Pagination\LengthAwarePaginator|_IH_Daysheet_C|array
     {
         return Daysheet::query()->orderBy('work_date', 'desc')->with(['client', 'materials'])
@@ -50,11 +50,21 @@ class Index extends Component
             ->paginate(15);
     }
 
-    public function newDaysheet() {
+    public function newDaysheet(): RedirectResponse
+    {
         return redirect()->route('daysheet.create');
     }
 
-    public function render()
+    public function authoriseDaysheet($id): void
+    {
+        $daysheet = Daysheet::query()->where('id', $id)->first();
+        $daysheet->update([
+            'client_confirmed' => true
+        ]);
+        $this->getData();
+    }
+
+    public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         if(auth()->user()->client_id == null){
             $clientList = Client::query()->orderBy('name', 'asc')->get();

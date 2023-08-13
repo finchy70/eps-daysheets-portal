@@ -4,8 +4,12 @@ namespace App\Http\Livewire\Daysheet;
 
 use App\Traits\HoursCalculator;
 use Carbon\Carbon;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Livewire\Component;
 use app\Models\Daysheet as DaysheetModel;
+use Session;
 
 class Daysheet extends Component
 {
@@ -36,15 +40,21 @@ class Daysheet extends Component
             $this->materialTotal += $material->quantity * $material->cost_per_unit;
         }
         $this->engineerTotal = 0;
-        foreach($daysheet->engineers as $engineer) {
+        foreach($this->daysheet->engineers as $engineer) {
             $this->engineerTotal += $engineer->hours_as_fraction * $engineer->rate;
         }
+    }
 
+    public function confirmDaysheet($id) {
+        $this->daysheet->update([
+            'client_confirmed' => true
+        ]);
+        $this->dispatchBrowserEvent('notify-success', 'You have confirmed this daysheet.');
     }
 
 
 
-    public function render()
+    public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
 
         return view('livewire.daysheet.daysheet', [
@@ -55,7 +65,7 @@ class Daysheet extends Component
             'rateIncVat' => $this->rateIncVat,
             'hoursFraction' => $this->hoursFraction,
             'materialTotal' => $this->materialTotal,
-            'engineerTotal' => $this->engineerTotal
+            'engineerTotal' => $this->engineerTotal,
         ]);
     }
 }

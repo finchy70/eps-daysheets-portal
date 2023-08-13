@@ -1,11 +1,13 @@
 <div class="max-w-7xl mx-auto">
     @section('title','Index')
     <div class="px-4 sm:px-6 lg:px-8">
-        <div class="mt-4 row flex justify-end">
-            <button wire:click="newDaysheet" class="justify-end inline-flex items-center px-2 py-1 border border-transparent text-xs leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
-                New Daysheet
-            </button>
-        </div>
+        @if(auth()->user()->client_id == null)
+            <div class="mt-4 row flex justify-end">
+                <button wire:click="newDaysheet" class="justify-end inline-flex items-center px-2 py-1 border border-transparent text-xs leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+                    New Daysheet
+                </button>
+            </div>
+        @endif
         <div class="mt-4 flow-root">
             <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -17,6 +19,7 @@
                                 <th scope="col" class="py-1 bg-gray-600 px-3 text-left text-sm font-semibold text-gray-100">Job Number</th>
                                 <th scope="col" class="py-1 bg-gray-600 px-3 text-left text-sm font-semibold text-gray-100">Site</th>
                                 <th scope="col" class="py-1 bg-gray-600 px-3 text-left text-sm font-semibold text-gray-100">Client</th>
+                                <th scope="col" class="py-1 bg-gray-600 px-3 text-left text-sm font-semibold text-gray-100">Authorised</th>
                                 <th scope="col" class="py-1 bg-gray-600 px-3 text-left text-sm font-semibold text-gray-100">{{auth()->user()->client_id == null ? 'Published' : ''}}</th>
                                 <th scope="col" class="py-1 bg-gray-600 px-3 text-right text-sm font-semibold text-gray-100">Options</th>
                             </tr>
@@ -38,6 +41,9 @@
                                         @endforeach
                                     </select>
                                 </th>
+                                <th scope="col" class="bg-gray-600 px-3 text-left text-sm font-semibold text-gray-100">
+{{--                                    <input type="text" class="mb-2 text-xs text-gray-800 rounded-lg" wire:model="searchedSite" placeholder="Search"/>--}}
+                                </th>
                                 <th scope="col" class="bg-gray-600 px-3 text-left text-sm font-semibold text-gray-100"></th>
                                 <th scope="col" class="bg-gray-600 relative text-right pl-3 pr-4 sm:pr-6"></th>
                             </tr>
@@ -56,6 +62,9 @@
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         {{$daysheet->client->name}}
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {{$daysheet->client_confirmed ? 'Yes' : 'No'}}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         @if(auth()->user()->client_id == null)

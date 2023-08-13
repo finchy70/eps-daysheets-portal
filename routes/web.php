@@ -63,6 +63,8 @@ Route::middleware(['auth', 'approved'])->group(function () {
     Route::get('/daysheets/{daysheet}/edit', [DaysheetController::class, 'edit'])->name('daysheet.edit');
     Route::get('/daysheets/{daysheet}/show', [DaysheetController::class, 'show'])->name('daysheet.show');
     Route::patch('/daysheets/{daysheet}/update', [DaysheetController::class, 'update'])->name('daysheet.update');
+    Route::post('/daysheets', [DaysheetController::class, 'store'])->name('daysheet.store');
+
 });
 
 Route::get('/users/auth', [UserController::class, 'auth'])->name('users.auth')->middleware(['admin', 'auth', 'verified']);
