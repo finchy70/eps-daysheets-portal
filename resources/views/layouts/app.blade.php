@@ -27,7 +27,6 @@
                     </div>
                 </header>
             @endif
-r
             <!-- Page Content -->
             <main>
                 {{ $slot }}
