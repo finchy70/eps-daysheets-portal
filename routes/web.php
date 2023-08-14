@@ -68,6 +68,12 @@ Route::middleware(['auth', 'approved'])->group(function () {
 });
 
 Route::get('/users/auth', [UserController::class, 'auth'])->name('users.auth')->middleware(['admin', 'auth', 'verified']);
+Route::get('/pdf', function (){
+    return view('pdfs.daysheet');
+});
+Route::get('/remittance', function (){
+    return view('pdfs.remittance');
+});
 
 /** API Pages */
 Route::get('/api_admin', [ApiTokenController::class, 'admin'])->name('api_admin')->middleware(['admin', 'auth']);
