@@ -33,7 +33,7 @@
                                     {{$engineer->hours}}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">£ {{number_format(($engineer->rate * $engineer->hours_as_fraction), 2, thousands_separator: '')}}</td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 space-x-2">
-                                    <button onclick="return confirm('Are you sure you want to remove this Engineer?')" wire:click="delete({{$engineer->id}})" type="button" class="py-1 px-2 text-xs text-white bg-indigo-500 rounded-lg hover:text-indigo-900">Delete</button>
+                                    <button wire:click="delete({{$engineer->id}})" type="button" class="py-1 px-2 text-xs text-white bg-indigo-500 rounded-lg hover:text-indigo-900">Delete</button>
                                     <button wire:click="editEngineer({{$engineer->id}})" type="button" class="py-1 px-2 text-xs text-white bg-indigo-500 rounded-lg hover:text-indigo-900">Edit</button>
                                 </td>
                             </tr>
@@ -91,7 +91,7 @@
                             </div>
 
                             <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-2">
-                                <label for="costPerUnit" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Role</label>
+                                <label for="selectedRole" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Role</label>
                                 <div class=" sm:col-span-2 sm:mt-0">
                                     <select wire:model="selectedRole" name="selectedRole" id="selectedRole" class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                         @foreach($roles as $role)
@@ -121,7 +121,7 @@
                             </div>
 
                             <div class="mt-5 sm:mt-6 row-auto flex justify-center space-x-4">
-                                <button wire:click="$set('showNewEngineers', false)" type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Cancel</button>
+                                <button wire:click="$set('showEditEngineer', false)" type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Cancel</button>
                                 <button type="submit" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Update</button>
                             </div>
                         </div>
@@ -205,6 +205,28 @@
             </div>
         </form>
 
+    @endif
+
+    @if($showDeleteModal)
+        <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+            <div class="fixed inset-0 z-10 overflow-y-auto">
+                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 mx-auto max-w-xl">
+                    <div class="transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all w-full">
+                        <div>
+                            <div class="text-center">
+                                <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Are you sure you want to delete the Engineer?</h3>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 sm:mt-6 row-auto flex justify-center space-x-4">
+                            <button wire:click="$set('showDeleteModal', false)" type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Cancel</button>
+                            <button type="button" wire:click="confirmedDelete" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endif
 
 

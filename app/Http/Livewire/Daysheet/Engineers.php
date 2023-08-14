@@ -33,7 +33,9 @@ class Engineers extends Component
     public ?Daysheet $daysheet = null;
     public bool $showNewEngineer = false;
     public bool $showEditEngineer = false;
+    public bool $showDeleteModal = false;
     public mixed $roles = null;
+    public ?int $idToDelete = null;
 
     public function mount($daysheetId): void
     {
@@ -160,9 +162,15 @@ class Engineers extends Component
     }
 
     public function delete($id) {
-        Engineer::query()->where('id', $id)->delete();
+        $this->idToDelete = $id;
+        $this->showDeleteModal = true;
+    }
+
+    public function confirmedDelete() {
+        Engineer::query()->where('id', $this->idToDelete)->delete();
         $this->dispatchBrowserEvent('notify-success', 'Engineer successfully deleted.');
         $this->getEngineers();
+        $this->showDeleteModal = false;
     }
 
     public function render()
