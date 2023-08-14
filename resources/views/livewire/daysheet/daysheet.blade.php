@@ -75,7 +75,7 @@
             <div class="p-1 border-b border-r border-black col-span-5 bg-blue-200 text-right">Total with VAT</div>
             <div class="p-1 border-b border-black col-span-1 bg-blue-200 text-right">{{'£ '.number_format($materialTotal * 1.2, 2, thousands_separator: ',')}}</div>
             <div class="p-1 border-b border-r border-black col-span-5 bg-blue-300 text-right">Grand Total</div>
-            <div class="p-1 border-b border-black col-span-1 bg-blue-300 text-right">{{'£ '.number_format($this->rateIncVat + ($materialTotal * 1.2), 2)}}</div>
+            <div class="p-1 border-b border-black col-span-1 bg-blue-300 text-right">{{'£ '.number_format(($engineerTotal * 1.2) + ($materialTotal * 1.2), 2)}}</div>
 
         </div>
         <div class="grid grid-cols-5">
