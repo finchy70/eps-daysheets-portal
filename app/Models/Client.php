@@ -10,4 +10,8 @@ class Client extends Model
     use HasFactory;
 
     protected  $fillable = ['client'];
+
+    public function daysheets(): HasMany {
+        return $this->hasMany(Daysheet::class);
+    }
 }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Client;
 use App\Models\Daysheet;
+use App\Models\Role;
 use App\Models\Update;
 use App\Models\User;
 use Carbon\Carbon;
@@ -44,6 +45,12 @@ class DatabaseSeeder extends Seeder
         Update::query()->create([
            'data_updated' => now(),
            'daysheets_updated' => now()
+        ]);
+
+        Role::query()->create([
+           'role' => 'SAP',
+           'rate' => 25.00,
+
         ]);
 
 //        $daysheet = new Daysheet;

@@ -27,6 +27,8 @@ return new class extends Migration
             $table->text('resolution');
             $table->integer('mileage');
             $table->boolean('published')->default(false);
+            $table->boolean('client_confirmed')->default(false);
+            $table->dateTime('confirmed_on')->nullable();
             $table->timestamps();
         });
     }

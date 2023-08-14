@@ -5,18 +5,18 @@
     <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div class="mx-auto max-w-4xl shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <div class="bg-gray-600 mx-auto max-w-4xl shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
-                        <tr class="bg-gray-600">
-                            <th class="px-6 py-3 text-left text-xs leading-4 font-medium text-gray-700 uppercase tracking-wider text-white">
+                        <tr>
+                            <th class="px-6 pb-3 text-left text-xs leading-4 font-medium uppercase tracking-wider text-white">
                                 Client
                             </th>
-                            <th class="px-6 py-3 text-left text-xs leading-4 font-medium text-gray-700 uppercase tracking-wider text-white">
+                            <th class="px-6 pb-3 text-left text-xs leading-4 font-medium uppercase tracking-wider text-white">
                                 Email
                             </th>
-                            <th class="px-6 py-3 text-left text-xs leading-4 font-medium text-gray-700 uppercase tracking-wider text-white">Role / Client</th>
-                            <th class="px-6 py-3 text-right text-xs leading-4 font-medium text-gray-700 uppercase tracking-wider text-white">Options</th>
+                            <th class="px-6 pb-3 text-left text-xs leading-4 font-medium uppercase tracking-wider text-white">Role / Client</th>
+                            <th class="px-6 pb-3 text-right text-xs leading-4 font-medium uppercase tracking-wider text-white">Options</th>
                         </tr>
                         </thead>
                         @foreach($users as $user)

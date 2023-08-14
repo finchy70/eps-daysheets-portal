@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('livewire.layouts.app')
 
 @section('title', 'Unauthorised')
 
@@ -11,6 +11,5 @@
             <p class="mt-4 text-lg leading-6 text-indigo-200">You are not permitted to complete this action!</p>
         </div>
     </div>
-
 
 @endsection

@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DaysheetController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 //use App\Livewire\Daysheet;
 //use App\Livewire\Daysheets\DaysheetIndex;
 use App\Http\Livewire\Daysheet\Index;
+use App\Models\Daysheet;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,11 +49,31 @@ Route::middleware(['auth', 'approved', 'admin'])->group(function () {
     Route::get('/clients/{client}/edit', [ClientController::class, 'edit'])->name('clients.edit');
     Route::patch('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
 
-    Route::get('/daysheets/index', Index::class)->name('daysheets.index');
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles');
+    Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
+    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::patch('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+
+});
+
+Route::middleware(['auth', 'approved'])->group(function () {
+    Route::get('/daysheets/index', Index::class)->name('daysheet.index');
+    Route::get('/daysheets/create', [DaysheetController::class, 'create'])->name('daysheet.create');
+    Route::get('/daysheets/{daysheet}/edit', [DaysheetController::class, 'edit'])->name('daysheet.edit');
+    Route::get('/daysheets/{daysheet}/show', [DaysheetController::class, 'show'])->name('daysheet.show');
+    Route::patch('/daysheets/{daysheet}/update', [DaysheetController::class, 'update'])->name('daysheet.update');
+    Route::post('/daysheets', [DaysheetController::class, 'store'])->name('daysheet.store');
 
 });
 
 Route::get('/users/auth', [UserController::class, 'auth'])->name('users.auth')->middleware(['admin', 'auth', 'verified']);
+Route::get('/pdf', function (){
+    return view('pdfs.daysheet');
+});
+Route::get('/remittance', function (){
+    return view('pdfs.remittance');
+});
 
 /** API Pages */
 Route::get('/api_admin', [ApiTokenController::class, 'admin'])->name('api_admin')->middleware(['admin', 'auth']);

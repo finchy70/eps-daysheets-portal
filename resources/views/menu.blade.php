@@ -40,7 +40,7 @@
                             </div>
                             <div class="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center">
                             <span class="inline-flex rounded-md shadow-sm">
-                                <a href="{{route('daysheets.index')}}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+                                <a href="{{route('daysheet.index')}}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
                                     Manage Day Sheets
                                 </a>
                             </span>
@@ -119,20 +119,20 @@
                 <div class="py-4 mt-8 bg-white shadow sm:rounded-lg">
                     <div class="px-4 py-5 sm:p-6">
                         <h3 class="text-lg leading-6 font-medium text-gray-900">
-                            View Inspections
+                            View / Edit Day Sheets
                         </h3>
                         <div class="mt-2 sm:flex sm:items-start sm:justify-between">
                             <div class="max-w-xl text-sm leading-5 text-gray-600">
                                 <p>
-                                    View your inspection reports here, including any attached documents such as oil reports.
+                                    View and edit day sheets.  Also grant or revoke client access.
                                 </p>
                             </div>
                             <div class="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center">
-                            <span class="inline-flex rounded-md shadow-sm">
-                                <a href="" class="inline-flex items-center btn-indigo-lg">
-                                    View Inspections
-                                </a>
-                            </span>
+                        <span class="inline-flex rounded-md shadow-sm">
+                            <a href="{{route('daysheet.index')}}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+                                Manage Day Sheets
+                            </a>
+                        </span>
                             </div>
                         </div>
                     </div>

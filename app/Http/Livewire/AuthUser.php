@@ -22,7 +22,7 @@ class AuthUser extends Component
         $this->clients = Client::orderBy('name', 'asc')->get();
     }
 
-    public function authorise()
+    public function authorise(): \Livewire\Redirector
     {
 
         if($this->selectedClient == "1000")
