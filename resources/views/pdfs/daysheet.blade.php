@@ -159,7 +159,7 @@
             </div>
 
             <div class="row flex-row border-bottom border-right border-left border-dark">
-                <div class="col-10 border-right border-dark text-left">
+                <div class="col-10 border-right border-dark text-right">
                     Total with VAT
                 </div>
                 <div class="col-2 text-right">
