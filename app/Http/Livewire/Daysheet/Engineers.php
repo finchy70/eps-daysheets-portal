@@ -58,13 +58,14 @@ class Engineers extends Component
         $this->editRole = Role::query()->where('id', $id)->first();
         $this->editRate = $this->editRole->rate;
         $this->editFormattedRate = '£ '.number_format($this->editRole->rate, 2, thousands_separator: ',');
-        $this->editTotal = '£ '.number_format($this->editHoursAsFraction * floatval($this->editRole->rate), 2, thousands_separator: ',');
+        $this->editTotal = '£ '.number_format($this->editHoursAsFraction * floatval($this->editRate), 2, thousands_separator: ',');
     }
 
     public function updatedEditHours($time): void
     {
-        $hoursAsFraction = $this->getHoursAsFraction($time);
-        $this->editTotal = '£ '.number_format($hoursAsFraction * floatval($this->editRole->rate), 2, thousands_separator: ',');
+        $this->editHoursAsFraction = $this->getHoursAsFraction($time);
+        $this->editHours = $time;
+        $this->editTotal = '£ '.number_format($this->editHoursAsFraction * floatval($this->editRate), 2, thousands_separator: ',');
     }
 
     public function getHoursAsFraction($time): float|int

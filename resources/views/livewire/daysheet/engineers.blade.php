@@ -30,7 +30,7 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$engineer->role}}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{'£ '. number_format($engineer->rate, 2 ,thousands_separator: ',')}}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{$engineer->hours}}</td>
+                                    {{Carbon\Carbon::parse($engineer->hours)->format('H:i')}}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">£ {{number_format(($engineer->rate * $engineer->hours_as_fraction), 2, thousands_separator: '')}}</td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 space-x-2">
                                     <button wire:click="delete({{$engineer->id}})" type="button" class="py-1 px-2 text-xs text-white bg-indigo-500 rounded-lg hover:text-indigo-900">Delete</button>
@@ -84,7 +84,7 @@
                                 <label for="editHours" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Hours</label>
                                 <div class="sm:col-span-2 sm:mt-0">
                                     <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                        <input wire:model="editHours" type="time" name="editHours" id="editHours" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
+                                        <input wire:model="editHours" type="time" name="editHours" id="editFormattedHours" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
                                     </div>
                                     @error('editHours')<span class="text-xs text-red-500 italic">{{$message}}</span>@enderror
                                 </div>

@@ -4,6 +4,7 @@ use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DaysheetController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 //use App\Livewire\Daysheet;
@@ -64,6 +65,9 @@ Route::middleware(['auth', 'approved'])->group(function () {
     Route::get('/daysheets/{daysheet}/show', [DaysheetController::class, 'show'])->name('daysheet.show');
     Route::patch('/daysheets/{daysheet}/update', [DaysheetController::class, 'update'])->name('daysheet.update');
     Route::post('/daysheets', [DaysheetController::class, 'store'])->name('daysheet.store');
+
+
+    Route::get('/daysheets/{daysheet}/download', [PDFController::class, 'download'])->name('pdf.download');
 
 });
 
