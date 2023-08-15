@@ -16,250 +16,266 @@
 
 <body>
     <div class="container">
-        <div class="mt-4">
+        <div class="mt-4 text-sm">
 
-            <div class="p-2 row flex-row border border-dark">
+            <div class="row flex-row border border-dark p-1">
                 <div class="col">
                     <img style="padding-bottom: 2px; width:150px; height:75px;" src="{{asset('/images/EPS new logo 300x150.png')}}"
                          alt="EPS Logo">
                 </div>
-                <div class="col text-right">
-                    <h4>EPS Construction Limited - Job Report Sheet</h4>
+                <div class="col text-left">
+                    <h5>EPS Construction Limited - Job Report Sheet</h5>
                 </div>
             </div>
 
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Client Name</h5>
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-2 border-right border-dark">
+                    Client Name
                 </div>
-                <div class="p-2 col-4 text-right border border-dark">
-
+                <div class="col-4 text-left border-right border-dark">
+                    {{$daysheet->client->name}}
                 </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Site Name</h5>
+                <div class="col-2 border-right border-dark">
+                    Site Name
                 </div>
-                <div class="p-2 col-4 text-right border border-dark">
-
-                </div>
-            </div>
-
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Job Number</h5>
-                </div>
-                <div class="p-2 col-4 text-right border border-dark">
-
-                </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Mileage</h5>
-                </div>
-                <div class="p-2 col-4 text-right border border-dark">
-
+                <div class="col-4 text-left border-dark">
+                    {{$daysheet->site_name}}
                 </div>
             </div>
 
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Engineer</h5>
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-2 border-right border-dark">
+                    Job Number
                 </div>
-                <div class="p-2 col-4 text-right border border-dark">
-
+                <div class="col-4 text-left border-right border-dark">
+                    {{$daysheet->job_number}}
                 </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Date</h5>
+                <div class="col-2 border-right border-dark">
+                    Mileage
                 </div>
-                <div class="p-2 col-4 text-right border border-dark">
-
-                </div>
-            </div>
-
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Start Time</h5>
-                </div>
-                <div class="p-2 col-4 text-right border border-dark">
-
-                </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Finish Time</h5>
-                </div>
-                <div class="p-2 col-4 text-right border border-dark">
-
+                <div class="col-4 text-left border-dark">
+                    {{$daysheet->mileage}}
                 </div>
             </div>
 
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Issue / Fault</h5>
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-2 border-right border-dark">
+                    Engineer
                 </div>
-                <div class="p-2 col-10 text-right border border-dark">
-
+                <div class="col-4 text-left border-right border-dark">
+                    {{$daysheet->user->name}}
                 </div>
-            </div>
-
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Resolution</h5>
+                <div class="col-2 border-right border-dark">
+                    Date
                 </div>
-                <div class="p-2 col-10 text-right border border-dark">
-
+                <div class="col-4 text-left">
+                    {{Carbon\Carbon::parse($daysheet->work_date)->format('d-m-Y')}}
                 </div>
             </div>
 
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-4 border border-dark">
-                    <h5>Name</h5>
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-2 border-right border-dark">
+                    Start Time
                 </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Role</h5>
+                <div class="col-4 text-left border-right border-dark">
+                    {{Carbon\Carbon::parse($daysheet->start_time)->format('H:i')}}
                 </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Rate</h5>
+                <div class="col-2 border-right border-dark">
+                    Finish Time
                 </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Hours</h5>
-                </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Cost</h5>
+                <div class="col-4 text-left">
+                    {{Carbon\Carbon::parse($daysheet->finish_time)->format('H:i')}}
                 </div>
             </div>
 
-            {{-- foreach for engineers here --}}
-            {{--    @foreach($engineers as $engineer)--}}
-            {{--        <div class="p-2 col-4 border border-dark">--}}
-            {{--            <h5>{{$engineer->name}}</h5>--}}
-            {{--        </div>--}}
-            {{--        <div class="p-2 col-2 border border-dark">--}}
-            {{--            <h5>{{$engineer->role}}</h5>--}}
-            {{--        </div>--}}
-            {{--        <div class="p-2 col-2 border border-dark">--}}
-            {{--            <h5>{{$engineer->rate}}</h5>--}}
-            {{--        </div>--}}
-            {{--        <div class="p-2 col-2 border border-dark">--}}
-            {{--            <h5>{{$engineer->hours}}</h5>--}}
-            {{--        </div>--}}
-            {{--        <div class="p-2 col-2 border border-dark">--}}
-            {{--            <h5>{{'£ '.number_format($engineer->rate * $engineer->hours_as_fraction, 2, thousands_separator: ',')}}</h5>--}}
-            {{--        </div>--}}
-
-            {{--    @endforeach--}}
-
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-8 border border-dark">
-
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-2 border-right border-dark">
+                    Issue / Fault
                 </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5>VAT 20%</h5>
-                </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5></h5>
+                <div class="col-10 text-left">
+                    {{$daysheet->issue_fault}}
                 </div>
             </div>
 
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-10 border border-dark text-right">
-                    <h5>Total with VAT</h5>
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-2 border-right border-dark">
+                    Resolution
                 </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5></h5>
-                </div>
-            </div>
-
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-12 border border-dark text-center">
-                    <h5>Materials / Plant</h5>
-                </div>
-            </div>
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-6 border border-dark">
-                    <h5>Item</h5>
-                </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Unit Cost</h5>
-                </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Qty</h5>
-                </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5>Cost</h5>
+                <div class="col-10 text-left ">
+                    {{$daysheet->resolution}}
                 </div>
             </div>
 
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-8 border border-dark">
-
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-4 border-right border-dark">
+                    Name
                 </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5>VAT 20%</h5>
+                <div class="col-2 border-right border-dark">
+                    Role
                 </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5></h5>
+                <div class="col-2 border-right border-dark">
+                    Rate
                 </div>
-            </div>
-
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-10 border border-dark text-right">
-                    <h5>Total with VAT</h5>
+                <div class="col-2 border-right border-dark">
+                    Hours
                 </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5></h5>
+                <div class="col-2 border-dark">
+                    Cost
                 </div>
             </div>
 
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-10 border border-dark text-right">
-                    <h5>Grand Total</h5>
+
+            @foreach($daysheet->engineers as $engineer)
+                <div class="row flex-row border-bottom border-right border-left border-dark">
+                    <div class="col-4 border-right border-dark">
+                        {{$engineer->name}}
+                    </div>
+                    <div class="col-2 border-right border-dark">
+                        {{$engineer->role}}
+                    </div>
+                    <div class="col-2 border-right border-dark">
+                        {{$engineer->rate}}
+                    </div>
+                    <div class="col-2 border-right border-dark">
+                        {{$engineer->hours}}
+                    </div>
+                    <div class="col-2 text-right">
+                        {{'£ '.number_format($engineer->rate * $engineer->hours_as_fraction, 2, thousands_separator: ',')}}
+                    </div>
                 </div>
-                <div class="p-2 col-2 border border-dark">
-                    <h5></h5>
+
+            @endforeach
+
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-8 border-right border-dark">
+
+                </div>
+                <div class="col-2 border-right border-dark text-left">
+                    VAT 20%
+                </div>
+                <div class="col-2 text-right">
+                    {{'£ '.number_format(($engineerTotal * 0.2), 2, thousands_separator: ',')}}
                 </div>
             </div>
 
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-5 border border-dark text-center">
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-10 border-right border-dark text-left">
+                    Total with VAT
+                </div>
+                <div class="col-2 text-right">
+                    {{'£ '.number_format(($engineerTotal * 1.2), 2, thousands_separator: ',')}}
+                </div>
+            </div>
+
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-12 border-dark text-center">
+                    Materials / Plant
+                </div>
+            </div>
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-6 border-right border-dark">
+                    Item
+                </div>
+                <div class="col-2 border-right border-dark">
+                    Unit Cost
+                </div>
+                <div class="col-2 border-right border-dark">
+                    Qty
+                </div>
+                <div class="col-2">
+                    Cost
+                </div>
+            </div>
+
+            @foreach($daysheet->materials as $material)
+                <div class="row flex-row border-bottom border-right border-left border-dark">
+                    <div class="col-6 border-right border-dark">
+                        {{$material->name}}
+                    </div>
+                    <div class="col-2 border-right border-dark">
+                        {{$material->cost_per_unit}}
+                    </div>
+                    <div class="col-2 border-right border-dark">
+                        {{$material->quantity}}
+                    </div>
+                    <div class="col-2 text-right">
+                        {{'£ '.number_format($material->cost_per_unit * $material->quantity, 2, thousands_separator: ',')}}
+                    </div>
+                </div>
+            @endforeach
+
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-10 border-right border-dark text-left">
+                    VAT 20%
+                </div>
+                <div class="col-2 text-right">
+                    {{'£ '.number_format(($materialTotal * 0.2), 2, thousands_separator: ',')}}
+                </div>
+            </div>
+
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-10 border-right border-dark text-left">
+                    Total with VAT
+                </div>
+                <div class="col-2 text-right">
+                    {{'£ '.number_format(($materialTotal * 1.2), 2, thousands_separator: ',')}}
+                </div>
+            </div>
+
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-10 border-right border-dark text-left">
+                    Grand Total
+                </div>
+                <div class="col-2 text-right">
+                    {{'£ '.number_format(($materialTotal * 1.2) + ($engineerTotal * 1.2), 2, thousands_separator: ',')}}
+                </div>
+            </div>
+
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-5 text-center border-right border-dark">
                     Name for EPS Construction Limited
                 </div>
-                <div class="p-2 col-5 border border-dark text-center">
+                <div class="col-5 border-right border-dark text-center">
                     Signed for EPS Construction Limited
                 </div>
-                <div class="p-2 col-2 border border-dark text-center">
+                <div class="col-2 text-center">
                     Date
                 </div>
             </div>
 
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-5 border border-dark text-center">
-
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-5 border-right border-dark text-center">
+                    {{auth()->user()->name}}
                 </div>
-                <div class="p-2 col-5 border border-dark text-center">
-
+                <div class="col-5 border-right border-dark text-center">
+                    {{auth()->user()->name}}
                 </div>
-                <div class="p-2 col-2 border border-dark text-center">
-                    {{today()->format('d-m-Y')}}
+                <div class="col-2 border-dark text-center">
+                    {{$daysheet->work_date->format('d-m-Y')}}
                 </div>
             </div>
 
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-5 border border-dark text-center">
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-5 border-right border-dark text-center">
                     Name for Client
                 </div>
-                <div class="p-2 col-5 border border-dark text-center">
+                <div class="col-5 border-right border-dark text-center">
                     Signed for Client
                 </div>
-                <div class="p-2 col-2 border border-dark text-center">
+                <div class="col-2 border-right text-center">
                     Date
                 </div>
             </div>
 
-            <div class="row flex-row border border-dark">
-                <div class="p-2 col-5 border border-dark text-center">
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-5 border-right border-dark text-center text-white">
+                    placeholder
+                </div>
+                <div class="col-5 border-right border-dark text-center">
 
                 </div>
-                <div class="p-2 col-5 border border-dark text-center">
+                <div class="col-2 text-center">
 
-                </div>
-                <div class="p-2 col-2 border border-dark text-center">
-                    {{today()->format('d-m-Y')}}
                 </div>
             </div>
         </div>

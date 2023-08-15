@@ -2,17 +2,13 @@
 
 namespace App\Http\Livewire\Daysheet;
 
-use App\Models\Section;
 use App\Traits\HoursCalculator;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
-use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
 use Livewire\Component;
 use app\Models\Daysheet as DaysheetModel;
-use Session;
 
 class Daysheet extends Component
 {
@@ -55,20 +51,15 @@ class Daysheet extends Component
         $this->dispatchBrowserEvent('notify-success', 'You have confirmed this daysheet.');
     }
 
+
     public function downloadPDF(): Response
     {
-        $view = \Illuminate\Support\Facades\View::make('pdfs.daysheet', [
-            'daysheet' => $this->daysheet->load(['engineers', 'materials'])
-        ]);
-        $doc = Pdf::loadHtml($view)->setOption("enable-local-file-access", true)->setPaper('a4')->setOrientation('portrait');
+        $doc = Pdf::loadView('pdfs.daysheet', ['daysheet' => $this->daysheet->load(['engineers', 'materials'])])->setPaper('a4')->setOrientation('portrait');
         return $doc->download($this->daysheet->job_number.'-'.$this->daysheet->site_name.'-'.$this->daysheet->client->name . '-daysheet.pdf');
     }
 
-
-
-    public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    public function render(): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-
         return view('livewire.daysheet.daysheet', [
             'daysheet' => $this->daysheet,
             'hours' => $this->hours,

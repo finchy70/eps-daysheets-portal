@@ -2,9 +2,9 @@
 <div>
     @section('title', 'DaySheet')
     <div class="mt-4 mb-4 row flex justify-end max-w-4xl mx-auto">
-        <button wire:click="downloadPDF" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+        <a href="{{route('pdf.download', $daysheet->id)}}" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
             Download PDF
-        </button>
+        </a>
     </div>
     <div class="mx-auto max-w-4xl bg-white border-2 border-blue-900">
         <div class="p-2 row flex justify-between items-center border-t border-black">
