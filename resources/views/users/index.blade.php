@@ -20,7 +20,6 @@
                         </tr>
                         </thead>
                         @foreach($users as $user)
-                            @if($user->id != 1)
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     <tr class="{{($loop->iteration % 2)?'bg-white':'bg-gray-200'}}">
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
@@ -49,12 +48,15 @@
 {{--                                                        <button onclick="return confirm('Are you sure you want to delete {{$user->name}}?  This can not be undone!')" class="ml-4 inline-flex items-center btn-red">Delete</button>--}}
 {{--                                                    </form>--}}
                                                 @endif
-                                                <a href="{{route('users.edit', $user->id)}}" class="{{($user->id == auth()->user()->id) ? 'ml-auto' : 'ml-4'}} justify-end inline-flex items-center px-2 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">Edit</a>
+                                                @if(auth()->user()->id != $user->id)
+                                                    <a href="{{route('users.edit', $user->id)}}" class="{{($user->id == auth()->user()->id) ? 'ml-auto' : 'ml-4'}} justify-end inline-flex items-center px-2 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">Edit</a>
+                                                @else
+                                                    <button type="button" disabled class="ml-auto justify-end inline-flex items-center px-2 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-200 hover:bg-indigo-300 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-200 transition ease-in-out duration-150">Edit</button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
-                            @endif
 
                         @endforeach
                         <div class="mt-6">

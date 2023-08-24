@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
+use Livewire\Redirector;
 
 class AuthUser extends Component
 {
@@ -15,6 +16,7 @@ class AuthUser extends Component
     public ?Collection $clients = null;
     public ?String $selectedClient = null;
     public bool $admin = false;
+    public bool $showConfirmDelete = false;
 
     public function mount($aUser)
     {
@@ -22,7 +24,8 @@ class AuthUser extends Component
         $this->clients = Client::orderBy('name', 'asc')->get();
     }
 
-    public function authorise(): \Livewire\Redirector
+    /** @noinspection PhpIncompatibleReturnTypeInspection */
+    public function authorise(): Redirector
     {
 
         if($this->selectedClient == "1000")
@@ -43,6 +46,18 @@ class AuthUser extends Component
         $this->user->update();
         return redirect()->action([UserController::class, 'auth']);
     }
+
+    public function reject():void {
+        $this->showConfirmDelete = true;
+    }
+
+    /** @noinspection PhpIncompatibleReturnTypeInspection */
+    public function confirmReject():Redirector {
+        $this->showConfirmDelete = false;
+        $this->user->delete();
+        return redirect()->action([UserController::class, 'auth']);
+    }
+
     public function render()
     {
         return view('livewire.auth-user');

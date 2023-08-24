@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpIncompatibleReturnTypeInspection */
 
 namespace App\Http\Livewire\Daysheet;
 
@@ -14,6 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use JetBrains\PhpStorm\NoReturn;
 use LaravelIdea\Helper\App\Models\_IH_Daysheet_C;
 use Livewire\Component;
+use Livewire\Redirector;
 use Livewire\WithPagination;
 
 class Index extends Component
@@ -50,7 +51,7 @@ class Index extends Component
             ->paginate(15);
     }
 
-    public function newDaysheet(): RedirectResponse
+    public function newDaysheet(): Redirector
     {
         return redirect()->route('daysheet.create');
     }
