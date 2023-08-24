@@ -147,10 +147,7 @@
             @endforeach
 
             <div class="row flex-row border-bottom border-right border-left border-dark">
-                <div class="col-8 border-right border-dark">
-
-                </div>
-                <div class="col-2 border-right border-dark text-left">
+                <div class="col-10 border-right border-dark text-right">
                     VAT 20%
                 </div>
                 <div class="col-2 text-right">
@@ -205,7 +202,7 @@
             @endforeach
 
             <div class="row flex-row border-bottom border-right border-left border-dark">
-                <div class="col-10 border-right border-dark text-left">
+                <div class="col-10 border-right border-dark text-right">
                     VAT 20%
                 </div>
                 <div class="col-2 text-right">
@@ -214,7 +211,7 @@
             </div>
 
             <div class="row flex-row border-bottom border-right border-left border-dark">
-                <div class="col-10 border-right border-dark text-left">
+                <div class="col-10 border-right border-dark text-right">
                     Total with VAT
                 </div>
                 <div class="col-2 text-right">
@@ -223,7 +220,7 @@
             </div>
 
             <div class="row flex-row border-bottom border-right border-left border-dark">
-                <div class="col-10 border-right border-dark text-left">
+                <div class="col-10 border-right border-dark text-right">
                     Grand Total
                 </div>
                 <div class="col-2 text-right">
