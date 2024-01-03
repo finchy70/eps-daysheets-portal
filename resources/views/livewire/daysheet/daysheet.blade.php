@@ -41,13 +41,13 @@
                 <div class="border-r border-b border-black col-span-2 pl-1">{{$engineer->name}}</div>
                 <div class="border-r border-b border-black col-span-1  pl-1">{{$engineer->role}}</div>
                 <div class="border-r border-b border-black col-span-1 text-right pr-1"><span class="mr-1">£</span>{{number_format($engineer->rate, 2, thousands_separator: ',')}}</div>
-                <div class="border-r border-b border-black col-span-1 text-right pr-1">{{Carbon\Carbon::parse($engineer->hours)->format('H:i')}}</div>
+                <div class="border-r border-b border-black col-span-1 text-right pr-1">{{substr($engineer->hours,0, -3)}}</div>
                 <div class="border-b border-black col-span-1 text-right pr-1">{{'£ '.number_format($engineer->hours_as_fraction * $engineer->rate, 2, thousands_separator: ',')}}</div>
 
             @endforeach
             <div class="p-1 border-r border-b border-black col-span-5 bg-white text-right">Total</div>
             <div class="p-1 border-b border-black col-span-1 text-right">{{'£ '.number_format($engineerTotal, 2, thousands_separator: ',')}}</div>
-            <div class="p-1 border-r border-b border-black col-span-4 bg-white text-right bg-blue-100"></div>
+            <div class="p-1 border-r border-b border-black col-span-4 text-right bg-blue-100"></div>
             <div class="p-1 border-r border-b border-black col-span-1 text-right bg-blue-100">VAT 20%</div>
             <div class="p-1 border-b border-black col-span-1 bg-blue-100 text-right">{{'£ '.number_format($engineerTotal * 0.2, 2 , thousands_separator: ',')}}</div>
             <div class="p-1 border-r border-black col-span-5 bg-blue-200 text-right">Total with VAT</div>

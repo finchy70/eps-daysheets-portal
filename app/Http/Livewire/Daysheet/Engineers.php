@@ -26,6 +26,7 @@ class Engineers extends Component
     public ?String $editFormattedRate = null;
     public ?float $editHoursAsFraction = null;
     public ?String $editHours = null;
+    public ?String $editMinutes = null;
     public ?int $selectedRole = null;
     public ?String $editTotal = null;
     public mixed $Engineers = null;
@@ -61,21 +62,28 @@ class Engineers extends Component
         $this->editTotal = '£ '.number_format($this->editHoursAsFraction * floatval($this->editRate), 2, thousands_separator: ',');
     }
 
-    public function updatedEditHours($time): void
+    public function updatedEditHours():void
     {
-        $this->editHoursAsFraction = $this->getHoursAsFraction($time);
-        $this->editHours = $time;
+        $this->updateTotal();
+    }
+
+    public function updatedEditMinutes():void
+    {
+        $this->updateTotal();
+    }
+
+    public function updateTotal(): void
+    {
+        $this->editHoursAsFraction = $this->getHoursAsFraction();
         $this->editTotal = '£ '.number_format($this->editHoursAsFraction * floatval($this->editRate), 2, thousands_separator: ',');
     }
 
-    public function getHoursAsFraction($time): float|int
+    public function getHoursAsFraction(): float|int
     {
-        $hours = intval(Carbon::parse($time)->format('H'));
-        $minutes = intval(Carbon::parse($time)->format('i'));
+        $hours = $this->editHours;
+        $minutes = $this->editMinutes;
         $fraction = $minutes / 60;
-
-        $nearestQuarter = floor($fraction * 4) / 4;
-        return $hours + $nearestQuarter;
+        return $hours + $fraction;
     }
 
     public function editEngineer($id): void
@@ -87,7 +95,9 @@ class Engineers extends Component
         $this->showEditEngineer = true;
         $this->editName = $this->editEngineer->name;
         $this->editHoursAsFraction = $this->editEngineer->hours_as_fraction;
-        $this->editHours = Carbon::parse($this->editEngineer->hours)->format('H:i');
+        $this->editHours = floor($this->editEngineer->hours_as_fraction);
+        $spareFraction = $this->editEngineer->hours_as_fraction - $this->editHours;
+        $this->editMinutes = number_format($spareFraction * 60, 0, thousands_separator: '');
         $this->editRate = $this->editEngineer->rate;
         $this->editFormattedRate = '£ '.number_format($this->editEngineer->rate, 2, thousands_separator: ',');
         $this->editTotal = '£ '.number_format($this->editEngineer->hours_as_fraction * floatval($this->editEngineer->rate), 2, thousands_separator: ',');
@@ -104,7 +114,7 @@ class Engineers extends Component
         ]
         );
         $this->editEngineer->name = $this->editName;
-        $this->editEngineer->hours = $this->editHours;
+        $this->editEngineer->hours = $this->editHours.':'.$this->editMinutes;
         $this->editEngineer->role = Role::query()->where('id', $this->selectedRole)->first()->role;
         $this->editEngineer->hours_as_fraction = $this->editHoursAsFraction;
         $this->editEngineer->rate = $this->editRate;

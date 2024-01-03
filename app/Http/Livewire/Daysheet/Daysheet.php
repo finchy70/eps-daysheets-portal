@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Daysheet;
 
 use App\Traits\HoursCalculator;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
@@ -52,11 +53,12 @@ class Daysheet extends Component
     }
 
 
-    public function downloadPDF(): Response
-    {
-        $doc = Pdf::loadView('pdfs.daysheet', ['daysheet' => $this->daysheet->load(['engineers', 'materials'])])->setPaper('a4')->setOrientation('portrait');
-        return $doc->download($this->daysheet->job_number.'-'.$this->daysheet->site_name.'-'.$this->daysheet->client->name . '-daysheet.pdf');
-    }
+//    public function downloadPDF(): Response
+//    {
+//        dd('Here');
+//        $doc = Pdf::loadView('pdfs.daysheet', ['daysheet' => $this->daysheet->load(['engineers', 'materials'])])->setPaper('a4')->setOrientation('portrait');
+//        return $doc->download($this->daysheet->job_number.'-'.$this->daysheet->site_name.'-'.$this->daysheet->client->name . Carbon::parse($this->daysheet->start_date)->format('d-m-Y').'-daysheet.pdf');
+//    }z
 
     public function render(): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {

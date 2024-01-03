@@ -21,7 +21,8 @@ class Index extends Component
 {
     public string $searchedJobNumber = '';
     public string $searchedSite = '';
-    public string $searchedWorkDate = '';
+    public string $searchedStartDate = '';
+    public string $searchedFinishDate = '';
     public string $selectedClient = '';
     use WithPagination;
     protected $listeners = ['toggled'];
@@ -32,7 +33,7 @@ class Index extends Component
 
     public function getData(): LengthAwarePaginator|\Illuminate\Pagination\LengthAwarePaginator|_IH_Daysheet_C|array
     {
-        return Daysheet::query()->orderBy('work_date', 'desc')->with(['client', 'materials'])
+        return Daysheet::query()->orderBy('start_date', 'desc')->with(['client', 'materials'])
             ->when(auth()->user()->client_id != null, function ($q) {
                 return $q->where('client_id', auth()->user()->client_id)->where('published', true);
             })
@@ -45,8 +46,8 @@ class Index extends Component
             ->when($this->searchedSite != '', function ($q) {
                 return $q->where('site_name', 'like', '%'.$this->searchedSite.'%');
             })
-            ->when($this->searchedWorkDate != '', function ($q) {
-                return $q->where('work_date', '=' , Carbon::parse($this->searchedWorkDate)->format('Y-m-d'));
+            ->when($this->searchedStartDate != '', function ($q) {
+                return $q->where('start_date', '=' , Carbon::parse($this->searchedStartDate)->format('Y-m-d'));
             })
             ->paginate(15);
     }

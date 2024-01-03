@@ -14,6 +14,7 @@ class AddClient extends Component
 
     public function create(): \Livewire\Redirector
     {
+        ray($this);
         $data = $this->validate([
             'name' => 'required|unique:clients'
         ]);

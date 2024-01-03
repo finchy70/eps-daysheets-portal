@@ -30,7 +30,7 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{$engineer->role}}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{'£ '. number_format($engineer->rate, 2 ,thousands_separator: ',')}}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    {{Carbon\Carbon::parse($engineer->hours)->format('H:i')}}</td>
+                                    {{substr($engineer->hours, 0, -3)}}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">£ {{number_format(($engineer->rate * $engineer->hours_as_fraction), 2, thousands_separator: '')}}</td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 space-x-2">
                                     <button wire:click="delete({{$engineer->id}})" type="button" class="py-1 px-2 text-xs text-white bg-indigo-500 rounded-lg hover:text-indigo-900">Delete</button>
@@ -80,19 +80,36 @@
                             </div>
 
 
-                            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-2">
-                                <label for="editHours" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Hours</label>
-                                <div class="sm:col-span-2 sm:mt-0">
-                                    <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                        <input wire:model="editHours" type="time" name="editHours" id="editFormattedHours" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
+                            <div>
+                                <div class="w-full row flex justify-center">
+                                    <div class="row flex">
+                                        <label for="editHours" class="text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Hours</label>
+                                        <div class="row flex">
+                                            <div class="ml-2 flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                <input wire:model="editHours" id='editHours' type="number" step="1" name="editHours" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
+                                            </div>
+                                        </div>
                                     </div>
-                                    @error('editHours')<span class="text-xs text-red-500 italic">{{$message}}</span>@enderror
+                                    <div class="row flex">
+                                        <label for="editMinutes" class="ml-8 text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Minutes</label>
+                                        <div class="row flex">
+                                            <div class="ml-2 flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                <select wire:model="editMinutes" id='editMinutes' name="editMinutes" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
+                                                    <option value="00">00</option>
+                                                    <option value="15">15</option>
+                                                    <option value="30">30</option>
+                                                    <option value="45">45</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
                             <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-2">
                                 <label for="selectedRole" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Role</label>
-                                <div class=" sm:col-span-2 sm:mt-0">
+                                <div class="sm:col-span-2 sm:mt-0">
                                     <select wire:model="selectedRole" name="selectedRole" id="selectedRole" class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                         @foreach($roles as $role)
                                             <option value="{{$role->id}}">{{$role->role}}</option>

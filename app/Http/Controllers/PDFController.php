@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Daysheet;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Carbon\Carbon;
 
 class PDFController extends Controller
 {
@@ -27,6 +28,6 @@ class PDFController extends Controller
             'materialTotal' => $materialTotal,
             'engineerTotal' => $engineerTotal
         ])->setPaper('a4')->setOrientation('portrait');
-        return $doc->download($daysheet->job_number.'-'.$daysheet->site_name.'-'.$daysheet->client->name . '-daysheet.pdf');
+        return $doc->download($daysheet->job_number.'-'.$daysheet->site_name.'-'.$daysheet->client->name . Carbon::parse($daysheet->start_date)->format('d-m-Y').'daysheet.pdf');
     }
 }

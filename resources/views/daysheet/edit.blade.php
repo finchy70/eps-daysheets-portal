@@ -41,10 +41,10 @@
                 </div>
 
                 <div class="sm:grid sm:grid-cols-3 sm:items-start">
-                    <label for="workDate" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Work Date</label>
+                    <label for="startDate" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Start Date</label>
                     <div class="sm:col-span-2 sm:mt-0">
                         <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                            <input type="date" name="workDate" id="workDate" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="{{Carbon::parse($daysheet->work_date)->format('Y-m-d')}}">
+                            <input type="date" name="startDate" id="startDate" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="{{Carbon::parse($daysheet->start_date)->format('Y-m-d')}}">
                         </div>
                     </div>
                 </div>
@@ -54,6 +54,15 @@
                     <div class="mt-2 sm:col-span-2 sm:mt-0">
                         <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                             <input type="time" name="startTime" id="startTime" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="{{$daysheet->start_time}}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sm:grid sm:grid-cols-3 sm:items-start">
+                    <label for="finishDate" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Finish Date</label>
+                    <div class="sm:col-span-2 sm:mt-0">
+                        <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                            <input type="date" name="finishDate" id="finishDate" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="{{Carbon::parse($daysheet->finish_date)->format('Y-m-d')}}">
                         </div>
                     </div>
                 </div>
