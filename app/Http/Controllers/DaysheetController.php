@@ -29,6 +29,7 @@ class DaysheetController extends Controller
     }
 
     public function store(DaysheetFormRequest $request) {
+
         $validated = $request->validated();
 
         $newDaysheet = Daysheet::query()->create([
@@ -36,22 +37,36 @@ class DaysheetController extends Controller
             "client_id" => $validated['selectedClient'],
             "site_name" => $validated['site'],
             "job_number" => $validated['jobNumber'],
-            "work_date" => Carbon::parse($validated['workDate'])->format('Y-m-d'),
-            "week_ending" => Carbon::parse($validated['workDate'])->endOfWeek()->format('Y-m-d'),
+            "week_ending" => Carbon::parse($validated['startDate'])->endOfWeek()->format('Y-m-d'),
+            "start_date" => Carbon::parse($validated['startDate'])->format('Y-m-d'),
             "start_time" => $validated['startTime'],
+            "finish_date" => Carbon::parse($validated['finishDate'])->format('Y-m-d'),
             "finish_time" => $validated['finishTime'],
             "issue_fault" => $validated['issueFault'],
             "resolution" => $validated['resolution'],
             "mileage" => $validated['mileage'],
         ]);
 
-        $hours = $this->getHours($validated['startTime'], $validated['finishTime']);
+        $startTime = Carbon::parse($validated['startDate'])->format('d-m-Y').' '.Carbon::parse($validated['startTime'])->format('h:i:s');
+        $finishTime = Carbon::parse($validated['finishDate'])->format('d-m-Y').' '.Carbon::parse($validated['finishTime'])->format('h:i:s');
+        $totalMinutes = Carbon::parse($startTime)->diffInMinutes(Carbon::parse($finishTime));
+        $hours = floor($totalMinutes / 60);
+        $minutes = $totalMinutes - ($hours * 60);
+
+        if(strlen($minutes) == 1){
+            $formattedMinutes = '0'.$minutes;
+        } else {
+            $formattedMinutes = $minutes;
+        }
+        $minutesAsFraction = $minutes/60;
+        $hoursAsFraction = $hours + $minutesAsFraction;
+
         Engineer::query()->create([
             'name' => auth()->user()->name,
             'daysheet_id' => $newDaysheet->id,
             'role' => 'SAP',
-            'hours' => $hours['time'],
-            'hours_as_fraction' => $hours['hoursFraction'],
+            'hours' => $hours.':'.$formattedMinutes,
+            'hours_as_fraction' => $hoursAsFraction,
             'rate' => Role::query()->where('role', 'SAP')->first()->rate
         ]);
 
@@ -77,9 +92,10 @@ class DaysheetController extends Controller
             "client_id" => $validated['selectedClient'],
             "site_name" => $validated['site'],
             "job_number" => $validated['jobNumber'],
-            "work_date" => Carbon::parse($validated['workDate'])->format('Y-m-d'),
-            "week_ending" => Carbon::parse($validated['workDate'])->endOfWeek()->format('Y-m-d'),
+            "start_date" => Carbon::parse($validated['startDate'])->format('Y-m-d'),
+            "week_ending" => Carbon::parse($validated['startDate'])->endOfWeek()->format('Y-m-d'),
             "start_time" => $validated['startTime'],
+            "finish_date" => Carbon::parse($validated['finishDate'])->format('Y-m-d'),
             "finish_time" => $validated['finishTime'],
             "issue_fault" => $validated['issueFault'],
             "resolution" => $validated['resolution'],

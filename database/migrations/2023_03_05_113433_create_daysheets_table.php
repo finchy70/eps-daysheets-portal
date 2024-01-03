@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('site_name');
             $table->string('job_number');
             $table->date('week_ending');
-            $table->date('work_date');
+            $table->date('start_date');
             $table->time('start_time');
+            $table->date('finish_date');
             $table->time('finish_time')->nullable();
             $table->text('issue_fault');
             $table->text('resolution');

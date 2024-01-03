@@ -4,7 +4,7 @@
     <div class="my-8 px-6 py-4 max-w-4xl mx-auto border border-indigo-600 focus:ring-gray-500 rounded-lg overflow-hidden bg-gray-50">
         <h2 class="mb-2 text-2xl font-semibold leading-7 text-gray-900">Create Daysheet</h2>
         <h2 class="mb-6 text-sm italic font-semibold leading-7 text-red-500">To add materials and engineers save this daysheet then add them via the edit option.</h2>
-        <form class="space-y-4" method="POST" action="/daysheets">
+        <form class="space-y-4" method="POST" action="{{route('daysheet.store')}}">
             @csrf
             <div class="space-y-4">
                 <div class="sm:grid sm:grid-cols-3 sm:items-start">
@@ -41,12 +41,12 @@
                 </div>
 
                 <div class="sm:grid sm:grid-cols-3 sm:items-start">
-                    <label for="workDate" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Work Date</label>
+                    <label for="startDate" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Start Date</label>
                     <div class="sm:col-span-2 sm:mt-0">
                         <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                            <input type="date" name="workDate" id="workDate" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                            <input type="date" name="startDate" id="startDate" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
                         </div>
-                        @error('workDate')<span class="text-red-500 italic text-xs">{{$message}}</span>@enderror
+                        @error('startDate')<span class="text-red-500 italic text-xs">{{$message}}</span>@enderror
 
                     </div>
                 </div>
@@ -58,6 +58,17 @@
                             <input type="time" name="startTime" id="startTime" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
                         </div>
                         @error('startTime')<span class="text-red-500 italic text-xs">{{$message}}</span>@enderror
+                    </div>
+                </div>
+
+                <div class="sm:grid sm:grid-cols-3 sm:items-start">
+                    <label for="finishDate" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Finish Date</label>
+                    <div class="sm:col-span-2 sm:mt-0">
+                        <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                            <input type="date" name="finishDate" id="finishDate" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                        </div>
+                        @error('finishDate')<span class="text-red-500 italic text-xs">{{$message}}</span>@enderror
+
                     </div>
                 </div>
 

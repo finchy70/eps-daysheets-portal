@@ -25,7 +25,7 @@
                             </tr>
                             <tr>
                                 <th scope="col" class="bg-gray-600 pl-4 pr-3 text-left text-sm font-semibold text-gray-100 sm:pl-6">
-                                    <input type="date" class="mb-2 text-xs text-gray-800 rounded-lg" wire:model="searchedWorkDate" placeholder="Search"/>
+                                    <input type="date" class="mb-2 text-xs text-gray-800 rounded-lg" wire:model="searchedStartDate" placeholder="Search"/>
                                 </th>
                                 <th scope="col" class="bg-gray-600 px-3 text-left text-sm font-semibold text-gray-100">
                                     <input type="number" class="mb-2 text-xs text-gray-800 rounded-lg" wire:model="searchedJobNumber" placeholder="Search"/>
@@ -52,7 +52,7 @@
                             @foreach($daysheets as $daysheet)
                                 <tr class="{{$loop->iteration % 2 == 0 ? 'bg-white' : 'bg-gray-100'}} ">
                                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                        {{$daysheet->work_date->format('d-m-Y')}}
+                                        {{Carbon\Carbon::parse($daysheet->start_date)->format('d-m-Y')}}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         {{$daysheet->job_number}}

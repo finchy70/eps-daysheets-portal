@@ -248,7 +248,7 @@
                     {{auth()->user()->name}}
                 </div>
                 <div class="col-2 border-dark text-center">
-                    {{$daysheet->work_date->format('d-m-Y')}}
+                    {{Carbon\Carbon::parse($daysheet->finish_date)->format('d-m-Y')}}
                 </div>
             </div>
 
