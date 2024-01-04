@@ -2,10 +2,12 @@
 
 namespace App\Http\Livewire\Daysheet;
 
+use App\Models\Mileage;
 use App\Traits\HoursCalculator;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
 use Livewire\Component;
@@ -62,15 +64,23 @@ class Daysheet extends Component
 
     public function render(): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
+        $mileageRate = Mileage::query()->where(function (Builder $q) {
+                return $q->where('valid_from', '<', $this->daysheet->start_date)->where('valid_to', '>', $this->daysheet->finish_date);
+            })
+            ->orWhere(function (Builder $q) {
+                return $q->where('valid_from', '<', $this->daysheet->start_date)->where('valid_to', null);
+            })
+            ->first()->rate;
         return view('livewire.daysheet.daysheet', [
             'daysheet' => $this->daysheet,
             'hours' => $this->hours,
-            'rate' => $this->rate,
             'rateTotal' => $this->rateTotal,
             'rateIncVat' => $this->rateIncVat,
             'hoursFraction' => $this->hoursFraction,
             'materialTotal' => $this->materialTotal,
             'engineerTotal' => $this->engineerTotal,
-        ]);
+            'mileageRate' => $mileageRate
+            ]);
+
     }
 }

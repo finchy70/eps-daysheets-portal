@@ -4,6 +4,7 @@ use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DaysheetController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\MileageController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -56,6 +57,11 @@ Route::middleware(['auth', 'approved', 'admin'])->group(function () {
     Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
     Route::patch('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
 
+
+    Route::get('/mileage', [MileageController::class, 'index'])-> name('mileage');
+    Route::get('/mileage/create', [MileageController::class, 'create'])-> name('mileage.create');
+    Route::get('/mileage/{mileage}/edit', [MileageController::class, 'edit'])-> name('mileage.edit');
+    Route::post('/mileage', [MileageController::class, 'store'])-> name('mileage.store');
 });
 
 Route::middleware(['auth', 'approved'])->group(function () {

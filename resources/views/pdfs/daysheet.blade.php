@@ -166,7 +166,7 @@
 
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-12 border-dark text-center">
-                    Materials / Plant
+                    Mileage / Materials / Plant
                 </div>
             </div>
             <div class="row flex-row border-bottom border-right border-left border-dark">
@@ -183,7 +183,20 @@
                     Cost
                 </div>
             </div>
-
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-6 border-right border-dark">
+                    Mileage
+                </div>
+                <div class="col-2 border-right border-dark">
+                    {{number_format($mileageRate, 2, thousands_separator: '')}}
+                </div>
+                <div class="col-2 border-right border-dark">
+                    {{$daysheet->mileage}}
+                </div>
+                <div class="col-2 text-right">
+                    {{'£ '.number_format($mileageRate * $daysheet->mileage, 2, thousands_separator: ',')}}
+                </div>
+            </div>
             @foreach($daysheet->materials as $material)
                 <div class="row flex-row border-bottom border-right border-left border-dark">
                     <div class="col-6 border-right border-dark">

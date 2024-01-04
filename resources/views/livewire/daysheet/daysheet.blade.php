@@ -54,12 +54,16 @@
             <div class="p-1 border-black col-span-1 bg-blue-200 text-right">{{'£ '.number_format($engineerTotal * 1.2, 2, thousands_separator: ',')}}</div>
 
 
-            <div class="p-1 border-t border-b border-black text-center bg-green-100 col-span-6">Materials / Plant</div>
+            <div class="p-1 border-t border-b border-black text-center bg-green-100 col-span-6">Mileage / Materials / Plant</div>
 
             <div class="p-1 border-b border-r border-black bg-green-100 col-span-3">Item</div>
             <div class="p-1 border-b border-r border-black bg-green-100 col-span-1">Unit Cost</div>
             <div class="p-1 border-b border-r border-black bg-green-100 col-span-1">Qty</div>
             <div class="p-1 border-b border-black bg-green-100 col-span-1">Cost</div>
+            <div class="p-1 border-b border-r border-black col-span-3">Mileage</div>
+            <div class="p-1 border-b border-r border-black col-span-1">{{number_format(floatval($mileageRate), 2, thousands_separator: '')}}</div>
+            <div class="p-1 border-b border-r border-black col-span-1">{{$daysheet->mileage}}</div>
+            <div class="p-1 border-b border-black col-span-1 text-right">{{'£ '.number_format((floatval($mileageRate) * floatval($daysheet->mileage)), 2, thousands_separator: ',')}}</div>
             @foreach($this->daysheet->materials as $material)
                 <div class="p-1 border-b border-r border-black col-span-3">{{$material->name}}</div>
                 <div class="p-1 border-b border-r border-black col-span-1">{{$material->cost_per_unit}}</div>
@@ -68,14 +72,14 @@
             @endforeach
 
             <div class="p-1 border-r border-b border-black col-span-5 bg-white text-right">Total</div>
-            <div class="p-1 border-b border-black col-span-1 text-right">{{'£ '.number_format($materialTotal, 2, thousands_separator: ',')}}</div>
+            <div class="p-1 border-b border-black col-span-1 text-right">{{'£ '.number_format((floatval($mileageRate) * floatval($daysheet->mileage)) + $materialTotal, 2, thousands_separator: ',')}}</div>
             <div class="p-1 border-r border-b border-black col-span-4 bg-white text-right bg-blue-100"></div>
             <div class="p-1 border-r border-b border-black col-span-1 text-center bg-blue-100 text-right">VAT 20%</div>
-            <div class="p-1 border-b border-black col-span-1 bg-blue-100 text-right">{{'£ '.number_format($materialTotal * 0.2, 2 , thousands_separator: ',')}}</div>
+            <div class="p-1 border-b border-black col-span-1 bg-blue-100 text-right">{{'£ '.number_format(((floatval($mileageRate) * floatval($daysheet->mileage)) + $materialTotal )* 0.2, 2 , thousands_separator: ',')}}</div>
             <div class="p-1 border-b border-r border-black col-span-5 bg-blue-200 text-right">Total with VAT</div>
-            <div class="p-1 border-b border-black col-span-1 bg-blue-200 text-right">{{'£ '.number_format($materialTotal * 1.2, 2, thousands_separator: ',')}}</div>
+            <div class="p-1 border-b border-black col-span-1 bg-blue-200 text-right">{{'£ '.number_format(((floatval($mileageRate) * floatval($daysheet->mileage)) + $materialTotal) * 1.2, 2, thousands_separator: ',')}}</div>
             <div class="p-1 border-b border-r border-black col-span-5 bg-blue-300 text-right">Grand Total</div>
-            <div class="p-1 border-b border-black col-span-1 bg-blue-300 text-right">{{'£ '.number_format(($engineerTotal * 1.2) + ($materialTotal * 1.2), 2)}}</div>
+            <div class="p-1 border-b border-black col-span-1 bg-blue-300 text-right">{{'£ '.number_format(($engineerTotal * 1.2) + ((floatval($mileageRate) * floatval($daysheet->mileage) * 1.2) + $materialTotal * 1.2), 2)}}</div>
 
         </div>
         <div class="grid grid-cols-5">
