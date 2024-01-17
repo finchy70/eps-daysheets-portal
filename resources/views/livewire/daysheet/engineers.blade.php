@@ -172,13 +172,30 @@
                             </div>
 
 
-                            <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-2">
-                                <label for="hours" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Hours</label>
-                                <div class="sm:col-span-2 sm:mt-0">
-                                    <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                        <input wire:model="hours" type="time" name="hours" id="hours" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
+                            <div>
+                                <div class="w-full row flex justify-center">
+                                    <div class="row flex">
+                                        <label for="hours" class="text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Hours</label>
+                                        <div class="row flex">
+                                            <div class="ml-2 flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                <input wire:model="hours" id='hours' type="number" step="1" name="hours" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
+                                            </div>
+                                        </div>
                                     </div>
-                                    @error('hours')<span class="text-xs text-red-500 italic">{{$message}}</span>@enderror
+                                    <div class="row flex">
+                                        <label for="minutes" class="ml-8 text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Minutes</label>
+                                        <div class="row flex">
+                                            <div class="ml-2 flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                <select wire:model="minutes" id='minutes' name="minutes" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
+                                                    <option value="00">00</option>
+                                                    <option value="15">15</option>
+                                                    <option value="30">30</option>
+                                                    <option value="45">45</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -207,7 +224,7 @@
                                 <label for="editTotal" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Total</label>
                                 <div class="sm:col-span-2 sm:mt-0">
                                     <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                        <input wire:model="newTotal" type="text" name="editTotal" id="editTotal" readonly class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
+                                        <input wire:model="newTotal" type="text" name="newTotal" id="newTotal" readonly class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
                                     </div>
                                 </div>
                             </div>

@@ -29,8 +29,6 @@ class PDFController extends Controller
             $materialTotal += ($material->quantity * $material->cost_per_unit);
         }
 
-
-
         $doc = Pdf::loadView('pdfs.daysheet', [
             'mileageRate' => $mileageRate,
             'daysheet' => $daysheet,

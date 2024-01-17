@@ -6,11 +6,13 @@ use Carbon\Carbon;
 
 trait HoursCalculator
 {
-    public function getHours($startTime, $finishTime): array
+    public function getHours($startDate, $startTime, $finishDate, $finishTime): array
     {
-        $mins = Carbon::parse($finishTime)->diffInMinutes(Carbon::parse($startTime));
-        $hours = floor($mins/60);
-        $spareMinutes = $mins - ($hours * 60);
+        $start = Carbon::parse($startDate.' '.$startTime);
+        $finish = Carbon::parse($finishDate.' '.$finishTime);
+        $totalMinutes = $start->diffInMinutes($finish);
+        $hours = floor($totalMinutes/60);
+        $spareMinutes = $totalMinutes - ($hours * 60);
         $fraction = $spareMinutes/60;
 
         $nearestQuarter = floor($fraction*4) / 4;

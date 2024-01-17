@@ -62,7 +62,8 @@ class DataController extends Controller
             $newDaysheet->resolution = $daysheet['resolution'];
             $newDaysheet->site_name = $daysheet['site_name'];
             $newDaysheet->week_ending = $daysheet['week_ending'];
-            $newDaysheet->work_date = $daysheet['work_date'];
+            $newDaysheet->start_date = $daysheet['start_date'];
+            $newDaysheet->finish_date = $daysheet['finish_date'];
             $newDaysheet->start_time = $daysheet['start_time'];
             $newDaysheet->finish_time = $daysheet['finish_time'];
             $newDaysheet->mileage = $daysheet['mileage'];
@@ -75,7 +76,7 @@ class DataController extends Controller
                     'cost_per_unit' => $material['cost_per_unit']
                 ]);
             }
-            $hours = $this->getHours($daysheet['start_time'], $daysheet['finish_time']);
+            $hours = $this->getHours($daysheet['start_date'], $daysheet['start_time'], $daysheet['finish_date'], $daysheet['finish_time']);
             Engineer::query()->create([
                 'name' => $user->name,
                 'daysheet_id' => $newDaysheet->id,

@@ -14,6 +14,7 @@ class Engineers extends Component
     public ?String $name = null;
     public ?float $hoursAsFraction = null;
     public ?String $hours = null;
+    public ?String $minutes = '00';
     public ?String $role = null;
     public ?float $total = null;
     public ?String $newTotal = null;
@@ -64,26 +65,47 @@ class Engineers extends Component
 
     public function updatedEditHours():void
     {
-        $this->updateTotal();
+        $this->updateEditTotal();
     }
 
     public function updatedEditMinutes():void
     {
-        $this->updateTotal();
+        $this->updateEditTotal();
     }
 
-    public function updateTotal(): void
+//    public function updatedHours():void
+//    {
+//        $this->updateNewTotal();
+//    }
+//
+//    public function updatedMinutes():void
+//    {
+//        $this->updateNewTotal();
+//    }
+
+    public function updateEditTotal(): void
     {
-        $this->editHoursAsFraction = $this->getHoursAsFraction();
+        $this->editHoursAsFraction = $this->getHoursAsFraction('edit');
         $this->editTotal = '£ '.number_format($this->editHoursAsFraction * floatval($this->editRate), 2, thousands_separator: ',');
     }
 
-    public function getHoursAsFraction(): float|int
+    public function updateNewTotal(): void
     {
-        $hours = $this->editHours;
-        $minutes = $this->editMinutes;
-        $fraction = $minutes / 60;
-        return $hours + $fraction;
+        $this->hoursAsFraction = $this->getHoursAsFraction('new');
+        $this->total = $this->editHoursAsFraction * floatval($this->editRate);
+    }
+
+    public function getHoursAsFraction($type = 'new'): float|int
+    {
+        if($type == 'new'){
+            $hours = $this->hours;
+            $minutes = $this->minutes;
+        } else{
+            $hours = $this->editHours;
+            $minutes = $this->editMinutes;
+        }
+        $fraction = floatval($minutes) / 60;
+        return floatval($hours) + $fraction;
     }
 
     public function editEngineer($id): void
@@ -130,16 +152,20 @@ class Engineers extends Component
         $this->newSelectedRole = $role->id;
         $this->name = '';
         $this->hours = '';
+        $this->minutes = '';
         $this->showNewEngineer = true;
         $this->newRate = $role->rate;
         $this->newFormattedRate = '£ '.number_format($this->newRate, 2, thousands_separator: ',');
     }
 
-    public function updatedHours($time) {
-        $this->hoursAsFraction = $this->getHoursAsFraction($time);
-
+    public function updatedHours():void {
+        $this->hoursAsFraction = $this->getHoursAsFraction('new');
         $this->newTotal = '£ '.number_format($this->hoursAsFraction * floatval($this->newRate), 2, thousands_separator: ',');
+    }
 
+    public function updatedMinutes():void {
+        $this->hoursAsFraction = $this->getHoursAsFraction('new');
+        $this->newTotal = '£ '.number_format($this->hoursAsFraction * floatval($this->newRate), 2, thousands_separator: ',');
     }
 
     public function updatedNewSelectedRole($id): void
@@ -164,7 +190,7 @@ class Engineers extends Component
             'daysheet_id' => $this->daysheet->id,
             'role' => Role::query()->where('id', $this->newSelectedRole)->first()->role,
             'rate' => $this->newRate,
-            'hours' => $this->hours,
+            'hours' => $this->hours.":".$this->minutes.":00",
             'hours_as_fraction' => $this->hoursAsFraction
         ]);
         $this->showNewEngineer = false;

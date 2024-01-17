@@ -31,10 +31,10 @@ class Daysheet extends Component
     public function mount(DaysheetModel $daysheet): void
     {
         $this->daysheet = $daysheet->load(['materials', 'client', 'user', 'engineers.role']);
-        $hoursWorkedArray = $this->getHours($this->daysheet->start_time, $this->daysheet->finish_time);
+        $hoursWorkedArray = $this->getHours($this->daysheet->start_date, $this->daysheet->start_time, $this->daysheet->finish_date, $this->daysheet->finish_time);
         $this->hours = $hoursWorkedArray['time'];
         $this->fraction = $hoursWorkedArray['hoursFraction'];
-        $this->rateTotal = number_format(floatval($this->fraction) * $this->rate, 2);
+        $this->rateTotal = floatval($this->fraction) * $this->rate;
         $this->vat = (floatval($this->rateTotal) / 100) *20;
         $this->rateIncVat = $this->rateTotal + $this->vat;
         $this->materialTotal = 0;
