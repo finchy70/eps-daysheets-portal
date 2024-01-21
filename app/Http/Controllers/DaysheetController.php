@@ -93,7 +93,6 @@ class DaysheetController extends Controller
             "site_name" => $validated['site'],
             "job_number" => $validated['jobNumber'],
             "start_date" => Carbon::parse($validated['startDate'])->format('Y-m-d'),
-            "week_ending" => Carbon::parse($validated['startDate'])->endOfWeek()->format('Y-m-d'),
             "start_time" => $validated['startTime'],
             "finish_date" => Carbon::parse($validated['finishDate'])->format('Y-m-d'),
             "finish_time" => $validated['finishTime'],
