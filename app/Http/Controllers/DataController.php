@@ -9,6 +9,7 @@ use App\Models\Engineer;
 use App\Models\Material;
 use App\Models\Update;
 use App\Traits\HoursCalculator;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DataController extends Controller
@@ -61,7 +62,6 @@ class DataController extends Controller
             $newDaysheet->issue_fault = $daysheet['issue_fault'];
             $newDaysheet->resolution = $daysheet['resolution'];
             $newDaysheet->site_name = $daysheet['site_name'];
-            $newDaysheet->week_ending = $daysheet['week_ending'];
             $newDaysheet->start_date = $daysheet['start_date'];
             $newDaysheet->finish_date = $daysheet['finish_date'];
             $newDaysheet->start_time = $daysheet['start_time'];

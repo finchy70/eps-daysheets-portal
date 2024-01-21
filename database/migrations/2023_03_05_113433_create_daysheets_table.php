@@ -19,7 +19,6 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('site_name');
             $table->string('job_number');
-            $table->date('week_ending');
             $table->date('start_date');
             $table->time('start_time');
             $table->date('finish_date');
