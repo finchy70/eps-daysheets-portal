@@ -50,8 +50,6 @@ class DatabaseSeeder extends Seeder
 
         Role::query()->create([
            'role' => 'SAP',
-
-
         ]);
 
 //        $daysheet = new Daysheet;

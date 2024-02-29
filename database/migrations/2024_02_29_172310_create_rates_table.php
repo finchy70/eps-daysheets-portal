@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('role_id');
             $table->decimal('rate', 8, 2);
+            $table->dateTime('valid_from')->nullable();
+            $table->dateTime('valid_to')->nullable();
             $table->timestamps();
         });
     }
