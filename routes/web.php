@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 //use App\Livewire\Daysheet;
 //use App\Livewire\Daysheets\DaysheetIndex;
 use App\Http\Livewire\Daysheet\Index;
+use App\Http\Livewire\Mileage;
 use App\Models\Daysheet;
 use Illuminate\Support\Facades\Route;
 
@@ -58,9 +59,10 @@ Route::middleware(['auth', 'approved', 'admin'])->group(function () {
     Route::patch('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
 
 
+//    Route::get('/mileage', Mileage::class)-> name('mileage');
     Route::get('/mileage', [MileageController::class, 'index'])-> name('mileage');
     Route::get('/mileage/create', [MileageController::class, 'create'])-> name('mileage.create');
-    Route::get('/mileage/{mileage}/edit', [MileageController::class, 'edit'])-> name('mileage.edit');
+    Route::get('/mileage/{client}/edit', [MileageController::class, 'edit'])-> name('mileage.edit');
     Route::post('/mileage', [MileageController::class, 'store'])-> name('mileage.store');
 });
 

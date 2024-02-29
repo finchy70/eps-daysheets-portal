@@ -1,4 +1,4 @@
-<x-app-layout>
+<div>
     @section('title', "Mileage Rate")
     <div class="mt-4 text-center text-2xl text-indigo-600 font-extrabold">Mileage Rates</div>
     <div class="mx-auto max-w-3xl row justify-end flex">
@@ -21,15 +21,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($clients as $client)
-                            <tr class="{{$loop->iteration % 2 == 0 ? 'bg-white' : 'bg-gray-100'}} ">
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $client->name }}</td>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">£ {{ $client->currentMileageRate->rate }}</td>
-                                <td class="whitespace-nowrap text-right py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                    <a href="{{route('mileage.edit', $client->id)}}">Update</a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach($clients as $client)
+                                <tr class="{{$loop->iteration % 2 == 0 ? 'bg-white' : 'bg-gray-100'}} ">
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $client->name }}</td>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">£ {{ number_format($client->currentMileageRate, 2) }}</td>
+                                    <td class="whitespace-nowrap text-right py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                        <x-secondary-button wire:click="update({{$client->id}})">Update</x-secondary-button>
+                                    </td>
+                                </tr>
+                            @endforeach
 
                         </tbody>
                     </table>
@@ -38,4 +38,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Client;
 use App\Models\Daysheet;
+use App\Models\Mileage;
 use App\Models\Role;
 use App\Models\Update;
 use App\Models\User;
@@ -40,7 +41,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password1')
         ]);
 
-        Client::factory(10)->create();
+        Mileage::factory(10)->create();
 
         Update::query()->create([
            'data_updated' => now(),
@@ -49,7 +50,7 @@ class DatabaseSeeder extends Seeder
 
         Role::query()->create([
            'role' => 'SAP',
-           'rate' => 25.00,
+
 
         ]);
 

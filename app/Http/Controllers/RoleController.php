@@ -23,7 +23,6 @@ class RoleController extends Controller
         $validated = $request->validated();
         Role::query()->create([
             'role' => $validated['role'],
-            'rate' => $validated['rate']
         ]);
         Session::flash('success', 'You have successfully created a new role!');
         return redirect()->route('roles');
@@ -39,7 +38,6 @@ class RoleController extends Controller
         $validated = $request->validated();
         $role->update([
             'role' => $validated['role'],
-            'rate' => $validated['rate']
         ]);
         Session::flash('success', 'You have successfully updated a role!');
         return redirect()->route('roles');

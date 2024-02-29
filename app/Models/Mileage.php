@@ -8,5 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Mileage extends Model
 {
     use HasFactory;
-    protected $fillable = ['rate', 'valid_from', 'valid_to'];
+
+    protected $casts = ['valid_from' => 'date', 'valid_to' => 'date'];
+
+    protected $fillable = ['client_id', 'rate', 'valid_from', 'valid_to'];
 }

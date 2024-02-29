@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mileages', function (Blueprint $table) {
+        Schema::create('rates', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('role_id');
             $table->decimal('rate', 8, 2);
-            $table->dateTime('valid_from')->nullable();
-            $table->dateTime('valid_to')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mileages');
+        Schema::dropIfExists('rates');
     }
 };

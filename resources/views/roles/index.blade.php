@@ -16,9 +16,7 @@
                                 <th class="px-6 py-3 bg-gray-600 text-white text-left text-xs leading-4 font-medium text-gray-700 uppercase tracking-wider">
                                     Role
                                 </th>
-                                <th class="px-6 py-3 bg-gray-600 text-white text-left text-xs leading-4 font-medium text-gray-700 uppercase tracking-wider">
-                                    Rate
-                                </th>
+
                                 <th class="px-6 py-3 bg-gray-600 text-white text-right text-xs leading-4 font-medium text-gray-700 uppercase tracking-wider">Options</th>
                             </tr>
                             </thead>
@@ -28,9 +26,7 @@
                                     <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                                         {{$role->role}}
                                     </td>
-                                    <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                        {{'£ '.number_format($role->rate, 2, thousands_separator: ',')}}
-                                    </td>
+
                                     <td class="px-4 py-2 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                         <div class="row flex justify-end">
                                             <a href="{{route('roles.edit', $role->id)}}" class="justify-end inline-flex items-center px-2 py-1 border border-transparent text-xs leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">Edit</a>

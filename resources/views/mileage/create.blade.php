@@ -8,6 +8,12 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
                         <tr>
+                            <select name="client" id="client" wire:model="clientId" class="mb-2 text-xs text-gray-800 rounded-lg">
+                                @foreach($clients as $client)
+                                    <option value="{{$client->id}}">{{$client->name}}</option>
+                                @endforeach
+                                <option value=""></option>
+                            </select>
                             <th class="px-6 py-3 bg-gray-600 text-white text-left text-xs leading-4 font-medium uppercase tracking-wider">
                                 Rate
                             </th>

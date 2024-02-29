@@ -29,12 +29,10 @@ class RoleFormRequest extends FormRequest
         if(count($path) > 1){
             return [
                 'role' => 'required|unique:roles,role,'.$path[1],
-                'rate' => 'required|numeric'
             ];
         } else {
             return [
                 'role' => 'required|unique:roles',
-                'rate' => 'required|numeric'
             ];
         }
 
