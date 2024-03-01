@@ -12,9 +12,9 @@ class RoleFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-//        if(!auth()->user()->admin){
-//            return false;
-//        }
+        if(!auth()->user()->admin){
+            return false;
+        }
         return true;
     }
 
@@ -29,10 +29,12 @@ class RoleFormRequest extends FormRequest
         if(count($path) > 1){
             return [
                 'role' => 'required|unique:roles,role,'.$path[1],
+                'rate' => 'required|min:0.01|numeric'
             ];
         } else {
             return [
                 'role' => 'required|unique:roles',
+                'rate' => 'required|min:0.01|numeric'
             ];
         }
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\DaysheetController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MileageController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\RateController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 //use App\Livewire\Daysheet;
@@ -57,6 +58,10 @@ Route::middleware(['auth', 'approved', 'admin'])->group(function () {
     Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
     Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
     Route::patch('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+
+    Route::get('/rates/{rate}/edit', [RateController::class, 'edit'])->name('rates.edit');
+//    Route::patch('/rates/{rate}', [RateController::class, 'update'])->name('rates.update');
+    Route::post('/rates', [RateController::class, 'store'])->name('rates.store');
 
 
 //    Route::get('/mileage', Mileage::class)-> name('mileage');

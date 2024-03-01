@@ -46,12 +46,12 @@ class MileageController extends Controller
             'rate' => 'required|numeric|min:0.01'
         ]);
         $lastRate = Mileage::query()->where('client_id', $request->clientId)->orderBy('valid_from', 'desc')->first();
-        $lastRate->valid_to = Carbon::parse($request->fromDate)->subDay();
+        $lastRate->valid_to = Carbon::parse($request->fromDate)->subDay()->format('Y-m-d').' 23:59:59';
         $lastRate->update();
         Mileage::query()->create([
             'client_id' => $request->clientId,
             'rate' => $request->rate,
-            'valid_from' => $request->fromDate
+            'valid_from' => Carbon::parse($request->fromDate)->format('Y-m-d').' 00:00:00'
         ]);
         Session::flash('success', 'The new Mileage Rate was successfully added!');
         return redirect(route('mileage.edit', $request->clientId));

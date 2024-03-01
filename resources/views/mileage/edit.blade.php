@@ -51,7 +51,7 @@
                         <input hidden="hidden" name="clientId" id="clientId" value="{{$mileages[0]->client_id}}"/>
                         <div class="grid grid-cols-3 items-center">
                             <div>
-                                <x-input  type='date' min="{{$mileages[0]->valid_from->addDays(2)->format('Y-m-d')}}" name="fromDate" value="{{$mileages[0]->valid_from->addDays(2)->format('Y-m-d')}}"></x-input>
+                                <x-input  type='date' min="{{$mileages[0]->valid_from->addDays(1)->format('Y-m-d')}}" name="fromDate" value="{{$mileages[0]->valid_from->addDays(1)->format('Y-m-d')}}"></x-input>
                             </div>
                             <div>
                                 <x-input type='number' step='0.01' min="0.01" name="rate"></x-input>

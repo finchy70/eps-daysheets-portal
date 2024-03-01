@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Update;
+use Illuminate\Database\Eloquent\Builder;
 use Session;
 
 class ClientController extends Controller
@@ -28,8 +29,10 @@ class ClientController extends Controller
     }
 
     public function edit(Client $client){
-
-        return view('clients.edit', compact('client'));
+        $rates = $client->currentRates()->orderBy('rate', 'desc')
+            ->with('role')
+            ->get();
+        return view('clients.edit', compact('client', 'rates'));
     }
 
     public function update(Client $client){

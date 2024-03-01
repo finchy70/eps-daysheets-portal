@@ -13,6 +13,32 @@
                 <button type="submit" class="mt-8 justify-end inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">Update</button>
             </div>
         </div>
-
     </form>
+    <div class="mt-8 max-w-4xl mx-auto">
+        <table class="min-w-full divide-y divide-gray-200 rounded rounded-t-lg overflow-hidden">
+            <thead>
+            <tr>
+                <th class="px-6 py-3 bg-gray-600 text-left text-xs leading-4 font-medium text-gray-100 uppercase tracking-wider">
+                    Role
+                </th>
+                <th class="px-6 py-3 bg-gray-600 text-left text-xs leading-4 font-medium text-gray-100 uppercase tracking-wider">
+                    Current Rate
+                </th>
+                <th class="px-6 py-3 bg-gray-600 text-right text-xs leading-4 font-medium text-gray-100 uppercase tracking-wider">Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($rates as $rate)
+                <tr class="{{$loop->iteration % 2 == 0 ? 'bg-white' : 'bg-gray-200'}} ">
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $rate->role->role }}</td>
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">£ {{ $rate->rate }}</td>
+                    <td class="whitespace-nowrap text-right py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                        <a href="{{route('rates.edit', $rate->id)}}" class="mr-4">Update</a>
+                    </td>
+                </tr>
+            @endforeach
+
+            </tbody>
+        </table>
+    </div>
 </x-app-layout>>

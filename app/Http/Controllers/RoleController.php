@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoleFormRequest;
+use App\Models\Client;
+use App\Models\Rate;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Session;
@@ -21,9 +23,19 @@ class RoleController extends Controller
 
     public function store(RoleFormRequest $request) {
         $validated = $request->validated();
-        Role::query()->create([
+        $clients = Client::query()->get();
+        $role = Role::query()->create([
             'role' => $validated['role'],
         ]);
+        foreach($clients as $client) {
+            Rate::query()->create([
+                'role_id' => $role->id,
+                'client_id' => $client->id,
+                'valid_from' => now()->format('Y-m-d').' 00:00:00',
+                'rate' => $request->rate
+            ]);
+
+        }
         Session::flash('success', 'You have successfully created a new role!');
         return redirect()->route('roles');
     }

@@ -30,4 +30,19 @@ class Client extends Model
                 return $query->where('valid_to', '>', now())->orWhere('valid_to', null);
             });
     }
+
+    public function currentRates(): HasOne
+    {
+        return $this->hasOne(Rate::class)
+            ->where('valid_from', '<', now())
+            ->where(function (Builder $q) {
+                return $q->where('valid_to', '>=', now())->orWhere('valid_to', null);
+            });
+
+    }
+
+    public function rates(): HasMany
+    {
+        return $this->hasMany(Rate::class);
+    }
 }
