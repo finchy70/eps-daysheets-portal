@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Daysheet;
 use App\Models\Engineer;
 use App\Models\Role;
+use App\Models\User;
 use App\Traits\HoursCalculator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,8 +18,10 @@ class DaysheetController extends Controller
 
     use HoursCalculator;
     public function create() {
+        $engineers = User::query()->whereNull('client_id')->orderBy('name')->get();
         if(auth()->user()->client_id == null){
             return view('daysheet.create', [
+                'engineers' => $engineers,
                 'clients' => Client::query()->orderBy('name')->get()
             ]);
         } else {
@@ -31,13 +34,11 @@ class DaysheetController extends Controller
     public function store(DaysheetFormRequest $request) {
 
         $validated = $request->validated();
-
         $newDaysheet = Daysheet::query()->create([
             'user_id' => auth()->user()->id,
             "client_id" => $validated['selectedClient'],
             "site_name" => $validated['site'],
             "job_number" => $validated['jobNumber'],
-            "week_ending" => Carbon::parse($validated['startDate'])->endOfWeek()->format('Y-m-d'),
             "start_date" => Carbon::parse($validated['startDate'])->format('Y-m-d'),
             "start_time" => $validated['startTime'],
             "finish_date" => Carbon::parse($validated['finishDate'])->format('Y-m-d'),
@@ -47,8 +48,8 @@ class DaysheetController extends Controller
             "mileage" => $validated['mileage'],
         ]);
 
-        $startTime = Carbon::parse($validated['startDate'])->format('d-m-Y').' '.Carbon::parse($validated['startTime'])->format('h:i:s');
-        $finishTime = Carbon::parse($validated['finishDate'])->format('d-m-Y').' '.Carbon::parse($validated['finishTime'])->format('h:i:s');
+        $startTime = Carbon::parse($validated['startDate'])->format('d-m-Y').' '.$validated['startTime'].':00';
+        $finishTime = Carbon::parse($validated['finishDate'])->format('d-m-Y').' '.$validated['finishTime'].':00';
         $totalMinutes = Carbon::parse($startTime)->diffInMinutes(Carbon::parse($finishTime));
         $hours = floor($totalMinutes / 60);
         $minutes = $totalMinutes - ($hours * 60);
@@ -60,14 +61,14 @@ class DaysheetController extends Controller
         }
         $minutesAsFraction = $minutes/60;
         $hoursAsFraction = $hours + $minutesAsFraction;
-
+        $client = Client::query()->where('id', $request->selectedClient)->first();
         Engineer::query()->create([
-            'name' => auth()->user()->name,
+            'name' => $request->selectedEngineer,
             'daysheet_id' => $newDaysheet->id,
-            'role' => 'SAP',
+            'role_id' => 1,
             'hours' => $hours.':'.$formattedMinutes,
             'hours_as_fraction' => $hoursAsFraction,
-            'rate' => Role::query()->where('role', 'SAP')->first()->rate
+            'rate' => $client->currentRates()->where('role_id', 1)->first()->rate
         ]);
 
         Session::flash('success', 'You have successfully created a daysheet!');

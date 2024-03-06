@@ -27,6 +27,7 @@ class DaysheetFormRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'selectedEngineer' => 'required',
             'selectedClient' => 'required',
             'site' => 'required',
             'jobNumber' => 'required',

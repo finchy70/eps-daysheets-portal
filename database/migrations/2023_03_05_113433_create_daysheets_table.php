@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean('published')->default(false);
             $table->boolean('client_confirmed')->default(false);
             $table->dateTime('confirmed_on')->nullable();
+            $table->string('client_representative')->nullable();
             $table->timestamps();
         });
     }

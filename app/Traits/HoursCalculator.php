@@ -13,7 +13,7 @@ trait HoursCalculator
         $totalMinutes = $start->diffInMinutes($finish);
         $hours = floor($totalMinutes/60);
         $spareMinutes = $totalMinutes - ($hours * 60);
-        $fraction = $spareMinutes/60;
+        $fraction = $spareMinutes > 0 ? $spareMinutes/60 : 0;
 
         $nearestQuarter = floor($fraction*4) / 4;
         $hoursFraction = $hours+$nearestQuarter;

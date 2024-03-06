@@ -131,10 +131,10 @@
                         {{$engineer->name}}
                     </div>
                     <div class="col-2 border-right border-dark">
-                        {{$engineer->role}}
+                        {{$engineer->role->role}}
                     </div>
                     <div class="col-2 border-right border-dark">
-                        {{$engineer->rate}}
+                        £ {{number_format($engineer->rate, 2, thousands_separator: '')}}
                     </div>
                     <div class="col-2 border-right border-dark">
                         {{$engineer->hours}}
@@ -145,7 +145,14 @@
                 </div>
 
             @endforeach
-
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-10 border-right border-dark text-right">
+                    Total ex VAT
+                </div>
+                <div class="col-2 text-right">
+                    {{'£ '.number_format(($engineerTotal), 2, thousands_separator: ',')}}
+                </div>
+            </div>
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-10 border-right border-dark text-right">
                     VAT 20%
@@ -157,7 +164,7 @@
 
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-10 border-right border-dark text-right">
-                    Total with VAT
+                    Total inc VAT
                 </div>
                 <div class="col-2 text-right">
                     {{'£ '.number_format(($engineerTotal * 1.2), 2, thousands_separator: ',')}}
@@ -216,25 +223,50 @@
 
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-10 border-right border-dark text-right">
+                    Total ex VAT
+                </div>
+                <div class="col-2 text-right">
+                    {{'£ '.number_format(($materialTotal), 2, thousands_separator: ',')}}
+                </div>
+            </div>
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-10 border-right border-dark text-right">
                     VAT 20%
                 </div>
                 <div class="col-2 text-right">
                     {{'£ '.number_format(($materialTotal * 0.2), 2, thousands_separator: ',')}}
                 </div>
             </div>
-
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-10 border-right border-dark text-right">
-                    Total with VAT
+                    Total inc VAT
                 </div>
                 <div class="col-2 text-right">
                     {{'£ '.number_format(($materialTotal * 1.2), 2, thousands_separator: ',')}}
                 </div>
             </div>
-
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-12 border-dark font-bold text-center">Grand Totals</div>
+            </div>
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-10 border-right border-dark text-right">
-                    Grand Total
+                    Grand Total ex VAT
+                </div>
+                <div class="col-2 text-right">
+                    {{'£ '.number_format(($materialTotal) + ($engineerTotal), 2, thousands_separator: ',')}}
+                </div>
+            </div>
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-10 border-right border-dark text-right">
+                    VAT 20%
+                </div>
+                <div class="col-2 text-right">
+                    {{'£ '.number_format((($materialTotal) + ($engineerTotal)) * 0.2, 2, thousands_separator: ',')}}
+                </div>
+            </div>
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-10 border-right border-dark text-right">
+                    Grand inc Total
                 </div>
                 <div class="col-2 text-right">
                     {{'£ '.number_format(($materialTotal * 1.2) + ($engineerTotal * 1.2), 2, thousands_separator: ',')}}
@@ -255,10 +287,10 @@
 
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-5 border-right border-dark text-center">
-                    {{auth()->user()->name}}
+                    {{$daysheet->user->name}}
                 </div>
                 <div class="col-5 border-right border-dark text-center">
-                    {{auth()->user()->name}}
+                    {{$daysheet->user->name}}
                 </div>
                 <div class="col-2 border-dark text-center">
                     {{Carbon\Carbon::parse($daysheet->finish_date)->format('d-m-Y')}}

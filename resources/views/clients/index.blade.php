@@ -12,10 +12,16 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
                         <tr>
-                            <th class="px-6 py-3 bg-gray-600 text-white text-left text-xs leading-4 font-medium text-gray-700 uppercase tracking-wider">
+                            <th class="px-6 py-3 bg-gray-600 text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
                                 Client
                             </th>
-                            <th class="px-6 py-3 bg-gray-600 text-white text-right text-xs leading-4 font-medium text-gray-700 uppercase tracking-wider">Options</th>
+                            <th class="px-6 py-3 bg-gray-600 text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
+                                Materials Markup %
+                            </th>
+                            <th class="px-6 py-3 bg-gray-600 text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
+                                Mileage Rate
+                            </th>
+                            <th class="px-6 py-3 bg-gray-600 text-right text-xs leading-4 font-medium text-white uppercase tracking-wider">Options</th>
                         </tr>
                         </thead>
                         @foreach($clients as $client)
@@ -23,6 +29,12 @@
                                 <tr class="{{($loop->iteration % 2)?'bg-white':'bg-gray-200'}}">
                                     <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                                         {{$client->name}}
+                                    </td>
+                                    <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                        {{$client->markup}}%
+                                    </td>
+                                    <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                        £ {{number_format($client->currentMileageRate->rate, 2, thousands_separator: '')}}
                                     </td>
                                     <td class="px-4 py-2 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                         <div class="row flex justify-end">

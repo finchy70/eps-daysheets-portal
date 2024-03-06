@@ -41,8 +41,9 @@
             <div class="p-1 border-b border-black bg-green-100 col-span-1">Cost</div>
             @foreach($daysheet->engineers as $engineer)
                 <div class="border-r border-b border-black col-span-2 pl-1">{{$engineer->name}}</div>
-                <div class="border-r border-b border-black col-span-1  pl-1">{{$engineer->role}}</div>
+                <div class="border-r border-b border-black col-span-1  pl-1">{{$engineer->role->role}}</div>
                 <div class="border-r border-b border-black col-span-1 text-right pr-1"><span class="mr-1">£</span>{{number_format($engineer->rate, 2, thousands_separator: ',')}}</div>
+
                 <div class="border-r border-b border-black col-span-1 text-right pr-1">{{substr($engineer->hours,0, -3)}}</div>
                 <div class="border-b border-black col-span-1 text-right pr-1">{{'£ '.number_format($engineer->hours_as_fraction * $engineer->rate, 2, thousands_separator: ',')}}</div>
 
@@ -88,8 +89,8 @@
             <div class="text-center col-span-2 text-xs border-r border-black">Name for EPS Construction Limited</div>
             <div class="text-center col-span-2 text-xs border-r border-black">Signed for EPS Construction Limited</div>
             <div class="text-center col-span-1 text-xs border-black">Date</div>
-            <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black">Jonathan Fleming</div>
-            <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black">Jonathan Fleming</div>
+            <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black">{{$daysheet->user->name}}</div>
+            <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black">{{$daysheet->user->name}}</div>
             <div class="p-1 text-center col-span-1 text-sm border-t border-black">{{now()->format('d-m-Y')}}</div>
             <div class="text-center col-span-2 text-xs border-r border-t border-black">Name for Client</div>
             <div class="text-center col-span-2 text-xs border-r border-t border-black">Signed for Client</div>

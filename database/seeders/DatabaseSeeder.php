@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Client;
 use App\Models\Daysheet;
 use App\Models\Mileage;
+use App\Models\Rate;
 use App\Models\Role;
 use App\Models\Update;
 use App\Models\User;
@@ -51,6 +52,34 @@ class DatabaseSeeder extends Seeder
         Role::query()->create([
            'role' => 'SAP',
         ]);
+
+        Role::query()->create([
+            'role' => 'Cable Jointer',
+        ]);
+
+        Role::query()->create([
+            'role' => 'Electrician',
+        ]);
+
+        Role::query()->create([
+            'role' => 'Labourer',
+        ]);
+
+
+        $clients = Client::query()->get();
+        $roles = Role::query()->get();
+        foreach($clients as $client){
+            $rate = 85;
+            foreach($roles as $role) {
+                Rate::query()->create([
+                    'client_id' => $client->id,
+                    'role_id' => $role->id,
+                    'rate' => $rate,
+                    'valid_from' => now()->subDays(7)
+                ]);
+                $rate -= 10;
+            }
+        }
 
 //        $daysheet = new Daysheet;
 //        $daysheet->client_id = 1;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Role;
 use App\Models\Update;
 use Illuminate\Database\Eloquent\Builder;
 use Session;
@@ -18,15 +19,16 @@ class ClientController extends Controller
         return view('clients.create');
     }
 
-    public function store(){
-        $data = request()->validate([
-            'name' => 'required|unique:clients'
-        ]);
-        Client::create($data);
-        Session::flash('success', 'The Client was successfully added!');
-
-        return redirect()->action([ClientController::class, 'index']);
-    }
+//    public function store(){
+//        $data = request()->validate([
+//            'name' => 'required|unique:clients',
+//            'markup' => 'required:min:1|max:50'
+//        ]);
+//        Client::create($data);
+//        Session::flash('success', 'The Client was successfully added!');
+//
+//        return redirect()->action([ClientController::class, 'index']);
+//    }
 
     public function edit(Client $client){
         $rates = $client->currentRates()->orderBy('rate', 'desc')

@@ -20,6 +20,7 @@ class ClientFactory extends Factory
     {
         return [
             'name' => fake()->company(),
+            'markup' => 5
         ];
     }
 }

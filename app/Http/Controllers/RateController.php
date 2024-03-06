@@ -28,7 +28,7 @@ class RateController extends Controller
             'client_id' => $request->clientId,
             'role_id' => $request->roleId,
             'rate' => $request->rate,
-            'valid_from' => $request->fromDate->format('Y-m-d').' 00:00:00'
+            'valid_from' => Carbon::parse($request->fromDate)->format('Y-m-d').' 00:00:00'
         ]);
         Session::flash('success', 'The new Rate was successfully added!');
         return redirect(route('rates.edit', $rate->id));
