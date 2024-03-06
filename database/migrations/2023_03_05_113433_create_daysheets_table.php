@@ -30,6 +30,8 @@ return new class extends Migration
             $table->boolean('client_confirmed')->default(false);
             $table->dateTime('confirmed_on')->nullable();
             $table->string('client_representative')->nullable();
+            $table->float('mileage_rate');
+            $table->float('markup_rate');
             $table->timestamps();
         });
     }

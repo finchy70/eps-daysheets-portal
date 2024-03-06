@@ -34,6 +34,7 @@ class DaysheetController extends Controller
     public function store(DaysheetFormRequest $request) {
 
         $validated = $request->validated();
+        $client = Client::query()->where('id', $validated['selectedClient'])->first();
         $newDaysheet = Daysheet::query()->create([
             'user_id' => auth()->user()->id,
             "client_id" => $validated['selectedClient'],
@@ -46,6 +47,8 @@ class DaysheetController extends Controller
             "issue_fault" => $validated['issueFault'],
             "resolution" => $validated['resolution'],
             "mileage" => $validated['mileage'],
+            "mileage_rate" => Daysheet::getMileageRate(Carbon::parse($validated['startDate'])->format('Y-m-d')),
+            "markup_rate" => $client->markup
         ]);
 
         $startTime = Carbon::parse($validated['startDate'])->format('d-m-Y').' '.$validated['startTime'].':00';

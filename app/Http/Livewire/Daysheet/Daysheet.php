@@ -18,13 +18,15 @@ class Daysheet extends Component
     public DaysheetModel $daysheet;
     public string $hours = "";
     public string $fraction = "";
-    public float $rate = 25.50;
+    public float $rate = 0.00;
     public float $rateTotal = 0.00;
     public float $vat = 0.00;
     public float $rateIncVat = 0.00;
     public float $hoursFraction = 0.00;
     public float $materialTotal = 0.00;
     public float $engineerTotal = 0.00;
+    public float $mileageRate = 0.00;
+    public float $markupRate = 0.00;
 
     use HoursCalculator;
 
@@ -39,8 +41,10 @@ class Daysheet extends Component
         $this->rateIncVat = $this->rateTotal + $this->vat;
         $this->materialTotal = 0;
         foreach($this->daysheet->materials as $material){
-            $this->materialTotal += $material->quantity * $material->cost_per_unit;
+            $this->materialTotal += $material->quantity * ($material->cost_per_unit * (1 + ($daysheet->markup_rate / 100)));
         }
+        $this->mileageRate = $daysheet->mileage_rate;
+        $this->markupRate = $daysheet->markup_rate;
         $this->engineerTotal = 0;
         foreach($this->daysheet->engineers as $engineer) {
             $this->engineerTotal += $engineer->hours_as_fraction * $engineer->rate;
@@ -64,13 +68,7 @@ class Daysheet extends Component
 
     public function render(): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $mileageRate = Mileage::query()->where(function (Builder $q) {
-                return $q->where('valid_from', '<', $this->daysheet->start_date)->where('valid_to', '>', $this->daysheet->finish_date);
-            })
-            ->orWhere(function (Builder $q) {
-                return $q->where('valid_from', '<', $this->daysheet->start_date)->where('valid_to', null);
-            })
-            ->first()->rate;
+
         return view('livewire.daysheet.daysheet', [
             'daysheet' => $this->daysheet,
             'hours' => $this->hours,
@@ -79,7 +77,8 @@ class Daysheet extends Component
             'hoursFraction' => $this->hoursFraction,
             'materialTotal' => $this->materialTotal,
             'engineerTotal' => $this->engineerTotal,
-            'mileageRate' => $mileageRate
+            'mileageRate' => $this->mileageRate,
+            'markupRate' => $this->markupRate
             ]);
 
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,5 +32,14 @@ class Daysheet extends Model
 
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
+    }
+
+    public static function getMileageRate($date): float
+    {
+        return Mileage::query()->where('valid_from', '<', $date)
+            ->where(function (Builder $q) use ($date) {
+            return $q->where('valid_to', '>', $date) ->orWhere('valid_to', null);
+        })
+            ->first()->rate;
     }
 }
