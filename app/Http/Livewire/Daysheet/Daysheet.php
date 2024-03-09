@@ -24,6 +24,7 @@ class Daysheet extends Component
     public float $rateIncVat = 0.00;
     public float $hoursFraction = 0.00;
     public float $materialTotal = 0.00;
+    public float $hotelTotal = 0.00;
     public float $engineerTotal = 0.00;
     public float $mileageRate = 0.00;
     public float $markupRate = 0.00;
@@ -32,7 +33,7 @@ class Daysheet extends Component
 
     public function mount(DaysheetModel $daysheet): void
     {
-        $this->daysheet = $daysheet->load(['materials', 'client', 'user', 'engineers.role']);
+        $this->daysheet = $daysheet->load(['materials', 'client', 'user', 'engineers.role', 'hotels']);
         $hoursWorkedArray = $this->getHours($this->daysheet->start_date, $this->daysheet->start_time, $this->daysheet->finish_date, $this->daysheet->finish_time);
         $this->hours = $hoursWorkedArray['time'];
         $this->fraction = $hoursWorkedArray['hoursFraction'];
@@ -49,9 +50,13 @@ class Daysheet extends Component
         foreach($this->daysheet->engineers as $engineer) {
             $this->engineerTotal += $engineer->hours_as_fraction * $engineer->rate;
         }
+        foreach($this->daysheet->hotels as $hotel) {
+            $this->hotelTotal += $hotel->quantity * ($hotel->cost_per_unit)* (1 + ($daysheet->markup_rate / 100));
+        }
     }
 
-    public function confirmDaysheet($id) {
+    public function confirmDaysheet($id): void
+    {
         $this->daysheet->update([
             'client_confirmed' => true
         ]);
@@ -77,6 +82,7 @@ class Daysheet extends Component
             'hoursFraction' => $this->hoursFraction,
             'materialTotal' => $this->materialTotal,
             'engineerTotal' => $this->engineerTotal,
+            'hotelTotal' => $this->hotelTotal,
             'mileageRate' => $this->mileageRate,
             'markupRate' => $this->markupRate
             ]);

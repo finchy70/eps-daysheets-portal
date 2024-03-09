@@ -18,7 +18,7 @@ class DaysheetController extends Controller
 
     use HoursCalculator;
     public function create() {
-        $engineers = User::query()->whereNull('client_id')->orderBy('name')->get();
+        $engineers = User::query()->whereNull('client_id')->where('authorised', 1)->orderBy('name')->get();
         if(auth()->user()->client_id == null){
             return view('daysheet.create', [
                 'engineers' => $engineers,

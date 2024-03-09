@@ -26,6 +26,10 @@ class Daysheet extends Model
         return $this->hasMany(Material::class);
     }
 
+    public function hotels(): HasMany {
+        return $this->hasMany(Hotel::class);
+    }
+
     public function engineers(): HasMany {
         return $this->hasMany(Engineer::class);
     }

@@ -36,7 +36,8 @@ class Materials extends Component
        $this->getMaterials();
     }
 
-    public function getMaterials() {
+    public function getMaterials(): void
+    {
         $this->total = 0;
         $this->daysheet->load('materials');
         foreach($this->daysheet->materials as $material) {

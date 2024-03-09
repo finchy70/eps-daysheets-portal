@@ -10,12 +10,21 @@ use Session;
 
 class ClientController extends Controller
 {
-    public function index(){
-        $clients = Client::orderBy('name', 'asc')->paginate(25);
-        return view('clients.index', compact('clients'));
+    public function index()
+    {
+        if(auth()->user()->client_id != null) {
+            session()->flash('info', 'You are not authorised to perform this action.');
+            return redirect()->back();
+        } else {
+            $clients = Client::orderBy('name', 'asc')->with('currentMileageRate')->paginate(25);
+            return view('clients.index', [
+                'clients' => $clients
+            ]);
+        }
     }
 
-    public function create(){
+    public function create()
+    {
         return view('clients.create');
     }
 

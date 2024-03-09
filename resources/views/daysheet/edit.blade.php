@@ -117,6 +117,10 @@
             <div>
                 <livewire:daysheet.materials :daysheetId="$daysheet->id"/>
             </div>
+
+            <div>
+                <livewire:daysheet.hotels :daysheetId="$daysheet->id"/>
+            </div>
         </div>
     </div>
 
