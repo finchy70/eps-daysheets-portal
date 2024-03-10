@@ -119,9 +119,16 @@
             <div class="text-center col-span-2 text-xs border-r border-t border-black">Name for Client</div>
             <div class="text-center col-span-2 text-xs border-r border-t border-black">Signed for Client</div>
             <div class="text-center col-span-1 text-xs border-t border-black">Date</div>
-            <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black">{{$daysheet->client_representative}}</div>
-            <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black"></div>
-            <div class="p-1 text-center col-span-1 text-sm border-t border-black"></div>
+            @if($daysheet->client_representative == null)
+                <div class="p-4 text-center col-span-2 text-sm border-t border-r border-black"></div>
+                <div class="p-4 text-center col-span-2 text-sm border-t border-r border-black"></div>
+                <div class="p-4 text-center col-span-1 text-sm border-t border-black"></div>
+            @else
+                <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black">{{$daysheet->client_representative}}</div>
+                <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black"></div>
+                <div class="p-1 text-center col-span-1 text-sm border-t border-black"></div>
+            @endif
+
         </div>
     </div>
     <div class="mt-4 mb-2 row flex justify-end max-w-4xl mx-auto">

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('daysheet_id');
             $table->unsignedBigInteger('role_id');
-            $table->unsignedBigInteger('signature_id');
             $table->time('hours');
             $table->decimal('rate', '8', '2');
             $table->decimal('hours_as_fraction', 8, 2);

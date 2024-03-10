@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('signature_id')->nullable();
             $table->string('site_name');
             $table->string('job_number');
             $table->date('start_date');
