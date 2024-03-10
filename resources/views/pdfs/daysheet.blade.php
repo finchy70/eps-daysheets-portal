@@ -143,11 +143,10 @@
                         {{'£ '.number_format($engineer->rate * $engineer->hours_as_fraction, 2, thousands_separator: ',')}}
                     </div>
                 </div>
-
             @endforeach
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-10 border-right border-dark text-right">
-                    Total ex VAT
+                    Labour Total
                 </div>
                 <div class="col-2 text-right">
                     {{'£ '.number_format(($engineerTotal), 2, thousands_separator: ',')}}
@@ -155,25 +154,25 @@
             </div>
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-10 border-right border-dark text-right">
-                    VAT 20%
+                    On Cost 0%
                 </div>
                 <div class="col-2 text-right">
-                    {{'£ '.number_format(($engineerTotal * 0.2), 2, thousands_separator: ',')}}
+                    £ 0.00
                 </div>
             </div>
 
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-10 border-right border-dark text-right">
-                    Total inc VAT
+                    Cost of Labour
                 </div>
                 <div class="col-2 text-right">
-                    {{'£ '.number_format(($engineerTotal * 1.2), 2, thousands_separator: ',')}}
+                    {{'£ '.number_format(($engineerTotal), 2, thousands_separator: ',')}}
                 </div>
             </div>
 
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-12 border-dark text-center">
-                    Mileage / Materials / Plant
+                    Materials / Consumables
                 </div>
             </div>
             <div class="row flex-row border-bottom border-right border-left border-dark">
@@ -188,20 +187,6 @@
                 </div>
                 <div class="col-2">
                     Cost
-                </div>
-            </div>
-            <div class="row flex-row border-bottom border-right border-left border-dark">
-                <div class="col-6 border-right border-dark">
-                    Mileage
-                </div>
-                <div class="col-2 border-right border-dark">
-                    {{number_format($mileageRate, 2, thousands_separator: '')}}
-                </div>
-                <div class="col-2 border-right border-dark">
-                    {{$daysheet->mileage}}
-                </div>
-                <div class="col-2 text-right">
-                    {{'£ '.number_format($mileageRate * $daysheet->mileage, 2, thousands_separator: ',')}}
                 </div>
             </div>
             @foreach($daysheet->materials as $material)
@@ -223,7 +208,7 @@
 
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-10 border-right border-dark text-right">
-                    Total ex VAT
+                    Materials / Consumables Total
                 </div>
                 <div class="col-2 text-right">
                     {{'£ '.number_format(($materialTotal), 2, thousands_separator: ',')}}
@@ -231,18 +216,92 @@
             </div>
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-10 border-right border-dark text-right">
-                    VAT 20%
+                    On Cost {{$daysheet->markup_rate}}%
                 </div>
                 <div class="col-2 text-right">
-                    {{'£ '.number_format(($materialTotal * 0.2), 2, thousands_separator: ',')}}
+                    {{'£ '.number_format($materialTotal * ($daysheet->markup_rate / 100), 2, thousands_separator: ',')}}
                 </div>
             </div>
             <div class="row flex-row border-bottom border-right border-left border-dark">
                 <div class="col-10 border-right border-dark text-right">
-                    Total inc VAT
+                    Cost of Materials / Consumables
                 </div>
                 <div class="col-2 text-right">
-                    {{'£ '.number_format(($materialTotal * 1.2), 2, thousands_separator: ',')}}
+                    {{'£ '.number_format(($materialTotal + $materialTotal * ($daysheet->markup_rate / 100)), 2, thousands_separator: ',')}}
+                </div>
+            </div>
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-12 border-dark text-center">
+                    Plant / Transport / Accommodation
+                </div>
+            </div>
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-6 border-right border-dark">
+                    Item
+                </div>
+                <div class="col-2 border-right border-dark">
+                    Unit Cost
+                </div>
+                <div class="col-2 border-right border-dark">
+                    Qty
+                </div>
+                <div class="col-2">
+                    Cost
+                </div>
+            </div>
+                <div class="row flex-row border-bottom border-right border-left border-dark">
+                    <div class="col-6 border-right border-dark">
+                        Mileage
+                    </div>
+                    <div class="col-2 border-right border-dark">
+                        {{number_format($mileageRate, 2, thousands_separator: '')}}
+                    </div>
+                    <div class="col-2 border-right border-dark">
+                        {{$daysheet->mileage}}
+                    </div>
+                    <div class="col-2 text-right">
+                        {{'£ '.number_format($mileageRate * $daysheet->mileage, 2, thousands_separator: ',')}}
+                    </div>
+                </div>
+            @foreach($daysheet->hotels as $hotel)
+                <div class="row flex-row border-bottom border-right border-left border-dark">
+                    <div class="col-6 border-right border-dark">
+                        {{$hotel->name}}
+                    </div>
+                    <div class="col-2 border-right border-dark">
+                        {{$hotel->cost_per_unit}}
+                    </div>
+                    <div class="col-2 border-right border-dark">
+                        {{$hotel->quantity}}
+                    </div>
+                    <div class="col-2 text-right">
+                        {{'£ '.number_format($hotel->cost_per_unit * $hotel->quantity, 2, thousands_separator: ',')}}
+                    </div>
+                </div>
+            @endforeach
+
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-10 border-right border-dark text-right">
+                    Plant / Transport / Accommodation Total
+                </div>
+                <div class="col-2 text-right">
+                    {{'£ '.number_format(($hotelTotal + $mileageTotal), 2, thousands_separator: ',')}}
+                </div>
+            </div>
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-10 border-right border-dark text-right">
+                    On Cost 0%
+                </div>
+                <div class="col-2 text-right">
+                    0.00
+                </div>
+            </div>
+            <div class="row flex-row border-bottom border-right border-left border-dark">
+                <div class="col-10 border-right border-dark text-right">
+                    Cost of Plant / Transport / Accommodation
+                </div>
+                <div class="col-2 text-right">
+                    {{'£ '.number_format(($hotelTotal + $mileageTotal), 2, thousands_separator: ',')}}
                 </div>
             </div>
             <div class="row flex-row border-bottom border-right border-left border-dark">
@@ -253,7 +312,7 @@
                     Grand Total ex VAT
                 </div>
                 <div class="col-2 text-right">
-                    {{'£ '.number_format(($materialTotal) + ($engineerTotal), 2, thousands_separator: ',')}}
+                    {{'£ '.number_format($materialTotal + $engineerTotal + $hotelTotal + $mileageTotal + ($materialTotal * ($daysheet->markup_rate / 100)), 2, thousands_separator: ',')}}
                 </div>
             </div>
             <div class="row flex-row border-bottom border-right border-left border-dark">
@@ -261,7 +320,7 @@
                     VAT 20%
                 </div>
                 <div class="col-2 text-right">
-                    {{'£ '.number_format((($materialTotal) + ($engineerTotal)) * 0.2, 2, thousands_separator: ',')}}
+                    {{'£ '.number_format(($materialTotal + $engineerTotal + $hotelTotal + $mileageTotal+ ($materialTotal * ($daysheet->markup_rate / 100))) * 0.2, 2, thousands_separator: ',')}}
                 </div>
             </div>
             <div class="row flex-row border-bottom border-right border-left border-dark">
@@ -269,7 +328,7 @@
                     Grand inc Total
                 </div>
                 <div class="col-2 text-right">
-                    {{'£ '.number_format(($materialTotal * 1.2) + ($engineerTotal * 1.2), 2, thousands_separator: ',')}}
+                    {{'£ '.number_format(($materialTotal + $engineerTotal + $hotelTotal + $mileageTotal + ($materialTotal * ($daysheet->markup_rate / 100))) * 1.2, 2, thousands_separator: ',')}}
                 </div>
             </div>
 

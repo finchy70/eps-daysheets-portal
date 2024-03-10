@@ -23,10 +23,17 @@ class Client extends Model
     public function mileages(): HasMany {
         return $this->hasMany(Mileage::class)->orderBy('id', 'desc');
     }
-    public function currentMileageRate($date): HasOne {
-        if($date == null) {
-            $date = now();
-        }
+    public function currentMileageRate(): HasOne {
+        return $this->hasOne(Mileage::class)
+            ->where('valid_from', '<', now())
+            ->where(function (Builder $query) {
+                return $query->where('valid_to', '>', now())->orWhere('valid_to', null);
+            });
+    }
+
+
+    public function mileageRateAtDate($date): HasOne
+    {
         return $this->hasOne(Mileage::class)
             ->where('valid_from', '<', $date)
             ->where(function (Builder $query) use ($date) {
@@ -44,6 +51,26 @@ class Client extends Model
 
     }
 
+    public function rateFromDate($date, $clientId, $roleId): HasOne
+    {
+        return $this->hasOne(Rate::class)
+            ->where('client_id', $clientId)
+            ->where('role_id', $roleId)
+            ->where('valid_from', '<', $date)
+            ->where(function (Builder $q) use ($date) {
+                return $q->where('valid_to', '>=', $date)->orWhere('valid_to', null);
+            });
+    }
+
+    public function getMileageRateFromDate($date, $clientId): HasOne
+    {
+        return $this->hasOne(Mileage::class)
+            ->where('client_id', $clientId)
+            ->where('valid_from', '<', $date)
+            ->where(function (Builder $q) use ($date) {
+                return $q->where('valid_to', '>=', $date)->orWhere('valid_to', null);
+            });
+    }
     public function rates(): HasMany
     {
         return $this->hasMany(Rate::class);

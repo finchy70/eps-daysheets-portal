@@ -47,7 +47,7 @@ class DaysheetController extends Controller
             "issue_fault" => $validated['issueFault'],
             "resolution" => $validated['resolution'],
             "mileage" => $validated['mileage'],
-            "mileage_rate" => Daysheet::getMileageRate(Carbon::parse($validated['startDate'])->format('Y-m-d')),
+            "mileage_rate" => $client->getMileageRateFromDate(Carbon::parse($validated['startDate'])->format('Y-m-d'), $client->id)->first()->rate,
             "markup_rate" => $client->markup
         ]);
 
@@ -71,7 +71,7 @@ class DaysheetController extends Controller
             'role_id' => 1,
             'hours' => $hours.':'.$formattedMinutes,
             'hours_as_fraction' => $hoursAsFraction,
-            'rate' => $client->currentRates()->where('role_id', 1)->first()->rate
+            'rate' => $client->rateFromDate($validated['startDate'], $client->id, 1)->first()->rate
         ]);
 
         Session::flash('success', 'You have successfully created a daysheet!');

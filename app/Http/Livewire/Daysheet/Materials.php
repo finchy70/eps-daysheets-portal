@@ -22,8 +22,8 @@ class Materials extends Component
     public ?string $formattedGrandTotal = '0.00';
     public ?string $materials = null;
     public ?Material $editMaterial = null;
-    public ?float $editQuantity = null;
-    public ?float $editCostPerUnit = null;
+    public ?string $editQuantity = null;
+    public ?string $editCostPerUnit = null;
     public ?string $editFormattedGrandTotal = '0.00';
     public ?string $editMaterials = null;
     public ?int $idToDelete = null;
@@ -88,11 +88,11 @@ class Materials extends Component
     }
 
     public function updatedEditQuantity(): void {
-        $this->formattedGrandTotal = '£ '.number_format($this->editQuantity * $this->editCostPerUnit, 2, thousands_separator: ',');
+        $this->formattedGrandTotal = '£ '.number_format(floatval($this->editQuantity) * floatval($this->editCostPerUnit), 2, thousands_separator: ',');
     }
 
     public function updatedEditCostPerUnit(): void {
-        $this->formattedGrandTotal = '£ '.number_format($this->editQuantity * $this->editCostPerUnit, 2, thousands_separator: ',');
+        $this->formattedGrandTotal = '£ '.number_format(floatval($this->editQuantity) * floatval($this->editCostPerUnit), 2, thousands_separator: ',');
 
     }
 
@@ -130,7 +130,7 @@ class Materials extends Component
     public function confirmedDelete(): void
     {
         Material::query()->where('id', $this->idToDelete)->delete();
-        $this->dispatchBrowserEvent('notify-success', 'Engineer successfully deleted.');
+        $this->dispatchBrowserEvent('notify-success', 'Material successfully deleted.');
         $this->getMaterials();
         $this->showDeleteModal = false;
     }

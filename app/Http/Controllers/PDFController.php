@@ -12,26 +12,26 @@ class PDFController extends Controller
 {
     public function download(Daysheet $daysheet){
         $daysheet = $daysheet->load(['engineers', 'materials']);
-        $mileageRate = Mileage::query()->where(function (Builder $q) use ($daysheet) {
-            return $q->where('valid_from', '<', $daysheet->start_date)->where('valid_to', '>', $daysheet->finish_date);
-        })
-            ->orWhere(function (Builder $q) use ($daysheet) {
-                return $q->where('valid_from', '<', $daysheet->start_date)->where('valid_to', null);
-            })
-            ->first()->rate;
+        $mileageRate = $daysheet->mileage_rate;
+        $mileageTotal = $daysheet->mileage * $daysheet->mileage_rate;
         $engineerTotal = 0.00;
         $materialTotal = 0.00;
-        $materialTotal += $mileageRate * $daysheet->mileage;
+        $hotelTotal = 0.00;
         foreach ($daysheet->engineers as $engineer){
             $engineerTotal += ($engineer->hours_as_fraction * $engineer->rate);
         }
         foreach ($daysheet->materials as $material){
             $materialTotal += ($material->quantity * $material->cost_per_unit);
         }
+        foreach ($daysheet->hotels as $hotel){
+            $hotelTotal += ($hotel->quantity * $hotel->cost_per_unit);
+        }
 
         $doc = Pdf::loadView('pdfs.daysheet', [
             'mileageRate' => $mileageRate,
+            'mileageTotal' => $mileageTotal,
             'daysheet' => $daysheet,
+            'hotelTotal' => $hotelTotal,
             'materialTotal' => $materialTotal,
             'engineerTotal' => $engineerTotal
         ])->setPaper('a4')->setOrientation('portrait');

@@ -203,6 +203,7 @@
                                 <label for="newSelectedRole" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Role</label>
                                 <div class=" sm:col-span-2 sm:mt-0">
                                     <select wire:model="newSelectedRole" name="newSelectedRole" id="newSelectedRole" class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                        <option value="null">Select Role...</option>
                                         @foreach($roles as $role)
                                             <option value="{{$role->id}}">{{$role->role}}</option>
                                         @endforeach

@@ -3,10 +3,10 @@
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
                 <h1 class="text-base font-semibold leading-6 text-gray-900">Plant / Transport / Accommodation</h1>
-                <p class="mt-2 text-sm text-gray-700">A list of all overnight stays.</p>
+                <p class="mt-2 text-sm text-gray-700">A list of all overnight stays, transport costs and plant costs..</p>
             </div>
             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                <button type="button" wire:click="newAccommodation" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Accommodation</button>
+                <button type="button" wire:click="newAccommodation" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Plant / Transport / Accommodation</button>
             </div>
         </div>
         <div class="mt-8 flow-root">
@@ -31,7 +31,7 @@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">£ {{number_format(($hotel->quantity * $hotel->cost_per_unit), 2, thousands_separator: '')}}</td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 space-x-2">
                                     <button typeof="button" wire:click="delete({{$hotel->id}})" type="button" class="py-1 px-2 text-xs text-white bg-indigo-500 rounded-lg hover:text-indigo-900">Delete</button>
-                                    <button type="button" wire:click="editMaterial({{$hotel->id}})" class="py-1 px-2 text-xs text-white bg-indigo-500 rounded-lg hover:text-indigo-900">Edit</button>
+                                    <button type="button" wire:click="editHotel({{$hotel->id}})" class="py-1 px-2 text-xs text-white bg-indigo-500 rounded-lg hover:text-indigo-900">Edit</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -103,7 +103,7 @@
                             </div>
 
                             <div class="mt-5 sm:mt-6 row-auto flex justify-center space-x-4">
-                                <button wire:click="$set('showNewMaterials', false)" type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Cancel</button>
+                                <button wire:click="$set('showNewHotels', false)" type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Cancel</button>
                                 <button type="submit" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add</button>
                             </div>
                         </div>
@@ -115,7 +115,7 @@
     @endif
 
     @if($showEditHotels)
-        <form wire:submit.prevent="edit">
+        <form wire:submit.prevent="submitEdit">
             <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
                 <div class="fixed inset-0 z-10 overflow-y-auto">
@@ -123,14 +123,14 @@
                         <div class="transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all w-full">
                             <div>
                                 <div class="text-center">
-                                    <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Materials</h3>
+                                    <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Plant / Transport / Accommodation</h3>
                                 </div>
                             </div>
                             <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-2">
-                                <label for="editMaterials" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Materials</label>
+                                <label for="editName" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Item</label>
                                 <div class="sm:col-span-2 sm:mt-0">
                                     <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                        <input wire:model.lazy="editMaterials" type="text" name="editMaterials" id="editMaterials" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
+                                        <input wire:model.lazy="editName" type="text" name="editName" id="editName" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
                                     </div>
                                     @error('editMaterials')<span class="text-xs text-red-500 italic">{{$message}}</span>@enderror
                                 </div>
@@ -161,14 +161,14 @@
                                 <label for="formattedGrandTotal" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Total</label>
                                 <div class="sm:col-span-2 sm:mt-0">
                                     <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                        <input wire:model="formattedGrandTotal" type="text" name="formattedGrandTotal" id="formattedGrandTotal" readonly class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
+                                        <input wire:model="editFormattedGrandTotal" type="text" name="formattedGrandTotal" id="formattedGrandTotal" readonly class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mt-5 sm:mt-6 row-auto flex justify-center space-x-4">
-                                <button wire:click="$set('showEditMaterials', false)" type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Cancel</button>
-                                <button type="submit" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add</button>
+                                <button wire:click="$set('showEditHotels', false)" type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Cancel</button>
+                                <button type="submit" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Update</button>
                             </div>
                         </div>
                     </div>
@@ -186,13 +186,13 @@
                     <div class="transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all w-full">
                         <div>
                             <div class="text-center">
-                                <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Are you sure you want to delete the Engineer?</h3>
+                                <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Are you sure you want to delete this item?</h3>
                             </div>
                         </div>
 
                         <div class="mt-5 sm:mt-6 row-auto flex justify-center space-x-4">
                             <button wire:click="$set('showDeleteModal', false)" type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Cancel</button>
-                            <button type="button" wire:click="confirmedDelete" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Confirm</button>
+                            <button type="button" wire:click="confirmDelete" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Confirm</button>
                         </div>
                     </div>
                 </div>

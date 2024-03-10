@@ -80,8 +80,8 @@
 
             <div class="p-1 border-t border-b border-black text-center bg-green-100 col-span-6">Plant / Transport / Accommodation</div>
             <div class="p-1 border-b border-r border-black col-span-3 bg-green-100">Name</div>
-            <div class="p-1 border-b border-r border-black col-span-1 bg-green-100">Cost Per Night</div>
-            <div class="p-1 border-b border-r border-black col-span-1 bg-green-100">Nights</div>
+            <div class="p-1 border-b border-r border-black col-span-1 bg-green-100">Unit Cost</div>
+            <div class="p-1 border-b border-r border-black col-span-1 bg-green-100">Qty</div>
             <div class="p-1 border-b border-black col-span-1 text-right bg-green-100">Cost</div>
             <div class="p-1 border-b border-r border-black col-span-3">Mileage</div>
             <div class="p-1 border-b border-r border-black col-span-1">{{'£ '.number_format($mileageRate, 2, thousands_separator: ',')}}</div>
@@ -93,12 +93,12 @@
                 <div class="p-1 border-b border-r border-black col-span-1">{{$hotel->quantity}}</div>
                 <div class="p-1 border-b border-black col-span-1 text-right">{{'£ '.number_format($hotel->cost_per_unit * $hotel->quantity, 2, thousands_separator: ',')}}</div>
             @endforeach
-            <div class="p-1 border-r border-b border-black col-span-5 bg-white text-right">Plant / Transport Total</div>
+            <div class="p-1 border-r border-b border-black col-span-5 bg-white text-right">Plant / Transport / Accommodation Total</div>
             <div class="p-1 border-b border-black col-span-1 text-right">{{'£ '.number_format($hotelTotal + $mileageTotal, 2, thousands_separator: ',')}}</div>
             <div class="p-1 border-r border-b border-black col-span-4 text-right bg-blue-100"></div>
             <div class="p-1 border-r border-b border-black col-span-1 bg-blue-100 text-right">On Cost 0%</div>
             <div class="p-1 border-b border-black col-span-1 bg-blue-100 text-right">£ 0.00</div>
-            <div class="p-1 border-b border-r border-black col-span-5 bg-blue-200 text-right">Cost of Plant / Transport</div>
+            <div class="p-1 border-b border-r border-black col-span-5 bg-blue-200 text-right">Cost of Plant / Transport / Accommodation</div>
             <div class="p-1 border-b border-black col-span-1 bg-blue-200 text-right">{{'£ '.number_format($hotelTotal + $mileageTotal, 2, thousands_separator: ',')}}</div>
 
             <div class="p-1 border-t border-b border-black text-center bg-green-100 col-span-6">Grand Total</div>
@@ -119,9 +119,9 @@
             <div class="text-center col-span-2 text-xs border-r border-t border-black">Name for Client</div>
             <div class="text-center col-span-2 text-xs border-r border-t border-black">Signed for Client</div>
             <div class="text-center col-span-1 text-xs border-t border-black">Date</div>
-            <div class="p-4 text-center col-span-2 text-sm border-t border-r border-black"></div>
-            <div class="p-4 text-center col-span-2 text-sm border-t border-r border-black"></div>
-            <div class="p-4 text-center col-span-1 text-sm border-t border-black"></div>
+            <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black">{{$daysheet->client_representative}}</div>
+            <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black"></div>
+            <div class="p-1 text-center col-span-1 text-sm border-t border-black"></div>
         </div>
     </div>
     <div class="mt-4 mb-2 row flex justify-end max-w-4xl mx-auto">

@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('engineers', function (Blueprint $table) {
+        Schema::create('signatures', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->unsignedBigInteger('daysheet_id');
-            $table->unsignedBigInteger('role_id');
-            $table->unsignedBigInteger('signature_id');
-            $table->time('hours');
-            $table->decimal('rate', '8', '2');
-            $table->decimal('hours_as_fraction', 8, 2);
+            $table->longText('signature_image');
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('engineers');
+        Schema::dropIfExists('signatures');
     }
 };

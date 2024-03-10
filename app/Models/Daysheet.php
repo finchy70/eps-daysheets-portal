@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Daysheet extends Model
 {
@@ -38,12 +39,17 @@ class Daysheet extends Model
         return $this->belongsTo(User::class);
     }
 
-    public static function getMileageRate($date): float
+    public static function getMileageRate($date, $client_id): float
     {
-        return Mileage::query()->where('valid_from', '<', $date)
+        return Mileage::query()->where('client_id', $client_id)
+            ->where('valid_from', '<', $date)
             ->where(function (Builder $q) use ($date) {
             return $q->where('valid_to', '>', $date) ->orWhere('valid_to', null);
         })
             ->first()->rate;
+    }
+
+    public function signature(): HasOne{
+        return $this->hasOne(Signature::class);
     }
 }

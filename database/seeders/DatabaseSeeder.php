@@ -65,6 +65,23 @@ class DatabaseSeeder extends Seeder
             'role' => 'Labourer',
         ]);
 
+        Role::query()->create([
+            'role' => 'SAP OT',
+        ]);
+
+        Role::query()->create([
+            'role' => 'Cable Jointer OT',
+        ]);
+
+        Role::query()->create([
+            'role' => 'Electrician OT',
+        ]);
+
+        Role::query()->create([
+            'role' => 'Labourer OT',
+        ]);
+
+
 
         $clients = Client::query()->get();
         $roles = Role::query()->get();

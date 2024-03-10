@@ -186,7 +186,7 @@
                     <div class="transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all w-full">
                         <div>
                             <div class="text-center">
-                                <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Are you sure you want to delete the Engineer?</h3>
+                                <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Are you sure you want to delete the Material?</h3>
                             </div>
                         </div>
 

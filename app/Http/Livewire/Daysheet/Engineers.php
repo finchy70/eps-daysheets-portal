@@ -58,8 +58,8 @@ class Engineers extends Component
     public function updatedSelectedRole($id): void
     {
         $this->editRole = Role::query()->where('id', $id)->first();
-        $this->editRate = $this->editRole->rate;
-        $this->editFormattedRate = '£ '.number_format($this->editRole->rate, 2, thousands_separator: ',');
+        $this->editRate = $this->editRole->getRateByDate($this->daysheet->start_date, $id, $this->daysheet->client_id)->first()->rate;
+        $this->editFormattedRate = '£ '.number_format($this->editRate, 2, thousands_separator: ',');
         $this->editTotal = '£ '.number_format($this->editHoursAsFraction * floatval($this->editRate), 2, thousands_separator: ',');
     }
 
@@ -112,7 +112,7 @@ class Engineers extends Component
     {
         $this->resetErrorBag();
         $this->editEngineer = Engineer::query()->where('id', $id)->first();
-        $this->editRole = Role::query()->where('role', $this->editEngineer->role)->orderBy('id', 'desc')->first();
+        $this->editRole = Role::query()->where('id', $this->editEngineer->role_id)->orderBy('id', 'desc')->first();
         $this->selectedRole = $this->editRole->id;
         $this->showEditEngineer = true;
         $this->editName = $this->editEngineer->name;
@@ -137,7 +137,7 @@ class Engineers extends Component
         );
         $this->editEngineer->name = $this->editName;
         $this->editEngineer->hours = $this->editHours.':'.$this->editMinutes;
-        $this->editEngineer->role = Role::query()->where('id', $this->selectedRole)->first()->role;
+        $this->editEngineer->role_id = $this->selectedRole;
         $this->editEngineer->hours_as_fraction = $this->editHoursAsFraction;
         $this->editEngineer->rate = $this->editRate;
         $this->editEngineer->update();
@@ -148,13 +148,10 @@ class Engineers extends Component
 
     public function newEngineer(): void
     {
-        $role = Role::query()->orderBy('role', 'asc')->first();
-        $this->newSelectedRole = $role->id;
         $this->name = '';
-        $this->hours = '';
-        $this->minutes = '';
+        $this->hours = '00';
+        $this->minutes = '00';
         $this->showNewEngineer = true;
-        $this->newRate = $role->rate;
         $this->newFormattedRate = '£ '.number_format($this->newRate, 2, thousands_separator: ',');
     }
 
@@ -171,7 +168,7 @@ class Engineers extends Component
     public function updatedNewSelectedRole($id): void
     {
         $role = Role::query()->where('id', $id)->first();
-        $this->newRate = $role->rate;
+        $this->newRate = $role->getRateByDate($this->daysheet->start_date, $role->id, $this->daysheet->client_id)->first()->rate;
         $this->newFormattedRate = '£ '.number_format($this->newRate, 2, thousands_separator: ',');
         $this->newTotal = '£ '.number_format($this->hoursAsFraction * floatval($this->newRate), 2, thousands_separator: ',');
     }
@@ -188,7 +185,7 @@ class Engineers extends Component
         Engineer::query()->create([
             'name' => $this->name,
             'daysheet_id' => $this->daysheet->id,
-            'role' => Role::query()->where('id', $this->newSelectedRole)->first()->role,
+            'role_id' => Role::query()->where('id', $this->newSelectedRole)->first()->id,
             'rate' => $this->newRate,
             'hours' => $this->hours.":".$this->minutes.":00",
             'hours_as_fraction' => $this->hoursAsFraction

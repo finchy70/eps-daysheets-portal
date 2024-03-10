@@ -16,7 +16,7 @@ class ClientController extends Controller
             session()->flash('info', 'You are not authorised to perform this action.');
             return redirect()->back();
         } else {
-            $clients = Client::orderBy('name', 'asc')->with('currentMileageRate')->paginate(25);
+            $clients = Client::orderBy('name', 'asc')->paginate(25);
             return view('clients.index', [
                 'clients' => $clients
             ]);
