@@ -2,7 +2,7 @@
     <div class="px-8 py-4 bg-gray-200 border border-indigo-500 rounded-xl">
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
-                <h1 class="text-base font-semibold leading-6 text-gray-900">Accommodation</h1>
+                <h1 class="text-base font-semibold leading-6 text-gray-900">Plant / Transport / Accommodation</h1>
                 <p class="mt-2 text-sm text-gray-700">A list of all overnight stays.</p>
             </div>
             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -15,9 +15,9 @@
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead>
                         <tr>
-                            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Person</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Nights</th>
-                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Cost Per Night</th>
+                            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Item</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Unit</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Cost Per Unit</th>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Total</th>
                             <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0"></th>
                         </tr>
@@ -59,11 +59,11 @@
                         <div class="transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all w-full">
                             <div>
                                 <div class="text-center">
-                                    <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Accommodation</h3>
+                                    <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Plant / Transport / Accommodation</h3>
                                 </div>
                             </div>
                             <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-2">
-                                <label for="name" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Name</label>
+                                <label for="name" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Item</label>
                                 <div class="sm:col-span-2 sm:mt-0">
                                     <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                         <input wire:model.lazy="name" type="text" name="name" id="name" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
@@ -74,7 +74,7 @@
 
 
                             <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-2">
-                                <label for="quantity" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Nights</label>
+                                <label for="quantity" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Qty</label>
                                 <div class="sm:col-span-2 sm:mt-0">
                                     <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                         <input wire:model="quantity" type="number" step="0.01" name="quantity" id="quantity" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">
@@ -84,7 +84,7 @@
                             </div>
 
                             <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-2">
-                                <label for="costPerUnit" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Cost Per Night</label>
+                                <label for="costPerUnit" class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Cost Per Unit</label>
                                 <div class=" sm:col-span-2 sm:mt-0">
                                     <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                         <input wire:model="costPerUnit" type="number" step="0.01" id="costPerUnit" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="">

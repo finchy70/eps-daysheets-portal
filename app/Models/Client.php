@@ -23,11 +23,14 @@ class Client extends Model
     public function mileages(): HasMany {
         return $this->hasMany(Mileage::class)->orderBy('id', 'desc');
     }
-    public function currentMileageRate(): HasOne {
+    public function currentMileageRate($date): HasOne {
+        if($date == null) {
+            $date = now();
+        }
         return $this->hasOne(Mileage::class)
-            ->where('valid_from', '<', now())
-            ->where(function (Builder $query) {
-                return $query->where('valid_to', '>', now())->orWhere('valid_to', null);
+            ->where('valid_from', '<', $date)
+            ->where(function (Builder $query) use ($date) {
+                return $query->where('valid_to', '>', $date)->orWhere('valid_to', null);
             });
     }
 

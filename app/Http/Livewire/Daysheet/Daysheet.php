@@ -27,6 +27,7 @@ class Daysheet extends Component
     public float $hotelTotal = 0.00;
     public float $engineerTotal = 0.00;
     public float $mileageRate = 0.00;
+    public float $mileageTotal = 0.00;
     public float $markupRate = 0.00;
 
     use HoursCalculator;
@@ -34,26 +35,51 @@ class Daysheet extends Component
     public function mount(DaysheetModel $daysheet): void
     {
         $this->daysheet = $daysheet->load(['materials', 'client', 'user', 'engineers.role', 'hotels']);
+
         $hoursWorkedArray = $this->getHours($this->daysheet->start_date, $this->daysheet->start_time, $this->daysheet->finish_date, $this->daysheet->finish_time);
         $this->hours = $hoursWorkedArray['time'];
         $this->fraction = $hoursWorkedArray['hoursFraction'];
         $this->rateTotal = floatval($this->fraction) * $this->rate;
         $this->vat = (floatval($this->rateTotal) / 100) *20;
         $this->rateIncVat = $this->rateTotal + $this->vat;
+        $this->markupRate = $this->daysheet->client->markup;
+
+        $this->getMaterialsTotal();
+        $this->getHotelsTotal();
+        $this->getEngineersTotal();
+        $this->getMileageTotal();
+    }
+
+    public function getMileageTotal(): void{
+        $this->mileageRate = $this->daysheet->mileage_rate;
+        $this->mileageTotal = $this->daysheet->mileage * $this->mileageRate;
+    }
+
+    private function getMaterialsTotal(): void
+    {
         $this->materialTotal = 0;
         foreach($this->daysheet->materials as $material){
-            $this->materialTotal += $material->quantity * ($material->cost_per_unit * (1 + ($daysheet->markup_rate / 100)));
+            $this->materialTotal += $material->quantity * $material->cost_per_unit;
         }
-        $this->mileageRate = $daysheet->mileage_rate;
-        $this->markupRate = $daysheet->markup_rate;
+    }
+
+    private function getEngineersTotal(): void
+    {
         $this->engineerTotal = 0;
         foreach($this->daysheet->engineers as $engineer) {
             $this->engineerTotal += $engineer->hours_as_fraction * $engineer->rate;
         }
-        foreach($this->daysheet->hotels as $hotel) {
-            $this->hotelTotal += $hotel->quantity * ($hotel->cost_per_unit)* (1 + ($daysheet->markup_rate / 100));
-        }
+
     }
+
+    private function getHotelsTotal(): void
+    {
+        $this->hotelTotal = 0;
+        foreach($this->daysheet->hotels as $hotel) {
+            $this->hotelTotal += $hotel->quantity * ($hotel->cost_per_unit);
+        }
+   }
+
 
     public function confirmDaysheet($id): void
     {

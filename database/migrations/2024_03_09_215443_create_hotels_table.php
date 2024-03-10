@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('daysheet_id');
             $table->string('name');
-            $table->float('quantity');
-            $table->float('cost_per_unit');
+            $table->integer('quantity');
+            $table->decimal('cost_per_unit', 8, 2);
             $table->timestamps();
         });
     }
