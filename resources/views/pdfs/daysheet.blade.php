@@ -134,7 +134,7 @@
                         {{$engineer->role->role}}
                     </div>
                     <div class="col-2 border-right border-dark">
-                        £ {{number_format($engineer->rate, 2, thousands_separator: '')}}
+                        {{'£ '.number_format($engineer->rate, 2, thousands_separator: '')}}
                     </div>
                     <div class="col-2 border-right border-dark">
                         {{$engineer->hours}}
@@ -195,7 +195,7 @@
                         {{$material->name}}
                     </div>
                     <div class="col-2 border-right border-dark">
-                        {{$material->cost_per_unit}}
+                        {{'£ '.number_format($material->cost_per_unit, 2)}}
                     </div>
                     <div class="col-2 border-right border-dark">
                         {{$material->quantity}}
@@ -254,7 +254,7 @@
                         Mileage
                     </div>
                     <div class="col-2 border-right border-dark">
-                        {{number_format($mileageRate, 2, thousands_separator: '')}}
+                        {{'£ '.number_format($mileageRate, 2, thousands_separator: '')}}
                     </div>
                     <div class="col-2 border-right border-dark">
                         {{$daysheet->mileage}}
@@ -269,7 +269,7 @@
                         {{$hotel->name}}
                     </div>
                     <div class="col-2 border-right border-dark">
-                        {{$hotel->cost_per_unit}}
+                        {{'£ '.number_format($hotel->cost_per_unit, 2)}}
                     </div>
                     <div class="col-2 border-right border-dark">
                         {{$hotel->quantity}}
