@@ -6,6 +6,7 @@ use App\Http\Requests\RoleFormRequest;
 use App\Models\Client;
 use App\Models\Rate;
 use App\Models\Role;
+use App\Models\Update;
 use Illuminate\Http\Request;
 use Session;
 
@@ -34,8 +35,10 @@ class RoleController extends Controller
                 'valid_from' => now()->format('Y-m-d').' 00:00:00',
                 'rate' => $request->rate
             ]);
-
         }
+        $update = Update::query()->orderBy('id', 'desc')->first();
+        $update->data_updated = now();
+        $update->update();
         Session::flash('success', 'You have successfully created a new role!');
         return redirect()->route('roles');
     }

@@ -7,22 +7,25 @@ use App\Models\Daysheet;
 use App\Models\Device;
 use App\Models\Engineer;
 use App\Models\Material;
+use App\Models\Role;
 use App\Models\Update;
 use App\Traits\HoursCalculator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use JetBrains\PhpStorm\NoReturn;
 
 class DataController extends Controller
 {
     use HoursCalculator;
-    public function clients(Request $request)
+    public function standingData(Request $request)
     {
         $user = $request->user();
         $token = $user->tokens()->first();
         $updated_last = Update::first();
         $clients = collect();
+        $roles = collect();
         $device = Device::where('device_identifier', $token->name)->first();
-        $message = 'Client and Engineer data has been updated!';
+        $message = 'Client and Roles data has been updated!';
 
         if($device == null){
             $device = new Device();
@@ -34,17 +37,18 @@ class DataController extends Controller
 
         if($updated_last->data_updated > $device->last_data_sync)
         {
-            $clients = Client::where('created_at', '>', $device->last_data_sync)->orWhere('updated_at',
+            $clients = Client::query()->select('id', 'name')->where('created_at', '>', $device->last_data_sync)->orWhere('updated_at',
+                '>', $device->last_data_sync)->get();
+            $roles = Role::query()->select('id', 'role')->where('created_at', '>', $device->last_data_sync)->orWhere('updated_at',
                 '>', $device->last_data_sync)->get();
             $device->last_data_sync = now();
 
         }
         $device->save();
-        if($clients->count() == 0) {
+        if($clients->count() == 0 && $roles->count() == 0) {
             $message = "No Update Required";
         }
-        return response()->json(['message' => $message, 'clients' => $clients]);
-
+        return response()->json(['message' => $message, 'clients' => $clients, 'roles' => $roles]);
     }
 
     public function daysheets(Request $request)

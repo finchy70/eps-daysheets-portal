@@ -29,7 +29,8 @@ class AddClient extends Component
         $client->name = $data['name'];
         $client->markup = $data['markup'];
         $client->save();
-        $update = Update::find(1);
+        $update = Update::query()->orderBy('id', 'desc')->first();
+
         $update->data_updated = now();
         $update->update();
         $roles = Role::query()->get();
