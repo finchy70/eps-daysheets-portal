@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DataController;
 use App\Http\Controllers\DaysheetController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MileageController;
@@ -78,6 +79,7 @@ Route::middleware(['auth', 'approved'])->group(function () {
     Route::get('/daysheets/{daysheet}/show', [DaysheetController::class, 'show'])->name('daysheet.show');
     Route::patch('/daysheets/{daysheet}/update', [DaysheetController::class, 'update'])->name('daysheet.update');
     Route::post('/daysheets', [DaysheetController::class, 'store'])->name('daysheet.store');
+    Route::get('/picture/{id}', [DataController::class, 'signature'])->name('signature');
 
 
     Route::get('/daysheets/{daysheet}/download', [PDFController::class, 'download'])->name('pdf.download');

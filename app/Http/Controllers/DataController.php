@@ -12,11 +12,43 @@ use App\Models\Update;
 use App\Traits\HoursCalculator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 use JetBrains\PhpStorm\NoReturn;
 
 class DataController extends Controller
 {
     use HoursCalculator;
+
+    public function signature($id): void {
+        $daysheet = Daysheet::query()->where('id', $id)->first();
+        $signature = $daysheet->signature;
+        $image = base64_decode($signature);
+        $sig = Image::make($image);
+        $sigPicture = $sig;
+
+        $sigPicture->save(storage_path().'/temp.png');
+    }
+//    public function pictures(Request $request){
+//
+//        $body = $request->getContent();
+//        $data = json_decode($body, true);
+//        $image = base64_decode($data['image']);
+//        $filename = $data['name'];
+//        $rotate = $data['rotate'];
+//        $picture = Image::make($image)->rotate($rotate);
+//        $thumbnail = Image::make($image)->rotate($rotate)->fit(150, null, function ($constraint) {
+//            $constraint->aspectRatio();
+//        });
+//        $originalPath = public_path().'/storage/img/';
+//        $thumbPath = public_path().'/storage/thumb/';
+//        $big_picture = $picture;
+//        $big_picture->resize(900, null, function ($constraint) {
+//            $constraint->aspectRatio();
+//        });
+//        $thumbnail->save($thumbPath.$filename);
+//        $big_picture->save($originalPath.$filename);
+//        return response()->json(['success' => true, 'message' => "Picture synced"]);
+//    }
     public function standingData(Request $request)
     {
         $user = $request->user();
@@ -70,6 +102,8 @@ class DataController extends Controller
             $newDaysheet->finish_date = $daysheet['finish_date'];
             $newDaysheet->start_time = $daysheet['start_time'];
             $newDaysheet->finish_time = $daysheet['finish_time'];
+            $newDaysheet->signature = $daysheet['signature'];
+            $newDaysheet->representative = $daysheet['representative'];
             $newDaysheet->mileage = $daysheet['mileage'];
             $newDaysheet->save();
             foreach($daysheet['materials'] as $material){
@@ -80,15 +114,26 @@ class DataController extends Controller
                     'cost_per_unit' => $material['cost_per_unit']
                 ]);
             }
+
             $hours = $this->getHours($daysheet['start_date'], $daysheet['start_time'], $daysheet['finish_date'], $daysheet['finish_time']);
             Engineer::query()->create([
                 'name' => $user->name,
                 'daysheet_id' => $newDaysheet->id,
-                'role' => 'SAP',
+                'role_id' => 1,
                 'rate' => 25.00,
                 'hours' => $hours['time'],
-                'hours_as_fraction' => $hours['hoursFraction']
-            ]);
+                'hours_as_fraction' => $hours['hoursFraction']]);
+
+            foreach($daysheet['engineers'] as $engineer){
+                Engineer::query()->create([
+                    'name' => $engineer['name'],
+                    'daysheet_id' => $newDaysheet->id,
+                    'role_id' => $engineer['role_id'],
+                    'rate' => 25.00,
+                    'hours' => $hours['time'],
+                    'hours_as_fraction' => $hours['hoursFraction']]);
+            }
+
         }
         return response()->json(['message' => "All completed daysheets have synced with EPS Daysheet server!!", 'synced_daysheet_ids' => $syncedDaysheetIds]);
     }

@@ -27,7 +27,7 @@ class TokenController extends Controller
                 $new_device = new Device;
                 $new_device->device_identifier = $request->device_name;
                 $new_device->last_data_sync = now()->subYears(7);
-                $new_device->last_inspection_sync = now()->subYears(7);
+                $new_device->last_daysheet_sync = now()->subYears(7);
                 $new_device->save();
             } elseif (!Hash::check($request->password, $user->password)) {
                 return response()->json(['success' => false, 'error' => 'Credentials Incorrect!']);

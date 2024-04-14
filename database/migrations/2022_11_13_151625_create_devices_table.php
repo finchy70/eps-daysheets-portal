@@ -17,7 +17,7 @@ class CreateDevicesTable extends Migration
             $table->id();
             $table->longText('device_identifier')->required();
             $table->dateTime('last_data_sync')->nullable();
-            $table->dateTime('last_inspection_sync')->nullable();
+            $table->dateTime('last_daysheet_sync')->nullable();
             $table->timestamps();
         });
     }

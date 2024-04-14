@@ -26,13 +26,15 @@ return new class extends Migration
             $table->time('finish_time')->nullable();
             $table->text('issue_fault');
             $table->text('resolution');
-            $table->integer('mileage');
+            $table->string('representative')->nullable();
+            $table->text('signature')->nullable();
+            $table->integer('mileage')->nullable();
             $table->boolean('published')->default(false);
             $table->boolean('client_confirmed')->default(false);
             $table->dateTime('confirmed_on')->nullable();
             $table->string('client_representative')->nullable();
-            $table->decimal('mileage_rate', 8, 2);
-            $table->decimal('markup_rate', 8, 2);
+            $table->decimal('mileage_rate', 8, 2)->nullable();
+            $table->decimal('markup_rate', 8, 2)->nullable();
             $table->timestamps();
         });
     }
