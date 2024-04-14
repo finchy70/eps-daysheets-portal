@@ -19,36 +19,19 @@ class DataController extends Controller
 {
     use HoursCalculator;
 
-    public function signature($id): void {
+    public function signature($id) {
         $daysheet = Daysheet::query()->where('id', $id)->first();
         $signature = $daysheet->signature;
         $image = base64_decode($signature);
         $sig = Image::make($image);
         $sigPicture = $sig;
 
-        $sigPicture->save(storage_path().'/temp.png');
+        $sigPicture->save(storage_path().'/app/public/temp.png');
+        return view('signature', [
+            'url' => asset('storage/temp.png')
+        ]);
     }
-//    public function pictures(Request $request){
-//
-//        $body = $request->getContent();
-//        $data = json_decode($body, true);
-//        $image = base64_decode($data['image']);
-//        $filename = $data['name'];
-//        $rotate = $data['rotate'];
-//        $picture = Image::make($image)->rotate($rotate);
-//        $thumbnail = Image::make($image)->rotate($rotate)->fit(150, null, function ($constraint) {
-//            $constraint->aspectRatio();
-//        });
-//        $originalPath = public_path().'/storage/img/';
-//        $thumbPath = public_path().'/storage/thumb/';
-//        $big_picture = $picture;
-//        $big_picture->resize(900, null, function ($constraint) {
-//            $constraint->aspectRatio();
-//        });
-//        $thumbnail->save($thumbPath.$filename);
-//        $big_picture->save($originalPath.$filename);
-//        return response()->json(['success' => true, 'message' => "Picture synced"]);
-//    }
+
     public function standingData(Request $request)
     {
         $user = $request->user();
