@@ -10,6 +10,12 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
+use Intervention\Image\Drivers\Gd\Decoders\Base64ImageDecoder;
+use Intervention\Image\Drivers\Gd\Decoders\DataUriImageDecoder;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Interfaces\DecoderInterface;
+use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Drivers\Gd\Driver;
 use Livewire\Component;
 use app\Models\Daysheet as DaysheetModel;
 
@@ -18,6 +24,7 @@ class Daysheet extends Component
     public DaysheetModel $daysheet;
     public string $hours = "";
     public string $fraction = "";
+    public string $filename = "";
     public float $rate = 0.00;
     public float $rateTotal = 0.00;
     public float $vat = 0.00;
@@ -35,7 +42,7 @@ class Daysheet extends Component
     public function mount(DaysheetModel $daysheet): void
     {
         $this->daysheet = $daysheet->load(['materials', 'client', 'user', 'engineers.role', 'hotels']);
-
+        $this->getSignature();
         $hoursWorkedArray = $this->getHours($this->daysheet->start_date, $this->daysheet->start_time, $this->daysheet->finish_date, $this->daysheet->finish_time);
         $this->hours = $hoursWorkedArray['time'];
         $this->fraction = $hoursWorkedArray['hoursFraction'];
@@ -48,6 +55,20 @@ class Daysheet extends Component
         $this->getHotelsTotal();
         $this->getEngineersTotal();
         $this->getMileageTotal();
+    }
+
+    public function getSignature(): void
+    {
+
+        $signature = $this->daysheet->signature;
+        $manager = new ImageManager(new Driver());
+        $sig = $manager->read($signature, [
+            Base64ImageDecoder::class,
+        ]);
+        $sigPicture = $sig;
+        $this->filename = $this->daysheet->id.$this->daysheet->client_id.now()->format('YmdHis').'.png';
+
+        $sigPicture->scaleDown('300', '75')->save(storage_path().'/app/public/'.$this->filename);
     }
 
     public function getMileageTotal(): void{
@@ -110,7 +131,8 @@ class Daysheet extends Component
             'engineerTotal' => $this->engineerTotal,
             'hotelTotal' => $this->hotelTotal,
             'mileageRate' => $this->mileageRate,
-            'markupRate' => $this->markupRate
+            'markupRate' => $this->markupRate,
+            'filename' => $this->filename
             ]);
 
     }

@@ -1,5 +1,5 @@
-@php use function Symfony\Component\Translation\t; @endphp
-<div>
+{{--@php use function Symfony\Component\Translation\t; @endphp--}}
+<div x-on:loa>
     @section('title', 'DaySheet')
     <div class="mt-4 mb-4 row flex justify-end max-w-4xl mx-auto">
         <a href="{{route('pdf.download', $daysheet->id)}}" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
@@ -113,20 +113,21 @@
             <div class="text-center col-span-2 text-xs border-r border-black">Name for EPS Construction Limited</div>
             <div class="text-center col-span-2 text-xs border-r border-black">Signed for EPS Construction Limited</div>
             <div class="text-center col-span-1 text-xs border-black">Date</div>
-            <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black">{{$daysheet->user->name}}</div>
-            <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black">{{$daysheet->user->name}}</div>
-            <div class="p-1 text-center col-span-1 text-sm border-t border-black">{{now()->format('d-m-Y')}}</div>
+            <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black flex justify-center items-center" style="height: 75px">{{$daysheet->user->name}}</div>
+            <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black flex justify-center items-center">{{$daysheet->user->name}}</div>
+            <div class="p-1 text-center col-span-1 text-sm border-t border-black flex justify-center items-center">{{Carbon\Carbon::parse($daysheet->finish_date)->format('d-m-Y')}}</div>
             <div class="text-center col-span-2 text-xs border-r border-t border-black">Name for Client</div>
             <div class="text-center col-span-2 text-xs border-r border-t border-black">Signed for Client</div>
             <div class="text-center col-span-1 text-xs border-t border-black">Date</div>
-            @if($daysheet->client_representative == null)
+            @if($daysheet->representative == null)
                 <div class="p-4 text-center col-span-2 text-sm border-t border-r border-black"></div>
                 <div class="p-4 text-center col-span-2 text-sm border-t border-r border-black"></div>
                 <div class="p-4 text-center col-span-1 text-sm border-t border-black"></div>
             @else
-                <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black">{{$daysheet->client_representative}}</div>
-                <div class="p-1 text-center col-span-2 text-sm border-t border-r border-black"></div>
-                <div class="p-1 text-center col-span-1 text-sm border-t border-black"></div>
+                <div class="p-1 col-span-2 text-sm border-t border-r border-black flex justify-center items-center" style="height: 75px">{{$daysheet->representative}}</div>
+                <div class="col-span-2 text-sm border-t border-r border-black row flex justify-center items-center"><img src="{{asset('storage/'.$filename)}}" alt="Signature">
+                </div>
+                <div class="p-1 text-center col-span-1 text-sm border-t border-black flex justify-center items-center">{{Carbon\Carbon::parse($daysheet->finish_date)->format('d-m-Y')}}</div>
             @endif
 
         </div>
@@ -148,3 +149,7 @@
         </a>
     </div>
 </div>
+@script
+document.addEventListener('alpine:initialized', () => {
+//
+})

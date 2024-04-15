@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Livewire\Mileage;
 use App\Models\Client;
+use App\Models\Mileage as MileageRate;
 use App\Models\Daysheet;
 use App\Models\Device;
 use App\Models\Engineer;
@@ -10,27 +12,12 @@ use App\Models\Material;
 use App\Models\Role;
 use App\Models\Update;
 use App\Traits\HoursCalculator;
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
-use JetBrains\PhpStorm\NoReturn;
 
 class DataController extends Controller
 {
     use HoursCalculator;
-
-    public function signature($id) {
-        $daysheet = Daysheet::query()->where('id', $id)->first();
-        $signature = $daysheet->signature;
-        $image = base64_decode($signature);
-        $sig = Image::make($image);
-        $sigPicture = $sig;
-
-        $sigPicture->save(storage_path().'/app/public/temp.png');
-        return view('signature', [
-            'url' => asset('storage/temp.png')
-        ]);
-    }
 
     public function standingData(Request $request)
     {
@@ -68,11 +55,18 @@ class DataController extends Controller
 
     public function daysheets(Request $request)
     {
+
         $body = $request->getContent();
         $user = $request->user();
         $syncedDaysheetIds = [];
         $data = json_decode($body, true);
         foreach ($data['daysheet'] as $daysheet) {
+            $clientMileageRate = MileageRate::query()
+                ->where('client_id', $daysheet['client_id'])
+                ->where('valid_from', '<=' , $daysheet['start_date'])
+                ->where(function (Builder $q) use ($daysheet) {
+                    return $q->where('valid_to', '>', $daysheet['start_date'])->orWhere('valid_to', null);
+            })->first();
             $syncedDaysheetIds[] = $daysheet['id'];
             $newDaysheet = new Daysheet;
             $newDaysheet->client_id = $daysheet['client_id'];
@@ -88,6 +82,8 @@ class DataController extends Controller
             $newDaysheet->signature = $daysheet['signature'];
             $newDaysheet->representative = $daysheet['representative'];
             $newDaysheet->mileage = $daysheet['mileage'];
+            $newDaysheet->mileage_rate = $clientMileageRate->rate;
+            $newDaysheet->markup_rate = Client::query()->where('id', $daysheet['client_id'])->first()->markup;
             $newDaysheet->save();
             foreach($daysheet['materials'] as $material){
                 Material::query()->create([
