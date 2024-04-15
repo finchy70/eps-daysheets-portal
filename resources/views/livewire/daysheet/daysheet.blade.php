@@ -2,7 +2,7 @@
 <div x-on:loa>
     @section('title', 'DaySheet')
     <div class="mt-4 mb-4 row flex justify-end max-w-4xl mx-auto">
-        <a href="{{route('pdf.download', $daysheet->id)}}" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+        <a href="{{route('pdf.download', [$daysheet->id, encrypt($filename)])}}" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
             Download PDF
         </a>
     </div>

@@ -82,7 +82,7 @@ Route::middleware(['auth', 'approved'])->group(function () {
     Route::get('/picture/{id}', [DataController::class, 'signature'])->name('signature');
 
 
-    Route::get('/daysheets/{daysheet}/download', [PDFController::class, 'download'])->name('pdf.download');
+    Route::get('/daysheets/{daysheet}/download/{filename}', [PDFController::class, 'download'])->name('pdf.download');
 
 });
 

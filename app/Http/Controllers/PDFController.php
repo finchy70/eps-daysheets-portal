@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PDFController extends Controller
 {
-    public function download(Daysheet $daysheet){
+    public function download(Daysheet $daysheet, String $filename){
+        $signatureFilename = decrypt($filename);
         $daysheet = $daysheet->load(['engineers', 'materials']);
         $mileageRate = $daysheet->mileage_rate;
         $mileageTotal = $daysheet->mileage * $daysheet->mileage_rate;
@@ -33,7 +34,8 @@ class PDFController extends Controller
             'daysheet' => $daysheet,
             'hotelTotal' => $hotelTotal,
             'materialTotal' => $materialTotal,
-            'engineerTotal' => $engineerTotal
+            'engineerTotal' => $engineerTotal,
+            'signatureFilename' => $signatureFilename
         ])->setPaper('a4')->setOrientation('portrait');
         return $doc->download($daysheet->job_number.'-'.$daysheet->site_name.'-'.$daysheet->client->name . Carbon::parse($daysheet->start_date)->format('d-m-Y').'daysheet.pdf');
     }

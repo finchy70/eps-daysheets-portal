@@ -345,40 +345,41 @@
             </div>
 
             <div class="row flex-row border-bottom border-right border-left border-dark">
-                <div class="col-5 border-right border-dark text-center">
+                <div class="col-5 border-right border-dark text-center text-black">
                     {{$daysheet->user->name}}
                 </div>
-                <div class="col-5 border-right border-dark text-center">
+                <div class="col-5 border-right border-dark text-center text-black">
                     {{$daysheet->user->name}}
                 </div>
                 <div class="col-2 border-dark text-center">
                     {{Carbon\Carbon::parse($daysheet->finish_date)->format('d-m-Y')}}
                 </div>
             </div>
+            @if($daysheet->representative != 'Not Available')
+                <div class="row flex-row border-bottom border-right border-left border-dark">
+                    <div class="col-5 border-right border-dark text-center">
+                        Site Client Representative
+                    </div>
+                    <div class="col-5 border-right border-dark text-center">
+                        Signed by Client Representative
+                    </div>
+                    <div class="col-2 border-right text-center">
+                        Date Signed
+                    </div>
+                </div>
 
-            <div class="row flex-row border-bottom border-right border-left border-dark">
-                <div class="col-5 border-right border-dark text-center">
-                    Name for Client
+                <div class="row flex-row border-bottom border-right border-left border-dark">
+                    <div class="col-5 border-right border-dark text-center text-black">
+                        {{$daysheet->representative}}
+                    </div>
+                    <div class="col-5 border-right border-dark text-center">
+                        <img src="{{asset('storage/'.$signatureFilename)}}" alt="Client Signature">
+                    </div>
+                    <div class="col-2 text-center">
+                        {{Carbon\Carbon::parse($daysheet->finish_date)->format('d-m-Y')}}
+                    </div>
                 </div>
-                <div class="col-5 border-right border-dark text-center">
-                    Signed for Client
-                </div>
-                <div class="col-2 border-right text-center">
-                    Date
-                </div>
-            </div>
-
-            <div class="row flex-row border-bottom border-right border-left border-dark">
-                <div class="col-5 border-right border-dark text-center text-white">
-                    placeholder
-                </div>
-                <div class="col-5 border-right border-dark text-center">
-
-                </div>
-                <div class="col-2 text-center">
-
-                </div>
-            </div>
+            @endif
         </div>
     </div>
 
