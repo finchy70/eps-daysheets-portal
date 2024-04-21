@@ -42,7 +42,7 @@ class Hotels extends Component
         switch($key) {
             case 'quantity':
             case 'costPerUnit':
-                $this->formattedGrandTotal = '£ '.number_format(($this->quantity * $this->costPerUnit), 2, thousands_separator: '');
+                $this->formattedGrandTotal = '£ '.number_format((intval($this->quantity) * floatval($this->costPerUnit)), 2, thousands_separator: '');
                 break;
             case 'editQuantity':
             case 'editCostPerUnit':

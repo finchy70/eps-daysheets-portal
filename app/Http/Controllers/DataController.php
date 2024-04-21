@@ -9,6 +9,7 @@ use App\Models\Daysheet;
 use App\Models\Device;
 use App\Models\Engineer;
 use App\Models\Material;
+use App\Models\Rate;
 use App\Models\Role;
 use App\Models\Update;
 use App\Traits\HoursCalculator;
@@ -104,16 +105,34 @@ class DataController extends Controller
                 'hours_as_fraction' => $hours['hoursFraction']]);
 
             foreach($daysheet['engineers'] as $engineer){
+                $rate = Rate::query()
+                    ->where('client_id', $newDaysheet->client_id)
+                    ->where('role_id', $engineer['role_id'])
+                    ->where('valid_from', '<', $newDaysheet->start_date)
+                    ->where(function (Builder $q) use ($newDaysheet) {
+                    return $q->where('valid_to', '>=', $newDaysheet->start_date)->orWhere('valid_to', null);
+                })->first()->rate;
+                $engineerHours = $engineer['hours'].':'.$engineer['minutes'].':00';
+                $hoursAsFraction = $engineer['hours'].'.'.$this->getFraction($engineer['minutes']);
                 Engineer::query()->create([
                     'name' => $engineer['name'],
                     'daysheet_id' => $newDaysheet->id,
                     'role_id' => $engineer['role_id'],
-                    'rate' => 25.00,
-                    'hours' => $hours['time'],
-                    'hours_as_fraction' => $hours['hoursFraction']]);
+                    'rate' => $rate,
+                    'hours' => $engineerHours,
+                    'hours_as_fraction' => $hoursAsFraction]);
             }
 
         }
         return response()->json(['message' => "All completed daysheets have synced with EPS Daysheet server!!", 'synced_daysheet_ids' => $syncedDaysheetIds]);
+    }
+
+    private function getFraction($minutes): string {
+        return match ($minutes) {
+            '00' => '00',
+            '15' => '25',
+            '30' => '50',
+            default => '75',
+        };
     }
 }
