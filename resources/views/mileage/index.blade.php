@@ -24,7 +24,7 @@
                         @foreach($clients as $client)
                             <tr class="{{$loop->iteration % 2 == 0 ? 'bg-white' : 'bg-gray-100'}} ">
                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $client->name }}</td>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">£ {{ isset($client->currentMileageRate) ? $$client->currentMileageRate->rate : ''}}</td>
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">£ {{ isset($client->currentMileageRate) ? $client->currentMileageRate->rate : ''}}</td>
                                 <td class="whitespace-nowrap text-right py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                     <a href="{{route('mileage.edit', $client->id)}}">Update</a>
                                 </td>
