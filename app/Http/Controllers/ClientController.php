@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Role;
 use App\Models\Update;
+use http\Client\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Session;
 
@@ -46,19 +47,16 @@ class ClientController extends Controller
         return view('clients.edit', compact('client', 'rates'));
     }
 
-    public function update(Client $client){
-        if (request('name') === $client->name) {
-            Session::flash('message', 'No changes were made to the name!');
-        } else {
-            $data = request()->validate([
-                'name' => 'required|unique:clients'
-            ]);
-
-            $client->name = $data['name'];
-            $client->update();
-            Update::query()->where('id', 1)->update(['data_updated' => now()]);
-            Session::flash('success', 'The Client was successfully updated!');
-        }
+    public function update(Client $client) {
+        $data = request()->validate([
+            'name' => 'required|unique:clients,name,'.$client->id,
+            'markup' => 'required'
+        ]);
+        $client->name = $data['name'];
+        $client->markup = $data['markup'];
+        $client->update();
+        Update::query()->where('id', 1)->update(['data_updated' => now()]);
+        Session::flash('success', 'The Client was successfully updated!');
         return redirect()->action([ClientController::class, 'index']);
     }
 }

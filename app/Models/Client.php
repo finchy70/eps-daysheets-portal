@@ -23,8 +23,21 @@ class Client extends Model
     public function mileages(): HasMany {
         return $this->hasMany(Mileage::class)->orderBy('id', 'desc');
     }
+
+    public function markups(): HasMany {
+        return $this->hasMany(Markup::class)->orderBy('id', 'desc');
+    }
+
     public function currentMileageRate(): HasOne {
         return $this->hasOne(Mileage::class)
+            ->where('valid_from', '<', now())
+            ->where(function (Builder $query) {
+                return $query->where('valid_to', '>', now())->orWhere('valid_to', null);
+            });
+    }
+
+    public function currentMarkupRate(): HasOne {
+        return $this->hasOne(Markup::class)
             ->where('valid_from', '<', now())
             ->where(function (Builder $query) {
                 return $query->where('valid_to', '>', now())->orWhere('valid_to', null);
@@ -65,6 +78,16 @@ class Client extends Model
     public function getMileageRateFromDate($date, $clientId): HasOne
     {
         return $this->hasOne(Mileage::class)
+            ->where('client_id', $clientId)
+            ->where('valid_from', '<', $date)
+            ->where(function (Builder $q) use ($date) {
+                return $q->where('valid_to', '>=', $date)->orWhere('valid_to', null);
+            });
+    }
+
+    public function getMarkupFromDate($date, $clientId): HasOne
+    {
+        return $this->hasOne(Markup::class)
             ->where('client_id', $clientId)
             ->where('valid_from', '<', $date)
             ->where(function (Builder $q) use ($date) {

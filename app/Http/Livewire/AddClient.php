@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Http\Controllers\ClientController;
 use App\Models\Client;
+use App\Models\Markup;
 use App\Models\Rate;
 use App\Models\Role;
 use App\Models\Update;
@@ -27,7 +28,6 @@ class AddClient extends Component
         ]);
         $client = new Client;
         $client->name = $data['name'];
-        $client->markup = $data['markup'];
         $client->save();
         $update = Update::query()->orderBy('id', 'desc')->first();
 
@@ -47,8 +47,13 @@ class AddClient extends Component
             'rate' => $data['mileage'],
             'valid_from' => now()->subDays(30)
         ]);
+        Markup::query()->create([
+            'client_id' => $client->id,
+            'markup' => $data['markup'],
+            'valid_from' => now()->subDays(30)
+        ]);
         Session::flash('success', 'The Client was successfully added!  Please Update the Rates.');
-        return redirect()->route('clients.index');
+        return redirect()->route('clients');
     }
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application

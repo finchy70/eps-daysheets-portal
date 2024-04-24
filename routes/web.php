@@ -4,6 +4,7 @@ use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\DaysheetController;
+use App\Http\Controllers\MarkupController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MileageController;
 use App\Http\Controllers\PDFController;
@@ -70,6 +71,11 @@ Route::middleware(['auth', 'approved', 'admin'])->group(function () {
     Route::get('/mileage/create', [MileageController::class, 'create'])-> name('mileage.create');
     Route::get('/mileage/{client}/edit', [MileageController::class, 'edit'])-> name('mileage.edit');
     Route::post('/mileage', [MileageController::class, 'store'])-> name('mileage.store');
+
+    Route::get('/markup', [MarkupController::class, 'index'])-> name('markup');
+    Route::get('/markup/create', [MarkupController::class, 'create'])-> name('markup.create');
+    Route::get('/markup/{client}/edit', [MarkupController::class, 'edit'])-> name('markup.edit');
+    Route::post('/markup', [MarkupController::class, 'store'])-> name('markup.store');
 });
 
 Route::middleware(['auth', 'approved'])->group(function () {

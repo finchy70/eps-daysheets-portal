@@ -31,7 +31,7 @@
                                         {{$client->name}}
                                     </td>
                                     <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                        {{$client->markup}}%
+                                        {{$client->currentMarkupRate->markup}}%
                                     </td>
                                     <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                                         £ {{number_format($client->currentMileageRate->rate, 2, thousands_separator: '')}}

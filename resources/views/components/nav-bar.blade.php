@@ -87,6 +87,15 @@
                                     duration-150 ease-in-out">
                                     Mileage
                                 </a>
+                                <a href="{{route('markup')}}" class="inline-flex items-center px-3 pt-1
+                                border-b-2
+                                    {{request()->route()->named('markup*')
+                                    ? 'border-indigo-600 text-gray-900 '
+                                    : 'border-transparent text-gray-500 '}}
+                                    text-sm font-medium leading-5 focus:outline-none focus:border-indigo-700 transition
+                                    duration-150 ease-in-out">
+                                    Markup
+                                </a>
                                 <a href="{{route('api_admin')}}" class="inline-flex items-center px-3 pt-1 border-b-2
                                     {{request()->route()->named('api_admin*')
                                     ? 'border-indigo-600 text-gray-900 '

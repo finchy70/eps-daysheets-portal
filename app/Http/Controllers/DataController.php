@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Livewire\Mileage;
 use App\Models\Client;
+use App\Models\Markup;
 use App\Models\Mileage as MileageRate;
 use App\Models\Daysheet;
 use App\Models\Device;
@@ -68,6 +69,12 @@ class DataController extends Controller
                 ->where(function (Builder $q) use ($daysheet) {
                     return $q->where('valid_to', '>', $daysheet['start_date'])->orWhere('valid_to', null);
             })->first();
+            $currentMarkUpRate = Markup::query()
+                ->where('client_id', $daysheet['client_id'])
+                ->where('valid_from', '<=' , $daysheet['start_date'])
+                ->where(function (Builder $q) use ($daysheet) {
+                    return $q->where('valid_to', '>', $daysheet['start_date'])->orWhere('valid_to', null);
+                })->first();
             $syncedDaysheetIds[] = $daysheet['id'];
             $newDaysheet = new Daysheet;
             $newDaysheet->client_id = $daysheet['client_id'];
@@ -84,7 +91,7 @@ class DataController extends Controller
             $newDaysheet->representative = $daysheet['representative'];
             $newDaysheet->mileage = $daysheet['mileage'];
             $newDaysheet->mileage_rate = $clientMileageRate->rate;
-            $newDaysheet->markup_rate = Client::query()->where('id', $daysheet['client_id'])->first()->markup;
+            $newDaysheet->markup_rate = $currentMarkUpRate->markup;
             $newDaysheet->save();
             foreach($daysheet['materials'] as $material){
                 Material::query()->create([

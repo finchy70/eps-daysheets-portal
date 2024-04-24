@@ -49,7 +49,7 @@ class Daysheet extends Component
         $this->rateTotal = floatval($this->fraction) * $this->rate;
         $this->vat = (floatval($this->rateTotal) / 100) *20;
         $this->rateIncVat = $this->rateTotal + $this->vat;
-        $this->markupRate = $this->daysheet->client->markup;
+        $this->markupRate = $this->daysheet->markup_rate;
 
         $this->getMaterialsTotal();
         $this->getHotelsTotal();

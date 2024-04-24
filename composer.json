@@ -18,7 +18,8 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^v2.12.5",
         "predis/predis": "^2.2",
-        "spatie/ray": "^1.37"
+        "spatie/ray": "^1.37",
+        "ext-http": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
