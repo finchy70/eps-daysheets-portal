@@ -32,7 +32,7 @@ class RoleController extends Controller
             Rate::query()->create([
                 'role_id' => $role->id,
                 'client_id' => $client->id,
-                'valid_from' => now()->format('Y-m-d').' 00:00:00',
+                'valid_from' => now()->subDay()->format('Y-m-d').' 00:00:00',
                 'rate' => $request->rate
             ]);
         }

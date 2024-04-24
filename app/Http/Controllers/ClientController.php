@@ -50,10 +50,9 @@ class ClientController extends Controller
     public function update(Client $client) {
         $data = request()->validate([
             'name' => 'required|unique:clients,name,'.$client->id,
-            'markup' => 'required'
         ]);
         $client->name = $data['name'];
-        $client->markup = $data['markup'];
+
         $client->update();
         Update::query()->where('id', 1)->update(['data_updated' => now()]);
         Session::flash('success', 'The Client was successfully updated!');

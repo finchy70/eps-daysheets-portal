@@ -16,6 +16,8 @@ use App\Models\Update;
 use App\Traits\HoursCalculator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use JetBrains\PhpStorm\NoReturn;
 
 class DataController extends Controller
 {
@@ -38,7 +40,6 @@ class DataController extends Controller
             $device->last_inspection_sync = now()->subDays(7);
             $device->save();
         }
-
         if($updated_last->data_updated > $device->last_data_sync)
         {
             $clients = Client::query()->select('id', 'name')->where('created_at', '>', $device->last_data_sync)->orWhere('updated_at',
@@ -52,6 +53,7 @@ class DataController extends Controller
         if($clients->count() == 0 && $roles->count() == 0) {
             $message = "No Update Required";
         }
+
         return response()->json(['message' => $message, 'clients' => $clients, 'roles' => $roles]);
     }
 
@@ -103,14 +105,20 @@ class DataController extends Controller
             }
 
             $hours = $this->getHours($daysheet['start_date'], $daysheet['start_time'], $daysheet['finish_date'], $daysheet['finish_time']);
+
+            $roleRate = Rate::query()
+                ->where('client_id', $newDaysheet->client_id)->where('role_id', 1)
+                ->where('valid_from', '<', Carbon::parse($newDaysheet->start_date))
+                ->where(function (Builder $q) use ($newDaysheet) {
+                    return $q->where('valid_to', '>=', Carbon::parse($newDaysheet->start_date))->orWhere('valid_to', null);
+                })->first()->rate;
             Engineer::query()->create([
                 'name' => $user->name,
                 'daysheet_id' => $newDaysheet->id,
                 'role_id' => 1,
-                'rate' => 25.00,
+                'rate' => $roleRate,
                 'hours' => $hours['time'],
                 'hours_as_fraction' => $hours['hoursFraction']]);
-
             foreach($daysheet['engineers'] as $engineer){
                 $rate = Rate::query()
                     ->where('client_id', $newDaysheet->client_id)
