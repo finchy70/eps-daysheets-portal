@@ -54,7 +54,7 @@
                                 <x-input type='date' min="{{$markups[0]->valid_from->addDays(1)->format('Y-m-d')}}" name="fromDate" value="{{$markups[0]->valid_from->addDays(1)->format('Y-m-d')}}"></x-input>
                             </div>
                             <div>
-                                <x-input type='number' step='1' min="1" name="markup" value="Hi"></x-input>
+                                <x-input type='number' step='1' min="1" name="markup"></x-input>
                             </div>
                             <div class="my-auto text-right">
                                 <x-primary-button type="submit" class="text-right">Save New Rate</x-primary-button>

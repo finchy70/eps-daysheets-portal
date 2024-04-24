@@ -36,7 +36,7 @@ class MarkupController extends Controller
     {
         $request->validate([
             'fromDate' => 'required|date',
-            'markup' => 'required|numeric|min:0.01'
+            'markup' => 'required|numeric|min:0.01|max:75'
         ]);
         $lastRate = Markup::query()->where('client_id', $request->clientId)->orderBy('valid_from', 'desc')->first();
         $lastRate->valid_to = Carbon::parse($request->fromDate)->subDay()->format('Y-m-d').' 23:59:59';
