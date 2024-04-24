@@ -34,7 +34,7 @@
                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $rate->role->role }}</td>
                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">£ {{ $rate->rate }}</td>
                     <td class="whitespace-nowrap text-right py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                        <a href="{{route('rates.edit', $rate->id)}}" class="mr-4">Update</a>
+                        <a class="p-1 text-xs bg-blue-300 rounded hover:bg-blue-100" href="{{route('rates.edit', $rate->id)}}" class="mr-4">Update</a>
                     </td>
                 </tr>
             @endforeach
