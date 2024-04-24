@@ -48,7 +48,7 @@ class AddClient extends Component
             'valid_from' => now()->subDays(30)
         ]);
         Session::flash('success', 'The Client was successfully added!  Please Update the Rates.');
-        return redirect()->route('clients.edit', $client->id);
+        return redirect()->route('clients.index');
     }
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
