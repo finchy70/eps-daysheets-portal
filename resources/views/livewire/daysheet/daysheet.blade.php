@@ -125,8 +125,11 @@
                 <div class="p-4 text-center col-span-1 text-sm border-t border-black"></div>
             @else
                 <div class="p-1 col-span-2 text-sm border-t border-r border-black flex justify-center items-center" style="height: 75px">{{$daysheet->representative}}</div>
-                <div class="col-span-2 text-sm border-t border-r border-black row flex justify-center items-center"><img src="{{asset('storage/'.$filename)}}" alt="Signature">
-                </div>
+                @if($filename != null)
+                    <div class="col-span-2 text-sm border-t border-r border-black row flex justify-center items-center"><img src="{{asset('storage/'.$filename)}}" alt="Signature"></div>
+                @else
+                    <div class="col-span-2 text-sm border-t border-r border-black row flex justify-center items-center"></div>
+                @endif
                 <div class="p-1 text-center col-span-1 text-sm border-t border-black flex justify-center items-center">{{Carbon\Carbon::parse($daysheet->finish_date)->format('d-m-Y')}}</div>
             @endif
 

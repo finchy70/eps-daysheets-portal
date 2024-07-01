@@ -24,7 +24,7 @@ class Daysheet extends Component
     public DaysheetModel $daysheet;
     public string $hours = "";
     public string $fraction = "";
-    public string $filename = "";
+    public ?string $filename = null;
     public float $rate = 0.00;
     public float $rateTotal = 0.00;
     public float $vat = 0.00;
@@ -61,14 +61,19 @@ class Daysheet extends Component
     {
 
         $signature = $this->daysheet->signature;
-        $manager = new ImageManager(new Driver());
-        $sig = $manager->read($signature, [
-            Base64ImageDecoder::class,
-        ]);
-        $sigPicture = $sig;
-        $this->filename = $this->daysheet->id.$this->daysheet->client_id.now()->format('YmdHis').'.png';
+        if ($signature != null){
+            $manager = new ImageManager(new Driver());
+            $sig = $manager->read($signature, [
+                Base64ImageDecoder::class,
+            ]);
+            $sigPicture = $sig;
+            $this->filename = $this->daysheet->id.$this->daysheet->client_id.now()->format('YmdHis').'.png';
 
-        $sigPicture->scaleDown('300', '75')->save(storage_path().'/app/public/'.$this->filename);
+            $sigPicture->scaleDown('300', '75')->save(storage_path().'/app/public/'.$this->filename);
+        } else {
+            $this->filename = null;
+        }
+
     }
 
     public function getMileageTotal(): void{
