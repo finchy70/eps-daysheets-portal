@@ -48,7 +48,7 @@ class DaysheetController extends Controller
             "resolution" => $validated['resolution'],
             "mileage" => $validated['mileage'],
             "mileage_rate" => $client->getMileageRateFromDate(Carbon::parse($validated['startDate'])->format('Y-m-d'), $client->id)->first()->rate,
-            "markup_rate" => $client->markup
+            "markup_rate" => $client->getMarkupFromDate(Carbon::parse($validated['startDate'])->format('Y-m-d'), $client->id)->first()->markup,
         ]);
 
         $startTime = Carbon::parse($validated['startDate'])->format('d-m-Y').' '.$validated['startTime'].':00';
