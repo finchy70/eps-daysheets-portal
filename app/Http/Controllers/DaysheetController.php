@@ -126,9 +126,15 @@ class DaysheetController extends Controller
 
     public function show(Daysheet $daysheet){
         if($daysheet->client_id == auth()->user()->client_id || auth()->user()->client_id == null){
-            return view('daysheet.daysheet', [
-                'daysheet' => $daysheet
-            ]);
+            if(!$daysheet->published) {
+                Session::flash('message', 'You can only view published Daysheets!');
+                return redirect(route('daysheet.index'));
+            } else {
+                return view('daysheet.daysheet', [
+                    'daysheet' => $daysheet
+                ]);
+            }
+
         } else {
             Session::flash('message', 'You can only see daysheets belonging to your company!');
             return redirect(route('daysheet.index'));

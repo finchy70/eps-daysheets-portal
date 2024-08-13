@@ -152,7 +152,3 @@
         </a>
     </div>
 </div>
-@script
-document.addEventListener('alpine:initialized', () => {
-//
-})
