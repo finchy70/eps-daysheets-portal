@@ -6,10 +6,13 @@ use App\Http\Requests\DaysheetFormRequest;
 use App\Models\Client;
 use App\Models\Daysheet;
 use App\Models\Engineer;
+use App\Models\Markup;
+use App\Models\Mileage as MileageRate;
 use App\Models\Role;
 use App\Models\User;
 use App\Traits\HoursCalculator;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Session;
 
@@ -35,6 +38,18 @@ class DaysheetController extends Controller
 
         $validated = $request->validated();
         $client = Client::query()->where('id', $validated['selectedClient'])->first();
+        $clientMileageRate = MileageRate::query()
+            ->where('client_id', $client->id)
+            ->where('valid_from', '<=' , Carbon::parse($validated['startDate'])->format('Y-m-d'))
+            ->where(function (Builder $q) use ($validated) {
+                return $q->where('valid_to', '>', Carbon::parse($validated['startDate'])->format('Y-m-d'))->orWhere('valid_to', null);
+            })->first()->rate;
+        $currentMarkUpRate = Markup::query()
+            ->where('client_id', $client->id)
+            ->where('valid_from', '<=' , Carbon::parse($validated['startDate'])->format('Y-m-d'))
+            ->where(function (Builder $q) use ($validated) {
+                return $q->where('valid_to', '>', Carbon::parse($validated['startDate'])->format('Y-m-d'))->orWhere('valid_to', null);
+            })->first()->markup;
         $newDaysheet = Daysheet::query()->create([
             'user_id' => auth()->user()->id,
             "client_id" => $validated['selectedClient'],
@@ -47,8 +62,8 @@ class DaysheetController extends Controller
             "issue_fault" => $validated['issueFault'],
             "resolution" => $validated['resolution'],
             "mileage" => $validated['mileage'],
-            "mileage_rate" => $client->getMileageRateFromDate(Carbon::parse($validated['startDate'])->format('Y-m-d'), $client->id)->first()->rate,
-            "markup_rate" => $client->getMarkupFromDate(Carbon::parse($validated['startDate'])->format('Y-m-d'), $client->id)->first()->markup,
+            "mileage_rate" => floatval($clientMileageRate),
+            "markup_rate" => floatval($currentMarkUpRate),
         ]);
 
         $startTime = Carbon::parse($validated['startDate'])->format('d-m-Y').' '.$validated['startTime'].':00';
